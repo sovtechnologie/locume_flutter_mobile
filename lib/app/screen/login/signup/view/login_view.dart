@@ -7,9 +7,6 @@ class LoginView extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-      children: [TextFormField(), TextFormField()],
-    ));
+    return Scaffold();
   }
 }
