@@ -95,7 +95,7 @@ class LoginOptionView extends GetView<LoginController> {
                       padding: const EdgeInsets.fromLTRB(40.0, 15.0, 40.0, 5.0),
                       child: GestureDetector(
                         onTap: () {
-                          // Get.to(() => const Options());
+                          Get.toNamed('/signup');
                         },
                         child: Container(
                           alignment: Alignment.center,
