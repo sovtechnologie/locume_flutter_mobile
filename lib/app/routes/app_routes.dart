@@ -6,7 +6,6 @@ abstract class Routes {
   static const Start1 = _Paths.Start1;
   static const LoginOption = _Paths.LoginOption;
   static const Login = _Paths.Login;
-  static const Register = _Paths.Register;
 }
 
 abstract class _Paths {
@@ -14,5 +13,4 @@ abstract class _Paths {
   static const Start1 = '/getstarted';
   static const LoginOption = '/login-option';
   static const Login = '/login';
-  static const Register = '/signup';
 }
