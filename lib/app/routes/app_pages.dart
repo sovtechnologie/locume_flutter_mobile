@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:locume/app/screen/getstarted/binding/getstart_binding.dart';
+import 'package:locume/app/screen/home/binding/Home_binding.dart';
+import 'package:locume/app/screen/home/view/Home_view.dart';
 import 'package:locume/app/screen/login/signup/binding/login_binding.dart';
 import 'package:locume/app/screen/login/signup/view/login_option.dart';
 import 'package:locume/app/screen/login/signup/view/login_view.dart';
@@ -23,6 +25,10 @@ class AppPages {
         page: () => LoginOptionView(),
         binding: LoginBinding()),
     GetPage(
-        name: _Paths.Login, page: () => LoginView(), binding: LoginBinding())
+        name: _Paths.Login, page: () => LoginView(), binding: LoginBinding()),
+    GetPage(
+        name: _Paths.Home,
+        page: () => HomeView(),
+        binding: HomeBinding()),
   ];
 }
