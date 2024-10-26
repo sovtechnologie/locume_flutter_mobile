@@ -77,7 +77,11 @@ class RegisterView extends GetView<LoginController> {
                             hintText: "Medical ID",
                             keyboardType: TextInputType.number,
                           ),
-                          CustomisableButton(text: "Sign Up", onTap: () {}),
+                          CustomisableButton(
+                              text: "Sign Up",
+                              onTap: () {
+                                Get.toNamed('/home');
+                              }),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             child: Row(

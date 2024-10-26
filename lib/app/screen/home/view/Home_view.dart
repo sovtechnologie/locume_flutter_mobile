@@ -3,8 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:locume/widget/reusedwidget.dart';
 
-import '../../../../reusedwidget.dart';
 import '../controller/Home_controller.dart';
 
 class HomeView extends GetView<HomeControlller> {

@@ -68,7 +68,11 @@ class LoginView extends GetView<LoginController> {
                             hintText: "Enter OTP",
                             keyboardType: TextInputType.number,
                           ),
-                          CustomisableButton(text: "Log in", onTap: () {}),
+                          CustomisableButton(
+                              text: "Log in",
+                              onTap: () {
+                                Get.toNamed('/home');
+                              }),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Row(

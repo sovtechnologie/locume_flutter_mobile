@@ -26,6 +26,18 @@ class AppPages {
         page: () => LoginOptionView(),
         binding: LoginBinding()),
     GetPage(
-        name: _Paths.Login, page: () => LoginView(), binding: LoginBinding())
+      name: _Paths.Login,
+      page: () => LoginView(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+        name: _Paths.Register,
+        page: () => RegisterView(),
+        binding: LoginBinding()),
+    GetPage(
+      name: _Paths.Home,
+      page: () => HomeView(),
+      binding: HomeBinding(),
+    )
   ];
 }
