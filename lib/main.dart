@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:locume/Theme/theme.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Locume',
-      theme: ThemeData(),
+      theme: themeData(context),
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     );

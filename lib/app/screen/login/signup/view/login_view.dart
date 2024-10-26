@@ -1,6 +1,7 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:locume/Theme/textTheme.dart';
 import 'package:locume/app/screen/login/signup/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:locume/widget/custom_button.dart';
@@ -42,12 +43,10 @@ class LoginView extends GetView<LoginController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SvgPicture.asset("assets/waving-hand.svg"),
-                          const Text(
+                          Text(
                             "Welcome back!",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w700),
+                            style: MyTextTheme.poppinsHeadline(
+                                fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                           const Text("Please login to access your account."),
                           const SizedBox(
