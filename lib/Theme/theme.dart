@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 
-const Color primaryColor = Color(0xff0A71B4);
-const Color secondaryColor = Color(0xffC2DDF2);
+Color primaryColor = HexColor('#0866C6');
+Color secondaryColor = HexColor('#FFFFFF');
 const Color scaffoldBackgroundColor = Color(0xffFFFFFF);
 const Color accentColor = Color(0xffFFFFFF);
 const Color errorColor = Color(0xffEB4456);
@@ -77,9 +78,9 @@ ThemeData themeData(BuildContext context) {
       primary: primaryColor,
       brightness: Brightness.light,
     ),
-    inputDecorationTheme: const InputDecorationTheme(
-      hintStyle: TextStyle(color: hintTextColor, fontSize: 15),
-      enabledBorder: UnderlineInputBorder(
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: const TextStyle(color: hintTextColor, fontSize: 15),
+      enabledBorder: const UnderlineInputBorder(
         borderSide: BorderSide(color: textColor),
       ),
       focusedBorder: UnderlineInputBorder(

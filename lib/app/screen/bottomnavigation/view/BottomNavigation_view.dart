@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -17,52 +18,68 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
         backgroundColor: Colors.white,
         bottomNavigationBar: ConvexAppBar(
             curveSize: 120.0,
-            style: TabStyle.reactCircle,
-            activeColor: Colors.blue,
+            style: TabStyle.fixedCircle,
+            activeColor: HexColor('#0866C6'),
             shadowColor: HexColor('#0866C6'),
-            color: Colors.grey,
+            color: HexColor('#0866C6'),
             height: 80.0,
             initialActiveIndex: 1,
             backgroundColor: Colors.white,
             items: [
               TabItem(
                   icon: Icon(
+                    size: 25.0,
                     Icons.home,
                     color: HexColor('#0866C6'),
                   ),
                   title: 'Home',
-                  activeIcon: const Icon(
-                    Icons.home,
-                    color: Colors.white,
+                  activeIcon: const CircleAvatar(
+                    radius: 40,
+                    child: Icon(
+                      size: 20,
+                      Icons.home,
+                      color: Colors.white,
+                    ),
                   )),
               TabItem(
-                  icon: Icon(
-                    Icons.dashboard,
+                  icon: SvgPicture.asset(
+                    'assets/doctor.svg',
+                    color: HexColor('#0866C6'),
+                  ),
+                  title: 'All Locums',
+                  activeIcon: CircleAvatar(
+                    radius: 40,
+                    child: SvgPicture.asset(
+                      'assets/doctor.svg',
+                      color: Colors.white,
+                    ),
+                  )),
+              TabItem(
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  activeIcon: Transform.translate(
+                    offset: const Offset(0, -5),
+                    child: const Icon(
+                      Icons.minimize_rounded,
+                      color: Colors.white,
+                    ),
+                  )),
+              TabItem(
+                  icon: SvgPicture.asset(
+                    'assets/hospital.svg',
                     color: HexColor('#0866C6'),
                   ),
                   title: 'Home',
-                  activeIcon: const Icon(
-                    Icons.dashboard,
-                    color: Colors.white,
-                  )),
-              const TabItem(
-                  icon: Icon(
-                    Icons.add,
-                    color: Colors.blueAccent,
-                  ),
-                  activeIcon: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  )),
-              TabItem(
-                  icon: Icon(
-                    Icons.local_hospital,
-                    color: HexColor('#0866C6'),
-                  ),
-                  title: 'Home',
-                  activeIcon: const Icon(
-                    Icons.local_hospital,
-                    color: Colors.white,
+                  activeIcon: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: HexColor('#0866C6'),
+                    child: SvgPicture.asset(
+                      height: 15,
+                      'assets/hospital.svg',
+                      color: Colors.white,
+                    ),
                   )),
               TabItem(
                   icon: Icon(
@@ -70,9 +87,13 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                     color: HexColor('#0866C6'),
                   ),
                   title: 'Home',
-                  activeIcon: const Icon(
-                    Icons.person,
-                    color: Colors.white,
+                  activeIcon: const CircleAvatar(
+                    radius: 40,
+                    child: Icon(
+                      size: 20,
+                      Icons.person,
+                      color: Colors.white,
+                    ),
                   )),
             ],
             onTap: (int i) {

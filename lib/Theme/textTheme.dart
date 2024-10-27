@@ -5,7 +5,7 @@ import 'package:locume/Theme/theme.dart';
 class MyTextTheme {
   // Poppins Text Styles
   static TextStyle _poppinsBaseStyle({
-    Color color = primaryColor,
+    Color color = Colors.blueAccent,
     double fontSize = 14.0,
     FontWeight fontWeight = FontWeight.normal,
   }) {
@@ -31,7 +31,7 @@ class MyTextTheme {
 
   // Montserrat Text Styles
   static TextStyle _montserratBaseStyle({
-    Color color = primaryColor,
+    Color color = Colors.blueAccent,
     double fontSize = 14.0,
     FontWeight fontWeight = FontWeight.normal,
   }) {

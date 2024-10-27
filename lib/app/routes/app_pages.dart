@@ -12,12 +12,9 @@ import 'package:locume/app/screen/locums/view/Locum_view.dart';
 import 'package:locume/app/screen/login/signup/binding/login_binding.dart';
 import 'package:locume/app/screen/login/signup/view/login_option.dart';
 import 'package:locume/app/screen/login/signup/view/login_view.dart';
-<<<<<<< Updated upstream
 import 'package:locume/app/screen/login/signup/view/reqister_view.dart';
-=======
 import 'package:locume/app/screen/profile/binding/Profile_Binding.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
->>>>>>> Stashed changes
 
 import '../screen/getstarted/view/getstart_view.dart';
 
@@ -38,7 +35,6 @@ class AppPages {
         page: () => LoginOptionView(),
         binding: LoginBinding()),
     GetPage(
-<<<<<<< Updated upstream
       name: _Paths.Login,
       page: () => LoginView(),
       binding: LoginBinding(),
@@ -51,8 +47,8 @@ class AppPages {
       name: _Paths.Home,
       page: () => HomeView(),
       binding: HomeBinding(),
-    )
-=======
+    ),
+    GetPage(
         name: _Paths.Login, page: () => LoginView(), binding: LoginBinding()),
     GetPage(name: _Paths.Home, page: () => HomeView(), binding: HomeBinding()),
     GetPage(
@@ -69,6 +65,5 @@ class AppPages {
         name: _Paths.BottomNavigation,
         page: () => BottomnavigationView(),
         binding: BottomnavigationBinding()),
->>>>>>> Stashed changes
   ];
 }

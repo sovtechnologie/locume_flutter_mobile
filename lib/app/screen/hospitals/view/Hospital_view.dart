@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-import '../../../../reusedwidget.dart';
 import '../controller/Hospital_Controller.dart';
 
 class HospitalView extends GetView<HospitalController> {

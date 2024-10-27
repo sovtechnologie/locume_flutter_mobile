@@ -3,8 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:locume/Theme/theme.dart';
 
-import '../../../../reusedwidget.dart';
+import '../../../../widget/reusedwidget.dart';
 import '../controller/Locum_Controller.dart';
 
 class LocumView extends GetView<LocumController> {
@@ -13,9 +14,8 @@ class LocumView extends GetView<LocumController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: primaryColor,
         centerTitle: false,
         leading: IconButton(
             onPressed: () {},
@@ -39,6 +39,7 @@ class LocumView extends GetView<LocumController> {
               ))
         ],
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 0.0),
@@ -100,179 +101,6 @@ class LocumView extends GetView<LocumController> {
                 ),
               ),
               space(double.maxFinite, 50.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Top Specialties',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: HexColor('#0866C6')),
-                  ),
-                  Text(
-                    'View All',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: HexColor('#1E5A84')),
-                  ),
-                ],
-              ),
-              space(double.maxFinite, 30.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: specialcard('assets/type1.svg', 'Anesthesiology')),
-                  space(20.0, 0.0),
-                  Expanded(
-                      child: specialcard('assets/type2.svg', 'Cardiology')),
-                  space(20.0, 0.0),
-                  Expanded(
-                      child: specialcard('assets/type3.svg', 'Dermatology')),
-                  space(20.0, 0.0),
-                  Expanded(
-                      child: specialcard(
-                          'assets/type4.svg', 'Emergency medicine')),
-                ],
-              ),
-              space(double.maxFinite, 30.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: specialcard('assets/type4.svg', 'Endocrinology')),
-                  space(20.0, 0.0),
-                  Expanded(
-                      child:
-                          specialcard('assets/type6.svg', 'Gastroenterology')),
-                  space(20.0, 0.0),
-                  Expanded(
-                      child:
-                          specialcard('assets/type7.svg', 'Hospital Medicine')),
-                  space(20.0, 0.0),
-                  Expanded(
-                      child:
-                          specialcard('assets/type8.svg', 'Medical Oncology')),
-                ],
-              ),
-              space(double.maxFinite, 50.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Top Locum`s',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: HexColor('#0866C6')),
-                  ),
-                  Text(
-                    'View All',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: HexColor('#1E5A84')),
-                  ),
-                ],
-              ),
-              space(double.maxFinite, 30.0),
-              doctorcard('assets/doctor1.png', 'name', 'md', 'work',
-                  'exprience', 'location'),
-              space(double.maxFinite, 20.0),
-              doctorcard('assets/doctor1.png', 'name', 'md', 'work',
-                  'exprience', 'location'),
-              space(double.maxFinite, 20.0),
-              doctorcard('assets/doctor1.png', 'name', 'md', 'work',
-                  'exprience', 'location'),
-              space(double.maxFinite, 20.0),
-              doctorcard('assets/doctor1.png', 'name', 'md', 'work',
-                  'exprience', 'location'),
-              space(double.maxFinite, 50.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Top Hospitals',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: HexColor('#0866C6')),
-                  ),
-                  Text(
-                    'View All',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: HexColor('#1E5A84')),
-                  ),
-                ],
-              ),
-              space(double.maxFinite, 40.0),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    hospitalcard(
-                        'assets/hospital1.png', 'name', 'location', 'distance'),
-                    space(15.0, 0.0),
-                    hospitalcard(
-                        'assets/hospital1.png', 'name', 'location', 'distance'),
-                    space(15.0, 0.0),
-                    hospitalcard(
-                        'assets/hospital1.png', 'name', 'location', 'distance'),
-                    space(15.0, 0.0),
-                    hospitalcard(
-                        'assets/hospital1.png', 'name', 'location', 'distance')
-                  ],
-                ),
-              ),
-              space(double.maxFinite, 65.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Top Clinic`s',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: HexColor('#0866C6')),
-                  ),
-                  Text(
-                    'View All',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: HexColor('#1E5A84')),
-                  ),
-                ],
-              ),
-              space(double.maxFinite, 40.0),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    hospitalcard(
-                        'assets/hospital1.png', 'name', 'location', 'distance'),
-                    space(15.0, 0.0),
-                    hospitalcard(
-                        'assets/hospital1.png', 'name', 'location', 'distance'),
-                    space(15.0, 0.0),
-                    hospitalcard(
-                        'assets/hospital1.png', 'name', 'location', 'distance'),
-                    space(15.0, 0.0),
-                    hospitalcard(
-                        'assets/hospital1.png', 'name', 'location', 'distance')
-                  ],
-                ),
-              )
             ],
           ),
         ),

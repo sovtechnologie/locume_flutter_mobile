@@ -179,11 +179,7 @@ class Start1View extends GetView<Start1Controller> {
                   padding: const EdgeInsets.fromLTRB(40.0, 15.0, 40.0, 5.0),
                   child: GestureDetector(
                     onTap: () {
-<<<<<<< Updated upstream
-                      Get.offAllNamed('/login-option');
-=======
                       Get.toNamed('/bottomnavigation');
->>>>>>> Stashed changes
                     },
                     child: Container(
                       alignment: Alignment.center,
