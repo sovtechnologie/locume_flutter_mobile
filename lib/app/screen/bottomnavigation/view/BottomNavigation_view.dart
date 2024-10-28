@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/home/view/Home_view.dart';
 import 'package:locume/app/screen/hospitals/view/Hospital_view.dart';
 import 'package:locume/app/screen/locums/view/Locum_view.dart';
@@ -15,107 +16,167 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        bottomNavigationBar: ConvexAppBar(
-            curveSize: 120.0,
-            style: TabStyle.fixedCircle,
-            activeColor: HexColor('#0866C6'),
-            shadowColor: HexColor('#0866C6'),
-            color: HexColor('#0866C6'),
-            height: 80.0,
-            initialActiveIndex: 1,
-            backgroundColor: Colors.white,
-            items: [
-              TabItem(
-                  icon: Icon(
-                    size: 25.0,
-                    Icons.home,
-                    color: HexColor('#0866C6'),
-                  ),
-                  title: 'Home',
-                  activeIcon: const CircleAvatar(
-                    radius: 40,
-                    child: Icon(
-                      size: 20,
-                      Icons.home,
-                      color: Colors.white,
-                    ),
-                  )),
-              TabItem(
-                  icon: SvgPicture.asset(
-                    'assets/doctor.svg',
-                    color: HexColor('#0866C6'),
-                  ),
-                  title: 'All Locums',
-                  activeIcon: CircleAvatar(
-                    radius: 40,
-                    child: SvgPicture.asset(
-                      'assets/doctor.svg',
-                      color: Colors.white,
-                    ),
-                  )),
-              TabItem(
-                  icon: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  activeIcon: Transform.translate(
-                    offset: const Offset(0, -5),
-                    child: const Icon(
-                      Icons.minimize_rounded,
-                      color: Colors.white,
-                    ),
-                  )),
-              TabItem(
-                  icon: SvgPicture.asset(
-                    'assets/hospital.svg',
-                    color: HexColor('#0866C6'),
-                  ),
-                  title: 'Home',
-                  activeIcon: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: HexColor('#0866C6'),
-                    child: SvgPicture.asset(
-                      height: 15,
-                      'assets/hospital.svg',
-                      color: Colors.white,
-                    ),
-                  )),
-              TabItem(
-                  icon: Icon(
-                    Icons.person,
-                    color: HexColor('#0866C6'),
-                  ),
-                  title: 'Home',
-                  activeIcon: const CircleAvatar(
-                    radius: 40,
-                    child: Icon(
-                      size: 20,
-                      Icons.person,
-                      color: Colors.white,
-                    ),
-                  )),
-            ],
-            onTap: (int i) {
-              controller.currentStep.value = i;
-            }),
-        body: Obx(
-          () => Column(
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          // Main Content
+          Column(
             children: [
               Expanded(
-                child: IndexedStack(
-                  index: controller.currentStep.value,
-                  children: [
-                    HomeView(),
-                    LocumView(),
-                    ProfileView(),
-                    HospitalView(),
-                    ProfileView()
-                  ],
+                child: Obx(
+                  () => IndexedStack(
+                    index: controller.currentStep.value,
+                    children: [
+                      HomeView(),
+                      LocumView(),
+                      ProfileView(),
+                      HospitalView(),
+                      ProfileView(),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-        ));
+
+          // Custom bottom sheet overlay
+          Obx(
+            () => controller.showBottom.value
+                ? Positioned(
+                    bottom: 0.0, // Position just above the ConvexAppBar
+                    left: 0,
+                    right: 0,
+                    child: AnimatedContainer(
+                      duration: Duration(seconds: 5),
+                      curve: Curves.easeIn,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(30.0),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              spreadRadius: 2,
+                              blurRadius: 8,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              'Add Item',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 10),
+                            // Additional content here
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
+          ),
+        ],
+      ),
+      bottomNavigationBar: ConvexAppBar(
+        curveSize: 120.0,
+        style: TabStyle.fixedCircle,
+        activeColor: HexColor('#0866C6'),
+        shadowColor: HexColor('#C4C4C4'),
+        color: HexColor('#0866C6'),
+        height: 80.0,
+        initialActiveIndex: 1,
+        backgroundColor: white,
+        items: [
+          TabItem(
+            icon: Icon(
+              size: 25.0,
+              Icons.home,
+              color: HexColor('#0866C6'),
+            ),
+            title: 'Home',
+            activeIcon: const CircleAvatar(
+              radius: 40,
+              child: Icon(
+                size: 20,
+                Icons.home,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          TabItem(
+            icon: SvgPicture.asset(
+              'assets/doctor.svg',
+              color: HexColor('#0866C6'),
+            ),
+            title: 'All Locums',
+            activeIcon: CircleAvatar(
+              radius: 40,
+              child: SvgPicture.asset(
+                'assets/doctor.svg',
+                color: Colors.white,
+              ),
+            ),
+          ),
+          TabItem(
+            icon: Obx(() => InkWell(
+                  onTap: () {
+                    controller.showBottom.value = !controller.showBottom.value;
+                  },
+                  child: Center(
+                    child: Icon(
+                      controller.showBottom.value
+                          ? Icons.minimize_rounded
+                          : Icons.add_rounded,
+                      color: Colors.white,
+                    ),
+                  ),
+                )),
+            title: 'Add',
+          ),
+          TabItem(
+            icon: SvgPicture.asset(
+              'assets/hospital.svg',
+              color: HexColor('#0866C6'),
+            ),
+            title: 'Hospitals',
+            activeIcon: CircleAvatar(
+              radius: 20,
+              backgroundColor: HexColor('#0866C6'),
+              child: SvgPicture.asset(
+                height: 15,
+                'assets/hospital.svg',
+                color: Colors.white,
+              ),
+            ),
+          ),
+          TabItem(
+            icon: Icon(
+              Icons.person,
+              color: HexColor('#0866C6'),
+            ),
+            title: 'Profile',
+            activeIcon: const CircleAvatar(
+              radius: 40,
+              child: Icon(
+                size: 20,
+                Icons.person,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+        onTap: (int i) {
+          if (i != 2) {
+            controller.currentStep.value = i;
+          }
+        },
+      ),
+    );
   }
 }

@@ -70,7 +70,7 @@ class LoginView extends GetView<LoginController> {
                           CustomisableButton(
                               text: "Log in",
                               onTap: () {
-                                Get.toNamed('/home');
+                                Get.toNamed('/bottomnavigation');
                               }),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -82,7 +82,7 @@ class LoginView extends GetView<LoginController> {
                                   style: TextStyle(
                                       color: Color.fromRGBO(50, 98, 149, 1),
                                       fontSize: 16,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -94,7 +94,7 @@ class LoginView extends GetView<LoginController> {
                                     style: TextStyle(
                                         color: Colors.red,
                                         fontSize: 16,
-                                        fontWeight: FontWeight.w500),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 )
                               ],

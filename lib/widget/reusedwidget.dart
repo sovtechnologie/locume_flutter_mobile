@@ -52,7 +52,7 @@ specialcard(String svg, String title) {
 doctorcard(String image, String name, String md, String work, String exprience,
     String location) {
   return Container(
-    height: 170,
+    height: 150,
     width: double.maxFinite,
     decoration: BoxDecoration(
       color: HexColor('#FFFFFF'),
@@ -69,19 +69,24 @@ doctorcard(String image, String name, String md, String work, String exprience,
     child: Padding(
       padding: const EdgeInsets.all(15.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-            child: Image.asset(
-              image,
+          SizedBox(
+            height: 150,
+            width: 100,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              child: Image.asset(
+                fit: BoxFit.cover,
+                image,
+              ),
             ),
           ),
-          space(5.0, 0.0),
+          space(10.0, 0.0),
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Flexible(
@@ -95,7 +100,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                         color: HexColor('#326295')),
                   ),
                 ),
-                space(0.0, 10.0),
+                space(0.0, 5.0),
                 Flexible(
                   child: Text(
                     md,
@@ -107,7 +112,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                         color: HexColor('#326295')),
                   ),
                 ),
-                space(0.0, 10.0),
+                space(0.0, 5.0),
                 Flexible(
                   child: Text(
                     work,
@@ -119,7 +124,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                         color: HexColor('#326295')),
                   ),
                 ),
-                space(0.0, 10.0),
+                space(0.0, 5.0),
                 Flexible(
                   child: Text(
                     exprience,
@@ -131,7 +136,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                         color: HexColor('#326295')),
                   ),
                 ),
-                space(0.0, 10.0),
+                space(0.0, 5.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -155,7 +160,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                     ),
                   ],
                 ),
-                space(0.0, 10.0),
+                space(0.0, 5.0),
                 Flexible(
                   child: Text(
                     'View Details',

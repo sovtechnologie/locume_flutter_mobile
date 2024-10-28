@@ -3,20 +3,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 Color primaryColor = HexColor('#0866C6');
-Color secondaryColor = HexColor('#FFFFFF');
-const Color scaffoldBackgroundColor = Color(0xffFFFFFF);
-const Color accentColor = Color(0xffFFFFFF);
-const Color errorColor = Color(0xffEB4456);
-const Color cardColor = Color(0xfff7fbfc);
-const Color introBackgroundColor = Color(0xff000000);
-const Color descriptionColor = Color(0xffF5F5F5);
-const Color titleColor = Color(0xff585858);
-const Color subtitleColor = Color(0xff6f6060);
-const Color whiteTextColor = Color(0xffffffff);
-const Color hintTextColor = Color(0xff6f6060);
-const Color textColor = Color(0xff6f6060);
+Color white = HexColor('#FFFFFF');
+Color secondaryColor = HexColor('#1E5A84');
+Color hintTextColor = HexColor('#9A9A9A');
+Color lightblue = HexColor('#2A7FBA');
+Color textColor = HexColor("#326295");
 
-const MaterialColor kprimary = MaterialColor(
+Color scaffoldBackgroundColor = Color(0xffFFFFFF);
+Color accentColor = Color(0xffFFFFFF);
+Color errorColor = Color(0xffEB4456);
+Color cardColor = Color(0xfff7fbfc);
+Color introBackgroundColor = Color(0xff000000);
+Color descriptionColor = Color(0xffF5F5F5);
+Color titleColor = Color(0xff585858);
+
+Color whiteTextColor = Color(0xffffffff);
+
+MaterialColor kprimary = MaterialColor(
   0xff0E4672,
   <int, Color>{
     50: Color(0xff0A71B4),
@@ -37,7 +40,7 @@ List<BoxShadow> shadow({Color? color}) => [
         color: color?.withOpacity(0.5) ?? primaryColor.withOpacity(0.5),
         spreadRadius: 1,
         blurRadius: 3,
-        offset: const Offset(0, 1),
+        offset: Offset(0, 1),
       ),
     ];
 ThemeData themeData(BuildContext context) {
@@ -48,13 +51,13 @@ ThemeData themeData(BuildContext context) {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     scaffoldBackgroundColor: scaffoldBackgroundColor,
     brightness: Brightness.light,
-    pageTransitionsTheme: const PageTransitionsTheme(
+    pageTransitionsTheme: PageTransitionsTheme(
       builders: {
         TargetPlatform.android: ZoomPageTransitionsBuilder(),
         TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
       },
     ),
-    textSelectionTheme: const TextSelectionThemeData(
+    textSelectionTheme: TextSelectionThemeData(
       cursorColor: whiteTextColor,
     ),
     tabBarTheme: TabBarTheme(
@@ -62,13 +65,13 @@ ThemeData themeData(BuildContext context) {
       unselectedLabelColor: whiteTextColor.withOpacity(0.4),
     ),
     textTheme: baseTextTheme.copyWith(
-      bodyLarge: const TextStyle(color: textColor, inherit: true),
-      bodyMedium: const TextStyle(color: textColor, inherit: true),
-      displayLarge: const TextStyle(color: textColor, inherit: true),
-      displayMedium: const TextStyle(color: textColor, inherit: true),
-      titleMedium: const TextStyle(color: textColor, inherit: true),
-      bodySmall: const TextStyle(color: textColor, inherit: true),
-      labelLarge: const TextStyle(color: textColor, inherit: true),
+      bodyLarge: TextStyle(color: textColor, inherit: true),
+      bodyMedium: TextStyle(color: textColor, inherit: true),
+      displayLarge: TextStyle(color: textColor, inherit: true),
+      displayMedium: TextStyle(color: textColor, inherit: true),
+      titleMedium: TextStyle(color: textColor, inherit: true),
+      bodySmall: TextStyle(color: textColor, inherit: true),
+      labelLarge: TextStyle(color: textColor, inherit: true),
     ),
     focusColor: primaryColor,
     indicatorColor: primaryColor,
@@ -79,8 +82,8 @@ ThemeData themeData(BuildContext context) {
       brightness: Brightness.light,
     ),
     inputDecorationTheme: InputDecorationTheme(
-      hintStyle: const TextStyle(color: hintTextColor, fontSize: 15),
-      enabledBorder: const UnderlineInputBorder(
+      hintStyle: TextStyle(color: hintTextColor, fontSize: 15),
+      enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: textColor),
       ),
       focusedBorder: UnderlineInputBorder(
