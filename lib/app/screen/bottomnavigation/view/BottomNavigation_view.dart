@@ -47,34 +47,38 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                     left: 0,
                     right: 0,
                     child: AnimatedContainer(
-                      duration: Duration(seconds: 5),
+                      duration: const Duration(seconds: 5),
                       curve: Curves.easeIn,
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.5,
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(30.0),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(30.0),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                spreadRadius: 2,
+                                blurRadius: 8,
+                              ),
+                            ],
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              spreadRadius: 2,
-                              blurRadius: 8,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text(
-                              'Add Item',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const SizedBox(height: 10),
-                            // Additional content here
-                          ],
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                'Add Item',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              const SizedBox(height: 10),
+                              // Additional content here
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -100,12 +104,12 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
               color: HexColor('#0866C6'),
             ),
             title: 'Home',
-            activeIcon: const CircleAvatar(
-              radius: 40,
-              child: Icon(
-                size: 20,
+            activeIcon: Transform.translate(
+              offset: const Offset(-3, -10),
+              child: const Icon(
+                size: 30,
                 Icons.home,
-                color: Colors.white,
+                color: Colors.grey,
               ),
             ),
           ),
@@ -115,11 +119,11 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
               color: HexColor('#0866C6'),
             ),
             title: 'All Locums',
-            activeIcon: CircleAvatar(
-              radius: 40,
+            activeIcon: Transform.translate(
+              offset: const Offset(-3, -10),
               child: SvgPicture.asset(
                 'assets/doctor.svg',
-                color: Colors.white,
+                color: Colors.grey,
               ),
             ),
           ),
@@ -129,12 +133,18 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                     controller.showBottom.value = !controller.showBottom.value;
                   },
                   child: Center(
-                    child: Icon(
-                      controller.showBottom.value
-                          ? Icons.minimize_rounded
-                          : Icons.add_rounded,
-                      color: Colors.white,
-                    ),
+                    child: controller.showBottom.value
+                        ? Transform.translate(
+                            offset: Offset(0, -7),
+                            child: const Icon(
+                              Icons.minimize_rounded,
+                              color: Colors.white,
+                            ),
+                          )
+                        : const Icon(
+                            Icons.add_rounded,
+                            color: Colors.white,
+                          ),
                   ),
                 )),
             title: 'Add',
@@ -145,13 +155,11 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
               color: HexColor('#0866C6'),
             ),
             title: 'Hospitals',
-            activeIcon: CircleAvatar(
-              radius: 20,
-              backgroundColor: HexColor('#0866C6'),
+            activeIcon: Transform.translate(
+              offset: const Offset(-3, -10),
               child: SvgPicture.asset(
-                height: 15,
                 'assets/hospital.svg',
-                color: Colors.white,
+                color: Colors.grey,
               ),
             ),
           ),
@@ -161,12 +169,11 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
               color: HexColor('#0866C6'),
             ),
             title: 'Profile',
-            activeIcon: const CircleAvatar(
-              radius: 40,
-              child: Icon(
-                size: 20,
+            activeIcon: Transform.translate(
+              offset: const Offset(-3, -10),
+              child: const Icon(
                 Icons.person,
-                color: Colors.white,
+                color: Colors.grey,
               ),
             ),
           ),
