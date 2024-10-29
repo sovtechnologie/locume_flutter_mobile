@@ -82,7 +82,8 @@ ThemeData themeData(BuildContext context) {
       brightness: Brightness.light,
     ),
     inputDecorationTheme: InputDecorationTheme(
-      hintStyle: TextStyle(color: hintTextColor, fontSize: 15),
+      hintStyle: TextStyle(
+          color: hintTextColor, fontSize: 14, fontWeight: FontWeight.w400),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: textColor),
       ),

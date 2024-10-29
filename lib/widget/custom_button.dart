@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:locume/Theme/theme.dart';
 
 class CustomisableButton extends StatelessWidget {
   final String text;
@@ -30,7 +31,7 @@ class CustomisableButton extends StatelessWidget {
           onPressed: onTap,
           style: ElevatedButton.styleFrom(
             foregroundColor: textColor,
-            backgroundColor: color,
+            backgroundColor: primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             ),

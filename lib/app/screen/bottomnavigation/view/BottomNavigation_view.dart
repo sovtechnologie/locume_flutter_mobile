@@ -8,6 +8,8 @@ import 'package:locume/app/screen/home/view/Home_view.dart';
 import 'package:locume/app/screen/hospitals/view/Hospital_view.dart';
 import 'package:locume/app/screen/locums/view/Locum_view.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
+import 'package:locume/widget/custom_button.dart';
+import 'package:locume/widget/custom_textField.dart';
 import '../controller/BottomNavigation_Controller.dart';
 
 class BottomnavigationView extends GetView<BottomnavigationController> {
@@ -43,7 +45,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
           Obx(
             () => controller.showBottom.value
                 ? Positioned(
-                    bottom: 0.0, // Position just above the ConvexAppBar
+                    bottom: 0.0,
                     left: 0,
                     right: 0,
                     child: AnimatedContainer(
@@ -69,14 +71,383 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                             ],
                           ),
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(
-                                'Add Item',
-                                style: Theme.of(context).textTheme.titleLarge,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 15, bottom: 10),
+                                child: Text(
+                                  "Hospital/Clinic Name",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
                               ),
-                              const SizedBox(height: 10),
-                              // Additional content here
+                              TextFormField(
+                                controller: controller.hospitalname,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: "Hospital/Clinic Name",
+                                  fillColor:
+                                      const Color.fromRGBO(248, 247, 247, 1),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color.fromRGBO(220, 215, 215, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: primaryColor,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 0,
+                                    horizontal: 16,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 15, bottom: 10),
+                                child: Text(
+                                  "Rate/Range",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: DropdownButtonFormField<String>(
+                                      items: ["Option 1", "Option 2"]
+                                          .map((String value) =>
+                                              DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(value),
+                                              ))
+                                          .toList(),
+                                      onChanged: (String? newValue) {
+                                        // Handle dropdown selection
+                                      },
+                                      decoration: InputDecoration(
+                                        fillColor: const Color.fromRGBO(
+                                            248, 247, 247, 1),
+                                        filled: true,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color.fromRGBO(
+                                                220, 215, 215, 1),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: primaryColor,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                          vertical: 0,
+                                          horizontal: 16,
+                                        ),
+                                      ),
+                                      hint: const Center(
+                                        child: Text(
+                                          "Select Rate", // Centered hint text
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors
+                                                .grey, // Customize color here
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Text(
+                                      "-",
+                                      style: TextStyle(fontSize: 30),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: DropdownButtonFormField<String>(
+                                      items: ["Option 1", "Option 2"]
+                                          .map((String value) =>
+                                              DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(value),
+                                              ))
+                                          .toList(),
+                                      onChanged: (String? newValue) {
+                                        // Handle dropdown selection
+                                      },
+                                      decoration: InputDecoration(
+                                        fillColor: const Color.fromRGBO(
+                                            248, 247, 247, 1),
+                                        filled: true,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color.fromRGBO(
+                                                220, 215, 215, 1),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: primaryColor,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                          vertical: 0,
+                                          horizontal: 16,
+                                        ),
+                                      ),
+                                      hint: const Center(
+                                        child: Text(
+                                          "Select Rate", // Centered hint text
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors
+                                                .grey, // Customize color here
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 15, bottom: 10),
+                                          child: Text(
+                                            "Specified category",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
+                                        ),
+                                        DropdownButtonFormField<String>(
+                                          items: ["Option 1", "Option 2"]
+                                              .map((String value) =>
+                                                  DropdownMenuItem<String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  ))
+                                              .toList(),
+                                          onChanged: (String? newValue) {
+                                            // Handle dropdown selection
+                                          },
+                                          decoration: InputDecoration(
+                                            fillColor: const Color.fromRGBO(
+                                                248, 247, 247, 1),
+                                            filled: true,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                color: Color.fromRGBO(
+                                                    220, 215, 215, 1),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: primaryColor,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                              vertical: 0,
+                                              horizontal: 16,
+                                            ),
+                                          ),
+                                          hint: const Center(
+                                            child: Text(
+                                              "Emergancy Med", // Centered hint text
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors
+                                                    .grey, // Customize color here
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 15, bottom: 10),
+                                          child: Text(
+                                            "Shift",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
+                                        ),
+                                        DropdownButtonFormField<String>(
+                                          items: ["Option 1", "Option 2"]
+                                              .map((String value) =>
+                                                  DropdownMenuItem<String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  ))
+                                              .toList(),
+                                          onChanged: (String? newValue) {
+                                            // Handle dropdown selection
+                                          },
+                                          decoration: InputDecoration(
+                                            fillColor: const Color.fromRGBO(
+                                                248, 247, 247, 1),
+                                            filled: true,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                color: Color.fromRGBO(
+                                                    220, 215, 215, 1),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: primaryColor,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                              vertical: 0,
+                                              horizontal: 16,
+                                            ),
+                                          ),
+                                          hint: const Center(
+                                            child: Text(
+                                              "Your Shift", // Centered hint text
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors
+                                                    .grey, // Customize color here
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Radio<String>(
+                                        value: "Schedule",
+                                        groupValue:
+                                            controller.selectedType.value,
+                                        onChanged: (value) {
+                                          controller.selectedType.value =
+                                              value!;
+                                        },
+                                        activeColor:
+                                            primaryColor, // primary color when selected
+                                      ),
+                                      Text(
+                                        "Schedule",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: controller
+                                                        .selectedType.value ==
+                                                    "Schedule"
+                                                ? primaryColor
+                                                : secondaryColor // Text color based on selection
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Radio<String>(
+                                        value: "Emergency",
+                                        groupValue:
+                                            controller.selectedType.value,
+                                        onChanged: (value) {
+                                          controller.selectedType.value =
+                                              value!;
+                                        },
+                                        activeColor:
+                                            primaryColor, // primary color when selected
+                                      ),
+                                      Text(
+                                        "Emergency",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: controller
+                                                      .selectedType.value ==
+                                                  "Emergency"
+                                              ? primaryColor
+                                              : secondaryColor, // Text color based on selection
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      controller.showBottom.value = false;
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: white,
+                                      backgroundColor: primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                    child: Text("Book Now")),
+                              )
                             ],
                           ),
                         ),
@@ -90,41 +461,34 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
       bottomNavigationBar: ConvexAppBar(
         curveSize: 120.0,
         style: TabStyle.fixedCircle,
-        activeColor: HexColor('#0866C6'),
+        activeColor: primaryColor,
         shadowColor: HexColor('#C4C4C4'),
-        color: HexColor('#0866C6'),
+        color: Colors.grey,
         height: 80.0,
         initialActiveIndex: 1,
         backgroundColor: white,
         items: [
           TabItem(
-            icon: Icon(
+            icon: const Icon(
               size: 25.0,
               Icons.home,
-              color: HexColor('#0866C6'),
+              color: Colors.grey,
             ),
             title: 'Home',
             activeIcon: Transform.translate(
-              offset: const Offset(-3, -10),
-              child: const Icon(
-                size: 30,
-                Icons.home,
-                color: Colors.grey,
-              ),
+              offset: Offset(-2, -5),
+              child: Icon(size: 30, Icons.home, color: primaryColor),
             ),
           ),
           TabItem(
             icon: SvgPicture.asset(
               'assets/doctor.svg',
-              color: HexColor('#0866C6'),
+              color: Colors.grey,
             ),
             title: 'All Locums',
             activeIcon: Transform.translate(
-              offset: const Offset(-3, -10),
-              child: SvgPicture.asset(
-                'assets/doctor.svg',
-                color: Colors.grey,
-              ),
+              offset: const Offset(0, -5),
+              child: SvgPicture.asset('assets/doctor.svg', color: primaryColor),
             ),
           ),
           TabItem(
@@ -132,19 +496,23 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                   onTap: () {
                     controller.showBottom.value = !controller.showBottom.value;
                   },
-                  child: Center(
-                    child: controller.showBottom.value
-                        ? Transform.translate(
-                            offset: Offset(0, -7),
-                            child: const Icon(
-                              Icons.minimize_rounded,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: primaryColor, shape: BoxShape.circle),
+                    child: Center(
+                      child: controller.showBottom.value
+                          ? Transform.translate(
+                              offset: Offset(0, -7),
+                              child: const Icon(
+                                Icons.minimize_rounded,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Icon(
+                              Icons.add_rounded,
                               color: Colors.white,
                             ),
-                          )
-                        : const Icon(
-                            Icons.add_rounded,
-                            color: Colors.white,
-                          ),
+                    ),
                   ),
                 )),
             title: 'Add',
@@ -152,28 +520,28 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
           TabItem(
             icon: SvgPicture.asset(
               'assets/hospital.svg',
-              color: HexColor('#0866C6'),
+              color: Colors.grey,
             ),
             title: 'Hospitals',
             activeIcon: Transform.translate(
-              offset: const Offset(-3, -10),
+              offset: const Offset(0, -5),
               child: SvgPicture.asset(
                 'assets/hospital.svg',
-                color: Colors.grey,
+                color: primaryColor,
               ),
             ),
           ),
           TabItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.person,
-              color: HexColor('#0866C6'),
+              color: Colors.grey,
             ),
             title: 'Profile',
             activeIcon: Transform.translate(
-              offset: const Offset(-3, -10),
-              child: const Icon(
+              offset: const Offset(0, -5),
+              child: Icon(
                 Icons.person,
-                color: Colors.grey,
+                color: primaryColor,
               ),
             ),
           ),
