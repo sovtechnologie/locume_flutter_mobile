@@ -3,6 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../Theme/textTheme.dart';
+import '../Theme/theme.dart';
+
 space(wid, hit) {
   return SizedBox(
     width: wid,
@@ -89,7 +92,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Flexible(
+                Expanded(
                   child: Text(
                     name,
                     overflow: TextOverflow.ellipsis,
@@ -101,7 +104,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                   ),
                 ),
                 space(0.0, 5.0),
-                Flexible(
+                Expanded(
                   child: Text(
                     md,
                     overflow: TextOverflow.ellipsis,
@@ -113,7 +116,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                   ),
                 ),
                 space(0.0, 5.0),
-                Flexible(
+                Expanded(
                   child: Text(
                     work,
                     overflow: TextOverflow.ellipsis,
@@ -125,7 +128,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                   ),
                 ),
                 space(0.0, 5.0),
-                Flexible(
+                Expanded(
                   child: Text(
                     exprience,
                     overflow: TextOverflow.ellipsis,
@@ -147,7 +150,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                         size: 10,
                       ),
                     ),
-                    Flexible(
+                    Expanded(
                       child: Text(
                         location,
                         overflow: TextOverflow.ellipsis,
@@ -161,7 +164,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                   ],
                 ),
                 space(0.0, 5.0),
-                Flexible(
+                Expanded(
                   child: Text(
                     'View Details',
                     overflow: TextOverflow.ellipsis,
@@ -231,7 +234,7 @@ hospitalcard(String image, String name, String location, String distance) {
             ),
           ),
           space(0.0, 10.0),
-          Flexible(
+          Expanded(
             child: Text(
               name,
               overflow: TextOverflow.ellipsis,
@@ -254,7 +257,7 @@ hospitalcard(String image, String name, String location, String distance) {
                 ),
               ),
               space(5.0, 0.0),
-              Flexible(
+              Expanded(
                 child: Text(
                   location,
                   overflow: TextOverflow.ellipsis,
@@ -274,7 +277,128 @@ hospitalcard(String image, String name, String location, String distance) {
             children: [
               SizedBox(child: SvgPicture.asset('assets/distancesvg.svg')),
               space(5.0, 0.0),
-              Flexible(
+              Expanded(
+                child: Text(
+                  distance,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
+                      color: HexColor('#333333')),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+locationbuttonsandfilter(String location) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      SizedBox(
+        child: Row(
+          children: [
+            Icon(
+              Icons.location_on_outlined,
+              color: primaryColor,
+            ),
+            Text(
+              location,
+              style: MyTextTheme.poppinsSubtitle(
+                fontSize: 14,
+              ),
+            )
+          ],
+        ),
+      ),
+      SvgPicture.asset('assets/filter.svg')
+    ],
+  );
+}
+
+hospitalfullcard(String image, String name, String location, String distance) {
+  return Container(
+    width: double.maxFinite,
+    decoration: BoxDecoration(
+      color: HexColor('#FFFFFF'),
+      boxShadow: [
+        BoxShadow(
+            offset: const Offset(0, 2),
+            color: HexColor('#326295').withOpacity(0.15),
+            blurRadius: 8.0,
+            spreadRadius: 1,
+            blurStyle: BlurStyle.normal)
+      ],
+      borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 150,
+            width: double.maxFinite,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              child: Image.asset(
+                fit: BoxFit.cover,
+                image,
+              ),
+            ),
+          ),
+          space(0.0, 10.0),
+          Expanded(
+            child: Text(
+              name,
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+              style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12,
+                  color: HexColor('#000000')),
+            ),
+          ),
+          space(0.0, 9.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                child: Icon(
+                  Icons.location_on_sharp,
+                  size: 10,
+                ),
+              ),
+              space(5.0, 0.0),
+              Expanded(
+                child: Text(
+                  location,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
+                      color: HexColor('#333333')),
+                ),
+              ),
+            ],
+          ),
+          space(0.0, 10.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(child: SvgPicture.asset('assets/distancesvg.svg')),
+              space(5.0, 0.0),
+              Expanded(
                 child: Text(
                   distance,
                   overflow: TextOverflow.ellipsis,

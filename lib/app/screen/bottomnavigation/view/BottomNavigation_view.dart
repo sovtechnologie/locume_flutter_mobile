@@ -465,7 +465,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
         shadowColor: HexColor('#C4C4C4'),
         color: Colors.grey,
         height: 80.0,
-        initialActiveIndex: 1,
+        initialActiveIndex: 0,
         backgroundColor: white,
         items: [
           TabItem(
