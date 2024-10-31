@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:locume/app/screen/allSpecialities/binding/specialities_binding.dart';
+import 'package:locume/app/screen/allSpecialities/view/specialities_view.dart';
 import 'package:locume/app/screen/bottomnavigation/binding/BottomNavigation_Binding.dart';
 import 'package:locume/app/screen/bottomnavigation/view/BottomNavigation_view.dart';
 import 'package:locume/app/screen/getstarted/binding/getstart_binding.dart';
@@ -65,5 +67,9 @@ class AppPages {
         name: _Paths.BottomNavigation,
         page: () => BottomnavigationView(),
         binding: BottomnavigationBinding()),
+    GetPage(
+        name: _Paths.specialities,
+        page: () => SpecialitiesView(),
+        binding: SpecialitiesBinding())
   ];
 }

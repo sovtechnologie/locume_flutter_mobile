@@ -47,11 +47,13 @@ ThemeData themeData(BuildContext context) {
   final baseTextTheme = GoogleFonts.poppinsTextTheme();
 
   return ThemeData(
+    appBarTheme:
+        AppBarTheme(backgroundColor: primaryColor, foregroundColor: white),
     primaryColor: primaryColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
     scaffoldBackgroundColor: scaffoldBackgroundColor,
     brightness: Brightness.light,
-    pageTransitionsTheme: PageTransitionsTheme(
+    pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
         TargetPlatform.android: ZoomPageTransitionsBuilder(),
         TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),

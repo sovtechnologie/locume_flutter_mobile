@@ -13,6 +13,7 @@ abstract class Routes {
   static const Hospital = _Paths.Hospital;
   static const Profile = _Paths.Profile;
   static const Locums = _Paths.Locums;
+  static const Specialities = _Paths.specialities;
 }
 
 abstract class _Paths {
@@ -26,4 +27,5 @@ abstract class _Paths {
   static const Hospital = '/hospital';
   static const Profile = '/profile';
   static const Locums = '/locums';
+  static const specialities = '/specialities';
 }
