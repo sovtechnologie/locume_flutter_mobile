@@ -16,6 +16,7 @@ import 'package:locume/app/screen/login/signup/binding/login_binding.dart';
 import 'package:locume/app/screen/login/signup/view/login_option.dart';
 import 'package:locume/app/screen/login/signup/view/login_view.dart';
 import 'package:locume/app/screen/login/signup/view/reqister_view.dart';
+import 'package:locume/app/screen/notification/view/notification_view.dart';
 import 'package:locume/app/screen/profile/binding/Profile_Binding.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
 
@@ -76,6 +77,7 @@ class AppPages {
     GetPage(
         name: _Paths.clinics,
         page: () => ClinicsView(),
-        binding: ClinicsBinding())
+        binding: ClinicsBinding()),
+    GetPage(name: _Paths.Notification, page: () => NotificationView())
   ];
 }

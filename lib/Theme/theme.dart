@@ -47,6 +47,17 @@ ThemeData themeData(BuildContext context) {
   final baseTextTheme = GoogleFonts.poppinsTextTheme();
 
   return ThemeData(
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: WidgetStateProperty.all(white),
+        backgroundColor: WidgetStateProperty.all(primaryColor),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+    ),
     appBarTheme:
         AppBarTheme(backgroundColor: primaryColor, foregroundColor: white),
     primaryColor: primaryColor,

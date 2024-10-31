@@ -16,6 +16,7 @@ abstract class Routes {
   static const Specialities = _Paths.specialities;
   static const Clinics = _Paths.clinics;
   static const Privacy = _Paths.privacy;
+  static const Notification = _Paths.Notification;
 }
 
 abstract class _Paths {
@@ -32,4 +33,5 @@ abstract class _Paths {
   static const specialities = '/specialities';
   static const clinics = '/clinics';
   static const privacy = '/privacy';
+  static const Notification = '/notification';
 }

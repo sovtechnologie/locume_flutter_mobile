@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:locume/app/screen/statics/about.dart';
+import 'package:locume/app/screen/statics/contact.dart';
 import 'package:locume/widget/reusedwidget.dart';
 
 import '../controller/Home_controller.dart';
@@ -15,29 +17,72 @@ class HomeView extends GetView<HomeControlller> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: false,
-        leading: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.menu_rounded,
-              color: HexColor('#0866C6'),
-            )),
-        title: Text(
-          'hi, Christopher\ngood morning',
-          style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              color: HexColor('#174666')),
-        ),
-        actions: [
-          Transform.translate(
-              offset: Offset(-15, 0),
-              child: Icon(
-                Icons.notifications_active_rounded,
+          backgroundColor: Colors.white,
+          centerTitle: false,
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: Icon(
+                Icons.menu_rounded,
                 color: HexColor('#0866C6'),
-              ))
-        ],
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+          ),
+          title: Text(
+            'hi, Christopher\ngood morning',
+            style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                color: HexColor('#174666')),
+          ),
+          actions: [
+            InkWell(
+              onTap: () {
+                Get.toNamed('/notification');
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.all(8.0), // Adjust the padding as needed
+                child: Transform.translate(
+                  offset: const Offset(-15, 0),
+                  child: Icon(
+                    Icons.notifications_active_rounded,
+                    color: HexColor('#0866C6'),
+                  ),
+                ),
+              ),
+            ),
+          ]),
+      drawer: Drawer(
+        child: Material(
+          color: Colors.white,
+          borderRadius: BorderRadius.zero, // Remove rounded corners
+          child: SafeArea(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                ListTile(
+                  title: Text('About us'),
+                  onTap: () {
+                    Get.to(AboutUs());
+                  },
+                ),
+                ListTile(
+                  title: Text('Contact us'),
+                  onTap: () {
+                    Get.to(ContactUs());
+                  },
+                ),
+                ListTile(
+                  title: Text('Privacy policy'),
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
