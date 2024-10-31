@@ -255,12 +255,17 @@ class HomeView extends GetView<HomeControlller> {
                         fontWeight: FontWeight.w600,
                         color: HexColor('#0866C6')),
                   ),
-                  Text(
-                    'View All',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: HexColor('#1E5A84')),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed('/clinics');
+                    },
+                    child: Text(
+                      'View All',
+                      style: GoogleFonts.montserrat(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: HexColor('#1E5A84')),
+                    ),
                   ),
                 ],
               ),

@@ -7,6 +7,7 @@ import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/home/view/Home_view.dart';
 import 'package:locume/app/screen/hospitals/view/Hospital_view.dart';
 import 'package:locume/app/screen/locums/view/Locum_view.dart';
+import 'package:locume/app/screen/privacypolicy/view/Privacy_view.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
 import 'package:locume/widget/custom_button.dart';
 import 'package:locume/widget/custom_textField.dart';
@@ -33,7 +34,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                       LocumView(),
                       ProfileView(),
                       HospitalView(),
-                      ProfileView(),
+                      PrivacyView(),
                     ],
                   ),
                 ),

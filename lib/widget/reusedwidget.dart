@@ -215,7 +215,7 @@ hospitalcard(String image, String name, String location, String distance) {
   return Container(
     height: 200,
     width: double.maxFinite,
-    constraints: BoxConstraints(
+    constraints: const BoxConstraints(
         minHeight: 200, maxHeight: 220, minWidth: 220, maxWidth: 250),
     decoration: BoxDecoration(
       color: HexColor('#F0F3F5'),
@@ -322,97 +322,193 @@ locationbuttonsandfilter(String location) {
   );
 }
 
-hospitalfullcard(String image, String name, String location, String distance) {
-  return Container(
-    width: double.maxFinite,
-    decoration: BoxDecoration(
-      color: HexColor('#FFFFFF'),
-      boxShadow: [
-        BoxShadow(
-            offset: const Offset(0, 2),
-            color: HexColor('#326295').withOpacity(0.15),
-            blurRadius: 8.0,
-            spreadRadius: 1,
-            blurStyle: BlurStyle.normal)
-      ],
-      borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 150,
-            width: double.maxFinite,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              child: Image.asset(
-                fit: BoxFit.cover,
-                image,
-              ),
-            ),
-          ),
-          space(0.0, 10.0),
-          Expanded(
-            child: Text(
-              name,
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
-              style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12,
-                  color: HexColor('#000000')),
-            ),
-          ),
-          space(0.0, 9.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                child: Icon(
-                  Icons.location_on_sharp,
-                  size: 10,
-                ),
-              ),
-              space(5.0, 0.0),
-              Expanded(
-                child: Text(
-                  location,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 10,
-                      color: HexColor('#333333')),
-                ),
-              ),
-            ],
-          ),
-          space(0.0, 10.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(child: SvgPicture.asset('assets/distancesvg.svg')),
-              space(5.0, 0.0),
-              Expanded(
-                child: Text(
-                  distance,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 10,
-                      color: HexColor('#333333')),
-                ),
-              ),
-            ],
-          ),
+Widget hospitalfullcard(String image, String name, String hospitalspecialty,
+    String location, String distance, String doctors, String specialties) {
+  return Padding(
+    padding: const EdgeInsets.all(1.0),
+    child: Container(
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        color: HexColor('#FFFFFF'),
+        boxShadow: [
+          BoxShadow(
+              offset: const Offset(0, 2),
+              color: HexColor('#326295').withOpacity(0.15),
+              blurRadius: 8.0,
+              spreadRadius: 1,
+              blurStyle: BlurStyle.normal)
         ],
+        borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 200, // Fixed height for the image
+              width: double.maxFinite,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            space(0.0, 10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        overflow: TextOverflow.visible,
+                        softWrap: true,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+                      space(0.0, 2.0),
+                      Text(
+                        hospitalspecialty,
+                        overflow: TextOverflow.visible,
+                        softWrap: true,
+                        style: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    const Icon(
+                      Icons.star_rate_rounded,
+                      // size: 15,
+                      color: Colors.amberAccent,
+                    ),
+                    Text(
+                      '4.5',
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 10,
+                          color: HexColor('#333333')),
+                    ),
+                    Text(
+                      'Rating',
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 7,
+                          color: HexColor('#2A7FBA')),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            space(0.0, 9.0),
+            Row(
+              children: [
+                const Icon(Icons.location_on_sharp, size: 20),
+                space(5.0, 5.0),
+                Flexible(
+                  child: Text(
+                    location,
+                    overflow: TextOverflow.visible,
+                    softWrap: true,
+                    style: const TextStyle(
+                        fontSize: 10, fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ],
+            ),
+            space(0.0, 10.0),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/distancesvg.svg',
+                  height: 15.0,
+                ),
+                space(7.0, 5.0),
+                Flexible(
+                  child: Text(
+                    distance,
+                    overflow: TextOverflow.visible,
+                    softWrap: true,
+                    style: const TextStyle(
+                        fontSize: 10, fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ],
+            ),
+            space(0.0, 10.0),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/distancesvg.svg',
+                  height: 15.0,
+                ),
+                space(7.0, 5.0),
+                Flexible(
+                  child: Text(
+                    doctors,
+                    overflow: TextOverflow.visible,
+                    softWrap: true,
+                    style: const TextStyle(
+                        fontSize: 10, fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ],
+            ),
+            space(0.0, 10.0),
+            Row(
+              children: [
+                const Icon(
+                  Icons.savings,
+                  size: 20,
+                ),
+                space(5.0, 5.0),
+                Flexible(
+                  child: Text(
+                    specialties,
+                    overflow: TextOverflow.visible,
+                    softWrap: true,
+                    style: const TextStyle(
+                        fontSize: 10, fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     ),
+  );
+}
+
+policy(String title, String body) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        title,
+        overflow: TextOverflow.visible,
+        softWrap: true,
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+      ),
+      space(0.0, 20.0),
+      Text(
+        body,
+        overflow: TextOverflow.visible,
+        softWrap: true,
+        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+      ),
+    ],
   );
 }

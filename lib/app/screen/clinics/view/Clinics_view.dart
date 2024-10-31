@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../Theme/theme.dart';
 import '../../../../widget/reusedwidget.dart';
-import '../controller/Locum_Controller.dart';
+import '../controller/Clinics_Controller.dart';
 
-class LocumView extends GetView<LocumController> {
-  LocumView({super.key}) {
-    // Instantiate the controller here
-    Get.put(LocumController());
+class ClinicsView extends GetView<ClinicsController> {
+  ClinicsView({super.key}) {
+    Get.put(ClinicsController());
   }
 
   @override
@@ -21,8 +18,8 @@ class LocumView extends GetView<LocumController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: const Text(
-          'All Locum’s ',
+        title: Text(
+          'All Clinics',
         ),
         actions: [
           Transform.translate(
@@ -64,27 +61,19 @@ class LocumView extends GetView<LocumController> {
                   ),
                   enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15.0),
-                      )),
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
                   disabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15.0),
-                      )),
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15.0),
-                      )),
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15.0),
-                      )),
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
                   fillColor: HexColor("#FFFFFF"),
                   filled: true,
-                  hintText: "Text",
+                  hintText: "Search",
                   hintStyle: GoogleFonts.inter(
                     fontSize: 12,
                     color: HexColor('#AAAAAA').withOpacity(0.7),
@@ -96,7 +85,7 @@ class LocumView extends GetView<LocumController> {
             space(double.maxFinite, 20.0),
             locationbuttonsandfilter('Mumbai'),
             space(double.maxFinite, 10.0),
-            controller.data.isEmpty
+            controller.hospitals.isEmpty
                 ? Center(
                     child: SizedBox(
                       width: 50,
@@ -108,31 +97,39 @@ class LocumView extends GetView<LocumController> {
                     ),
                   )
                 : Expanded(
-                    // Use Expanded to let ListView fill the available space
+                    // Use Expanded to manage height constraints
                     child: ListView.builder(
                       controller: controller.scrollController,
-                      itemCount: controller.data.length,
+                      itemCount: controller.hospitals.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding:
                               const EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 0.0),
                           child: Column(
                             children: [
-                              doctorcard(
-                                controller.data[index]['image'].toString(),
-                                controller.data[index]['name'].toString(),
-                                controller.data[index]['md'].toString(),
-                                controller.data[index]['work'].toString(),
-                                controller.data[index]['experience'].toString(),
-                                controller.data[index]['location'].toString(),
-                              ),
+                              hospitalfullcard(
+                                  controller.hospitals[index]['image']
+                                      .toString(),
+                                  controller.hospitals[index]['name']
+                                      .toString(),
+                                  controller.hospitals[index]
+                                          ['hospitalspecialty']
+                                      .toString(),
+                                  controller.hospitals[index]['location']
+                                      .toString(),
+                                  controller.hospitals[index]['distance']
+                                      .toString(),
+                                  controller.hospitals[index]['doctors']
+                                      .toString(),
+                                  controller.hospitals[index]['specialties']
+                                      .toString()),
                               space(double.maxFinite, 20.0),
                             ],
                           ),
                         );
                       },
                     ),
-                  )
+                  ),
           ],
         ),
       ),

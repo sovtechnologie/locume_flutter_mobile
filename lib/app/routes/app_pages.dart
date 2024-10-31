@@ -4,6 +4,7 @@ import 'package:locume/app/screen/allSpecialities/binding/specialities_binding.d
 import 'package:locume/app/screen/allSpecialities/view/specialities_view.dart';
 import 'package:locume/app/screen/bottomnavigation/binding/BottomNavigation_Binding.dart';
 import 'package:locume/app/screen/bottomnavigation/view/BottomNavigation_view.dart';
+import 'package:locume/app/screen/clinics/binding/Clinics_Binding.dart';
 import 'package:locume/app/screen/getstarted/binding/getstart_binding.dart';
 import 'package:locume/app/screen/home/binding/Home_binding.dart';
 import 'package:locume/app/screen/home/view/Home_view.dart';
@@ -18,6 +19,7 @@ import 'package:locume/app/screen/login/signup/view/reqister_view.dart';
 import 'package:locume/app/screen/profile/binding/Profile_Binding.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
 
+import '../screen/clinics/view/Clinics_view.dart';
 import '../screen/getstarted/view/getstart_view.dart';
 
 part 'app_routes.dart';
@@ -70,6 +72,10 @@ class AppPages {
     GetPage(
         name: _Paths.specialities,
         page: () => SpecialitiesView(),
-        binding: SpecialitiesBinding())
+        binding: SpecialitiesBinding()),
+    GetPage(
+        name: _Paths.clinics,
+        page: () => ClinicsView(),
+        binding: ClinicsBinding())
   ];
 }
