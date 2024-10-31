@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HospitalController extends GetxController {
+class ClinicsController extends GetxController {
   ScrollController scrollController = ScrollController();
 
 // Define `data` as an observable list

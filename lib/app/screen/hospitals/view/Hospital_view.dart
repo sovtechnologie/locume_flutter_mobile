@@ -86,8 +86,8 @@ class HospitalView extends GetView<HospitalController> {
             ),
             space(double.maxFinite, 20.0),
             locationbuttonsandfilter('Mumbai'),
-            space(double.maxFinite, 35.0),
-            controller.data.isEmpty
+            space(double.maxFinite, 10.0),
+            controller.hospitals.isEmpty
                 ? Center(
                     child: SizedBox(
                       width: 50,
@@ -99,9 +99,10 @@ class HospitalView extends GetView<HospitalController> {
                     ),
                   )
                 : Expanded(
+                    // Use Expanded to manage height constraints
                     child: ListView.builder(
                       controller: controller.scrollController,
-                      itemCount: controller.data.length,
+                      itemCount: controller.hospitals.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding:
@@ -109,11 +110,21 @@ class HospitalView extends GetView<HospitalController> {
                           child: Column(
                             children: [
                               hospitalfullcard(
-                                controller.data[index]['image'].toString(),
-                                controller.data[index]['name'].toString(),
-                                controller.data[index]['location'].toString(),
-                                controller.data[index]['distance'].toString(),
-                              ),
+                                  controller.hospitals[index]['image']
+                                      .toString(),
+                                  controller.hospitals[index]['name']
+                                      .toString(),
+                                  controller.hospitals[index]
+                                          ['hospitalspecialty']
+                                      .toString(),
+                                  controller.hospitals[index]['location']
+                                      .toString(),
+                                  controller.hospitals[index]['distance']
+                                      .toString(),
+                                  controller.hospitals[index]['doctors']
+                                      .toString(),
+                                  controller.hospitals[index]['specialties']
+                                      .toString()),
                               space(double.maxFinite, 20.0),
                             ],
                           ),
