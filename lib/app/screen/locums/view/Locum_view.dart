@@ -21,11 +21,8 @@ class LocumView extends GetView<LocumController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        centerTitle: true,
-        title: Text(
+        title: const Text(
           'All Locum’s ',
-          style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w600, fontSize: 22, color: Colors.white),
         ),
         actions: [
           Transform.translate(

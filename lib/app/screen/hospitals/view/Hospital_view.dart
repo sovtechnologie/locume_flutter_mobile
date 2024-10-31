@@ -20,11 +20,8 @@ class HospitalView extends GetView<HospitalController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        centerTitle: true,
         title: Text(
           'All Hospitals',
-          style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w600, fontSize: 22, color: Colors.white),
         ),
         actions: [
           Transform.translate(
