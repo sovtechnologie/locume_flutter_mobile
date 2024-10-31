@@ -16,7 +16,10 @@ import 'package:locume/app/screen/login/signup/binding/login_binding.dart';
 import 'package:locume/app/screen/login/signup/view/login_option.dart';
 import 'package:locume/app/screen/login/signup/view/login_view.dart';
 import 'package:locume/app/screen/login/signup/view/reqister_view.dart';
+import 'package:locume/app/screen/notification/binding/notification_binding.dart';
 import 'package:locume/app/screen/notification/view/notification_view.dart';
+import 'package:locume/app/screen/privacypolicy/binding/Privacy_Binding.dart';
+import 'package:locume/app/screen/privacypolicy/view/Privacy_view.dart';
 import 'package:locume/app/screen/profile/binding/Profile_Binding.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
 
@@ -78,6 +81,13 @@ class AppPages {
         name: _Paths.clinics,
         page: () => ClinicsView(),
         binding: ClinicsBinding()),
-    GetPage(name: _Paths.Notification, page: () => NotificationView())
+    GetPage(
+        name: _Paths.Notification,
+        page: () => NotificationView(),
+        binding: NotificationBinding()),
+    GetPage(
+        name: _Paths.privacy,
+        page: () => PrivacyView(),
+        binding: PrivacyBinding())
   ];
 }

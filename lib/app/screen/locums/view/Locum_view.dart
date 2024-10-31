@@ -20,9 +20,12 @@ class LocumView extends GetView<LocumController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryColor,
-        title: const Text(
-          'All Locum’s ',
+        automaticallyImplyLeading: false,
+        title: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.0),
+          child: Text(
+            'Locum’s ',
+          ),
         ),
         actions: [
           Transform.translate(

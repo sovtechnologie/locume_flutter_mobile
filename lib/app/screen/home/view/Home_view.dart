@@ -77,7 +77,9 @@ class HomeView extends GetView<HomeControlller> {
                 ),
                 ListTile(
                   title: Text('Privacy policy'),
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed('/privacy');
+                  },
                 ),
               ],
             ),

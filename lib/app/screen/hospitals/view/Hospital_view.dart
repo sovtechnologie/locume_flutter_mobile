@@ -19,6 +19,7 @@ class HospitalView extends GetView<HospitalController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: primaryColor,
         title: Text(
           'All Hospitals',

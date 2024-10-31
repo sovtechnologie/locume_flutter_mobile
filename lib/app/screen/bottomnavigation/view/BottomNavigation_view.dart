@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -18,6 +19,9 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: white,
+    ));
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -465,7 +469,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
         activeColor: primaryColor,
         shadowColor: HexColor('#C4C4C4'),
         color: Colors.grey,
-        height: 80.0,
+        height: 75.0,
         initialActiveIndex: 0,
         backgroundColor: white,
         items: [
@@ -486,7 +490,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
               'assets/doctor.svg',
               color: Colors.grey,
             ),
-            title: 'All Locums',
+            title: 'Locums',
             activeIcon: Transform.translate(
               offset: const Offset(0, -5),
               child: SvgPicture.asset('assets/doctor.svg', color: primaryColor),
