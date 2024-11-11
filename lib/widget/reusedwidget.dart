@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -511,4 +513,9 @@ policy(String title, String body) {
       ),
     ],
   );
+}
+
+messagenotifications(problem, solution) {
+  return Get.snackbar(problem, solution,
+      overlayBlur: 20.0, overlayColor: Colors.white.withOpacity(0.7));
 }

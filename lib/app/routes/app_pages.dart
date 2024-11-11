@@ -22,6 +22,7 @@ import 'package:locume/app/screen/privacypolicy/binding/Privacy_Binding.dart';
 import 'package:locume/app/screen/privacypolicy/view/Privacy_view.dart';
 import 'package:locume/app/screen/profile/binding/Profile_Binding.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
+import 'package:locume/app/screen/splash/splash.dart';
 
 import '../screen/clinics/view/Clinics_view.dart';
 import '../screen/getstarted/view/getstart_view.dart';
@@ -31,9 +32,13 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.Start1;
+  static const INITIAL = Routes.Splash;
 
   static final routes = [
+    GetPage(
+      name: _Paths.Splash,
+      page: () => Splash(),
+    ),
     GetPage(
         name: _Paths.Start1,
         page: () => Start1View(),
