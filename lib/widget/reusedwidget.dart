@@ -41,11 +41,12 @@ specialcard(String svg, String title) {
       ),
       space(double.maxFinite, 10.0),
       Text(
-        overflow: TextOverflow.visible,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
         softWrap: true,
         textAlign: TextAlign.center,
         title,
-        style: GoogleFonts.poppins(
+        style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 10,
             color: HexColor('#326295')),
@@ -99,7 +100,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                     name,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                         color: HexColor('#326295')),
@@ -111,7 +112,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                     md,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         color: HexColor('#326295')),
@@ -123,7 +124,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                     work,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 11,
                         color: HexColor('#326295')),
@@ -135,7 +136,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                     exprience,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                         color: HexColor('#326295')),
@@ -157,7 +158,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                         location,
                         overflow: TextOverflow.ellipsis,
                         softWrap: true,
-                        style: GoogleFonts.montserrat(
+                        style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 10,
                             color: HexColor('#333333')),
@@ -171,7 +172,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                     'View Details',
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                         color: HexColor('#0866C6')),
@@ -192,7 +193,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
               Text(
                 '4.5',
                 overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.montserrat(
+                style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 10,
                     color: HexColor('#333333')),
@@ -200,7 +201,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
               Text(
                 'Rating',
                 overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.montserrat(
+                style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 7,
                     color: HexColor('#2A7FBA')),
@@ -241,7 +242,7 @@ hospitalcard(String image, String name, String location, String distance) {
               name,
               overflow: TextOverflow.ellipsis,
               softWrap: true,
-              style: GoogleFonts.montserrat(
+              style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 12,
                   color: HexColor('#000000')),
@@ -264,7 +265,7 @@ hospitalcard(String image, String name, String location, String distance) {
                   location,
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
-                  style: GoogleFonts.montserrat(
+                  style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 10,
                       color: HexColor('#333333')),
@@ -284,7 +285,7 @@ hospitalcard(String image, String name, String location, String distance) {
                   distance,
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
-                  style: GoogleFonts.montserrat(
+                  style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 10,
                       color: HexColor('#333333')),
@@ -396,7 +397,7 @@ Widget hospitalfullcard(String image, String name, String hospitalspecialty,
                     Text(
                       '4.5',
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.montserrat(
+                      style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 10,
                           color: HexColor('#333333')),
@@ -404,7 +405,7 @@ Widget hospitalfullcard(String image, String name, String hospitalspecialty,
                     Text(
                       'Rating',
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.montserrat(
+                      style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 7,
                           color: HexColor('#2A7FBA')),

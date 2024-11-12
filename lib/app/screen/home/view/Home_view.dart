@@ -32,7 +32,7 @@ class HomeView extends GetView<HomeControlller> {
           ),
           title: Text(
             'hi, Christopher\ngood morning',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
                 color: HexColor('#174666')),
@@ -107,8 +107,8 @@ class HomeView extends GetView<HomeControlller> {
                 child: TextField(
                   strutStyle: const StrutStyle(
                       fontSize: 10, fontWeight: FontWeight.bold),
-                  style: GoogleFonts.inter(
-                      color: Colors.black, fontWeight: FontWeight.w300),
+                  // style: GoogleFonts.inter(
+                  //     color: Colors.black, fontWeight: FontWeight.w300),
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     prefixIcon: Icon(
@@ -138,7 +138,7 @@ class HomeView extends GetView<HomeControlller> {
                     fillColor: HexColor("#FFFFFF"),
                     filled: true,
                     hintText: "Text",
-                    hintStyle: GoogleFonts.inter(
+                    hintStyle: TextStyle(
                       fontSize: 12,
                       color: HexColor('#AAAAAA').withOpacity(0.7),
                       fontWeight: FontWeight.w400,
@@ -153,7 +153,7 @@ class HomeView extends GetView<HomeControlller> {
                 children: [
                   Text(
                     'Top Specialties',
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         color: HexColor('#0866C6')),
@@ -164,7 +164,7 @@ class HomeView extends GetView<HomeControlller> {
                     },
                     child: Text(
                       'View All',
-                      style: GoogleFonts.montserrat(
+                      style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           color: HexColor('#1E5A84')),
@@ -219,14 +219,14 @@ class HomeView extends GetView<HomeControlller> {
                 children: [
                   Text(
                     'Top Locum`s',
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         color: HexColor('#0866C6')),
                   ),
                   Text(
                     'View All',
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                         color: HexColor('#1E5A84')),
@@ -257,14 +257,14 @@ class HomeView extends GetView<HomeControlller> {
                 children: [
                   Text(
                     'Top Hospitals',
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         color: HexColor('#0866C6')),
                   ),
                   Text(
                     'View All',
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                         color: HexColor('#1E5A84')),
@@ -297,7 +297,7 @@ class HomeView extends GetView<HomeControlller> {
                 children: [
                   Text(
                     'Top Clinic`s',
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         color: HexColor('#0866C6')),
@@ -308,7 +308,7 @@ class HomeView extends GetView<HomeControlller> {
                     },
                     child: Text(
                       'View All',
-                      style: GoogleFonts.montserrat(
+                      style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           color: HexColor('#1E5A84')),
