@@ -4,7 +4,7 @@ import 'package:locume/Theme/theme.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
