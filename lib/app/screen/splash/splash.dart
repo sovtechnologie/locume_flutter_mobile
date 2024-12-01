@@ -23,43 +23,46 @@ class Splash extends StatelessWidget {
   }
 
   checkforsafety_android() async {
-    final isRealDevice = await JailbreakRootDetection.instance.isRealDevice;
-    final isJailBroken = await JailbreakRootDetection.instance.isJailBroken;
-    if (isRealDevice == false) {
-      messagenotifications('device is not a real device', 'open again');
-      SystemNavigator.pop();
-    } else if (isJailBroken) {
-      messagenotifications('device cannot be trusted', 'open again');
-      SystemNavigator.pop();
-    } else if (isRealDevice == true && isJailBroken == false) {
-      Get.offAndToNamed('/getstarted');
-    } else {
-      SystemNavigator.pop();
-    }
+    Get.toNamed('/getstarted');
+    // final isRealDevice = await JailbreakRootDetection.instance.isRealDevice;
+    // final isJailBroken = await JailbreakRootDetection.instance.isJailBroken;
+    // if (isRealDevice == false) {
+    //   messagenotifications('device is not a real device', 'open again');
+    //   SystemNavigator.pop();
+    // } else if (isJailBroken) {
+    //   messagenotifications('device cannot be trusted', 'open again');
+    //   SystemNavigator.pop();
+    // } else if (isRealDevice == true && isJailBroken == false) {
+    //   Get.offAndToNamed('/getstarted');
+    // } else {
+    //   SystemNavigator.pop();
+    // }
   }
 
   checkforsafety_ios() async {
-    final isJailBroken = await JailbreakRootDetection.instance.isJailBroken;
-    final isRealDevice = await JailbreakRootDetection.instance.isRealDevice;
-    final checkForIssues = await JailbreakRootDetection.instance.checkForIssues;
+    Get.toNamed('/getstarted');
 
-    if (checkForIssues.isNotEmpty) {
-      messagenotifications(
-          'there are issues with this phone', 'call the support team');
-      SystemNavigator.pop();
-    } else if (isRealDevice == false) {
-      messagenotifications('device is not a real device', 'open again');
-      SystemNavigator.pop();
-    } else if (isJailBroken) {
-      messagenotifications('device cannot be trusted', 'open again');
-      SystemNavigator.pop();
-    } else if (isRealDevice == true &&
-        checkForIssues.isEmpty &&
-        isJailBroken == false) {
-      Get.offAndToNamed('/getstarted');
-    } else {
-      SystemNavigator.pop();
-    }
+    // final isJailBroken = await JailbreakRootDetection.instance.isJailBroken;
+    // final isRealDevice = await JailbreakRootDetection.instance.isRealDevice;
+    // final checkForIssues = await JailbreakRootDetection.instance.checkForIssues;
+    //
+    // if (checkForIssues.isNotEmpty) {
+    //   messagenotifications(
+    //       'there are issues with this phone', 'call the support team');
+    //   SystemNavigator.pop();
+    // } else if (isRealDevice == false) {
+    //   messagenotifications('device is not a real device', 'open again');
+    //   SystemNavigator.pop();
+    // } else if (isJailBroken) {
+    //   messagenotifications('device cannot be trusted', 'open again');
+    //   SystemNavigator.pop();
+    // } else if (isRealDevice == true &&
+    //     checkForIssues.isEmpty &&
+    //     isJailBroken == false) {
+    //   Get.offAndToNamed('/getstarted');
+    // } else {
+    //   SystemNavigator.pop();
+    // }
   }
 
   @override
