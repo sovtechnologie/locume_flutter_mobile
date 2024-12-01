@@ -46,11 +46,12 @@ class LocumView extends GetView<LocumController> {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      offset: const Offset(0, 0),
-                      color: HexColor('#1B4584').withOpacity(0.05),
-                      blurRadius: 4.0,
-                      spreadRadius: 4.0,
-                      blurStyle: BlurStyle.normal)
+                    offset: const Offset(0, 0),
+                    color: HexColor('#1B4584').withOpacity(0.05),
+                    blurRadius: 4.0,
+                    spreadRadius: 4.0,
+                    blurStyle: BlurStyle.normal,
+                  )
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(15.0)),
               ),
@@ -70,21 +71,6 @@ class LocumView extends GetView<LocumController> {
                       borderRadius: BorderRadius.all(
                         Radius.circular(15.0),
                       )),
-                  disabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15.0),
-                      )),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15.0),
-                      )),
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15.0),
-                      )),
                   fillColor: HexColor("#FFFFFF"),
                   filled: true,
                   hintText: "Text",
@@ -99,43 +85,42 @@ class LocumView extends GetView<LocumController> {
             space(double.maxFinite, 20.0),
             locationbuttonsandfilter('Mumbai'),
             space(double.maxFinite, 10.0),
-            controller.data.isEmpty
-                ? Center(
-                    child: SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: LoadingAnimationWidget.hexagonDots(
-                        color: Colors.yellow,
-                        size: 20,
+            Obx(
+              () => controller.data.isEmpty
+                  ? Center(
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: LoadingAnimationWidget.hexagonDots(
+                          color: Colors.yellow,
+                          size: 20,
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: ListView.builder(
+                        itemCount: controller.data.length,
+                        itemBuilder: (context, index) {
+                          final doctor = controller.data[index];
+                          final imagePath = doctor['profile_image']?.toString();
+
+                          return Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 16.0),
+                            child: doctorcard(
+                              imagePath.toString(),
+                              '${doctor['first_name'] ?? ''} ${doctor['last_name'] ?? ''}',
+                              doctor['medical_id']?.toString() ?? '',
+                              doctor['about_me']?.toString() ??
+                                  'No details provided',
+                              doctor['total_exp']?.toString() ?? '0',
+                              doctor['location']?.toString() ?? 'Not specified',
+                            ),
+                          );
+                        },
                       ),
                     ),
-                  )
-                : Expanded(
-                    // Use Expanded to let ListView fill the available space
-                    child: ListView.builder(
-                      controller: controller.scrollController,
-                      itemCount: controller.data.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 0.0),
-                          child: Column(
-                            children: [
-                              doctorcard(
-                                controller.data[index]['image'].toString(),
-                                controller.data[index]['name'].toString(),
-                                controller.data[index]['md'].toString(),
-                                controller.data[index]['work'].toString(),
-                                controller.data[index]['experience'].toString(),
-                                controller.data[index]['location'].toString(),
-                              ),
-                              space(double.maxFinite, 20.0),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  )
+            ),
           ],
         ),
       ),
