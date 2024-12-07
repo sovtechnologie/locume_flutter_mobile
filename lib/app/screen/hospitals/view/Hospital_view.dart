@@ -21,7 +21,7 @@ class HospitalView extends GetView<HospitalController> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: primaryColor,
-        title: Text(
+        title: const Text(
           'All Hospitals',
         ),
         actions: [
@@ -88,51 +88,39 @@ class HospitalView extends GetView<HospitalController> {
             space(double.maxFinite, 20.0),
             locationbuttonsandfilter('Mumbai'),
             space(double.maxFinite, 10.0),
-            controller.hospitals.isEmpty
-                ? Center(
-                    child: SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: LoadingAnimationWidget.hexagonDots(
-                        color: Colors.yellow,
-                        size: 20,
+            Obx(
+              () => controller.data.isEmpty
+                  ? Center(
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: LoadingAnimationWidget.hexagonDots(
+                          color: Colors.yellow,
+                          size: 20,
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: ListView.builder(
+                        itemCount: controller.data.length,
+                        itemBuilder: (context, index) {
+                          final hospital = controller.data[index];
+                          // final imagePath =
+                          //     hospital['profile_image']?.toString();
+
+                          return Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  8.0, 0.0, 8.0, 16.0),
+                              child: hospitalcard(
+                                  'image',
+                                  hospital['hospital_name']?.toString() ?? '',
+                                  hospital['hospital_location']?.toString() ??
+                                      '',
+                                  'distance'));
+                        },
                       ),
                     ),
-                  )
-                : Expanded(
-                    // Use Expanded to manage height constraints
-                    child: ListView.builder(
-                      controller: controller.scrollController,
-                      itemCount: controller.hospitals.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 0.0),
-                          child: Column(
-                            children: [
-                              hospitalfullcard(
-                                  controller.hospitals[index]['image']
-                                      .toString(),
-                                  controller.hospitals[index]['name']
-                                      .toString(),
-                                  controller.hospitals[index]
-                                          ['hospitalspecialty']
-                                      .toString(),
-                                  controller.hospitals[index]['location']
-                                      .toString(),
-                                  controller.hospitals[index]['distance']
-                                      .toString(),
-                                  controller.hospitals[index]['doctors']
-                                      .toString(),
-                                  controller.hospitals[index]['specialties']
-                                      .toString()),
-                              space(double.maxFinite, 20.0),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+            ),
           ],
         ),
       ),

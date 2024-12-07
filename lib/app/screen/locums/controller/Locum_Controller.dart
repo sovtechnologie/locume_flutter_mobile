@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -28,12 +29,18 @@ class LocumController extends GetxController {
         // Use `.assignAll()` to update reactive list
         data.assignAll(
             List<Map<dynamic, dynamic>>.from(decodedResponse['result']));
-        print('Data fetched: ${data.length} items');
+        if (kDebugMode) {
+          print('Data fetched: ${data.length} items');
+        }
       } else {
-        print('No valid data found.');
+        if (kDebugMode) {
+          print('No valid data found.');
+        }
       }
     } else {
-      print('Error: ${response.statusCode}');
+      if (kDebugMode) {
+        print('Error: ${response.statusCode}');
+      }
     }
   }
 }

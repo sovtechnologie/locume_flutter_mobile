@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../../config.dart';
@@ -26,13 +27,18 @@ class SpecialitiesController extends GetxController {
         // Use `.assignAll()` to update reactive list
         data.assignAll(
             List<Map<dynamic, dynamic>>.from(decodedResponse['result']));
-        print(data);
-        print('Data fetched: ${data.length} items');
+        if (kDebugMode) {
+          print('Data fetched: ${data.length} items');
+        }
       } else {
-        print('No valid data found.');
+        if (kDebugMode) {
+          print('No valid data found.');
+        }
       }
     } else {
-      print('Error: ${response.statusCode}');
+      if (kDebugMode) {
+        print('Error: ${response.statusCode}');
+      }
     }
   }
 }
