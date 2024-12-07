@@ -71,7 +71,7 @@ ThemeData themeData(BuildContext context) {
       },
     ),
     textSelectionTheme: TextSelectionThemeData(
-      cursorColor: whiteTextColor,
+      cursorColor: Colors.grey.shade400,
     ),
     tabBarTheme: TabBarTheme(
       labelColor: whiteTextColor.withOpacity(0.6),

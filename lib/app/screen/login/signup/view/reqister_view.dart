@@ -12,6 +12,7 @@ class RegisterView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     final TextEditingController _shiftController = TextEditingController();
     final TextEditingController specialties = TextEditingController();
+    final TextEditingController genderController = TextEditingController();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -87,19 +88,34 @@ class RegisterView extends GetView<LoginController> {
                             return SizedBox
                                 .shrink(); // Empty widget if no error message
                           }),
-                          CustomizableField(
-                            controller: controller.otpcontroller,
-                            heading: "OTP",
-                            hintText: "Enter OTP",
-                            keyboardType: TextInputType.number,
-                            suffixText: Text("Verify OTP"),
-                            onSuffixTap: () {},
-                          ),
+                          Obx(() {
+                            return CustomizableField(
+                              controller: controller.otpcontroller,
+                              heading: "OTP",
+                              hintText: "Enter OTP",
+                              keyboardType: TextInputType.number,
+                              suffixText: controller.verifyotp.value
+                                  ? Icon(
+                                      Icons.verified,
+                                      color: Colors.green,
+                                    )
+                                  : Text("Verify OTP"),
+                              onSuffixTap: () {
+                                controller.verifyOTP();
+                              },
+                            );
+                          }),
                           CustomizableField(
                             controller: controller.medicalid,
                             heading: "Medical ID",
                             hintText: "Medical ID",
                             keyboardType: TextInputType.number,
+                          ),
+                          CustomizableField(
+                            controller: controller.location,
+                            heading: "Location",
+                            hintText: "Location",
+                            keyboardType: TextInputType.text,
                           ),
                           CustomDropdown(
                             heading: "Availability",
@@ -119,11 +135,26 @@ class RegisterView extends GetView<LoginController> {
                               controller: specialties,
                             );
                           }),
+                          SingleSelectionDropdown(
+                            heading: "Gender",
+                            options: ["Male", "Female", "Other"],
+                            selectedValue: controller.gender.value,
+                            controller: genderController,
+                            onChanged: (value) {
+                              controller.gender.value = value!;
+                            },
+                          ),
+                          CustomizableField(
+                            controller: controller.rate,
+                            heading: "Rate/Hourly",
+                            hintText: "Rate/Hourly",
+                            keyboardType: TextInputType.number,
+                          ),
                           CustomisableButton(
                               text: "Sign Up",
                               onTap: () async {
                                 await controller.register();
-                                Get.toNamed('/home');
+                                await controller.registerUser();
                               }),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),

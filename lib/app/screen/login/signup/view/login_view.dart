@@ -56,9 +56,14 @@ class LoginView extends GetView<LoginController> {
                             controller: controller.phonenumber,
                             heading: "Mobile Number",
                             hintText: "Enter mobile number",
-                            suffixText:
-                                Obx(() => Text(controller.otpButtonText.value)),
-                            onSuffixTap: controller.sendOtp,
+                            suffixText: Obx(() => controller.isLoading.value
+                                ? CircularProgressIndicator()
+                                : Text(controller.otpButtonText.value)),
+                            onSuffixTap: () {
+                              if (controller.isButtonEnabled == true) {
+                                controller.userloginotp();
+                              }
+                            },
                             keyboardType: TextInputType.number,
                           ),
                           CustomizableField(
@@ -70,7 +75,7 @@ class LoginView extends GetView<LoginController> {
                           CustomisableButton(
                               text: "Log in",
                               onTap: () {
-                                Get.toNamed('/bottomnavigation');
+                                controller.userLogin();
                               }),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
