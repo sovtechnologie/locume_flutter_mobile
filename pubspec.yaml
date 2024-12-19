@@ -47,6 +47,7 @@ dependencies:
   jailbreak_root_detection: ^1.1.5
   firebase_core: ^3.8.0
   http: ^1.2.2
+#  lottie: ^3.2.0
 
 dev_dependencies:
   flutter_test:
