@@ -5,6 +5,8 @@ import 'package:locume/app/screen/allSpecialities/view/specialities_view.dart';
 import 'package:locume/app/screen/bottomnavigation/binding/BottomNavigation_Binding.dart';
 import 'package:locume/app/screen/bottomnavigation/view/BottomNavigation_view.dart';
 import 'package:locume/app/screen/clinics/binding/Clinics_Binding.dart';
+import 'package:locume/app/screen/drprofile/binding/dr_profile_binding.dart';
+import 'package:locume/app/screen/drprofile/view/dr_profile_view.dart';
 import 'package:locume/app/screen/getstarted/binding/getstart_binding.dart';
 import 'package:locume/app/screen/home/binding/Home_binding.dart';
 import 'package:locume/app/screen/home/view/Home_view.dart';
@@ -93,6 +95,10 @@ class AppPages {
     GetPage(
         name: _Paths.privacy,
         page: () => PrivacyView(),
-        binding: PrivacyBinding())
+        binding: PrivacyBinding()),
+    GetPage(
+        name: _Paths.DrProfile,
+        page: () => DrProfileView(),
+        binding: DrProfileBinding())
   ];
 }

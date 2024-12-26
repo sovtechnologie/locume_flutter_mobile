@@ -24,7 +24,7 @@ class LocumView extends GetView<LocumController> {
         title: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.0),
           child: Text(
-            'Locum’s ',
+            'Locum ',
           ),
         ),
         actions: [
@@ -115,6 +115,7 @@ class LocumView extends GetView<LocumController> {
                                   'No details provided',
                               doctor['total_exp']?.toString() ?? '0',
                               doctor['location']?.toString() ?? 'Not specified',
+                              doctor['custom_id']?.toString() ?? '0',
                             ),
                           );
                         },

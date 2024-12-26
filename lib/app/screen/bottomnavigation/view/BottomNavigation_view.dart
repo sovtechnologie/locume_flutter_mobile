@@ -38,7 +38,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                       LocumView(),
                       ProfileView(),
                       HospitalView(),
-                      PrivacyView(),
+                      ProfileView(),
                     ],
                   ),
                 ),
@@ -490,7 +490,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
               'assets/doctor.svg',
               color: Colors.grey,
             ),
-            title: 'Locums',
+            title: 'Locum',
             activeIcon: Transform.translate(
               offset: const Offset(0, -5),
               child: SvgPicture.asset('assets/doctor.svg', color: primaryColor),

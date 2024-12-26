@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "546797918733",
+    "project_id": "locum-c64b2",
+    "storage_bucket": "locum-c64b2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546797918733:android:227c3c89e7e73506969344",
+        "android_client_info": {
+          "package_name": "com.example.locume"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiAPlz93WMX_EMaMqcVK1--m_suANgyIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

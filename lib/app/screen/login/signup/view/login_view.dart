@@ -42,7 +42,12 @@ class LoginView extends GetView<LoginController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SvgPicture.asset("assets/waving-hand.svg"),
+                          InkWell(
+                              onTap: () {
+                                Get.offAllNamed('/bottomnavigation');
+                              },
+                              child:
+                                  SvgPicture.asset("assets/waving-hand.svg")),
                           Text(
                             "Welcome back!",
                             style: MyTextTheme.poppinsHeadline(

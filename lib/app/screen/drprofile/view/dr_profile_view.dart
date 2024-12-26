@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:locume/Theme/theme.dart';
-import 'package:locume/app/screen/profile/controller/Profile_Controller.dart';
+import 'package:locume/app/screen/drprofile/controller/dr_profile_controller.dart';
+import 'package:locume/widget/custom_button.dart';
 
-class ProfileView extends GetView<ProfileController> {
-  ProfileView({super.key}) {
-    // Lazily load the controller when the view is initialized
-    Get.lazyPut(() => ProfileController());
-  }
+class DrProfileView extends GetView<DrProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

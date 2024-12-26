@@ -56,175 +56,181 @@ specialcard(String svg, String title) {
 }
 
 doctorcard(String image, String name, String md, String work, String exprience,
-    String location) {
-  return Container(
-    height: 150,
-    width: double.maxFinite,
-    decoration: BoxDecoration(
-      color: HexColor('#FFFFFF'),
-      boxShadow: [
-        BoxShadow(
-            offset: const Offset(0, 2),
-            color: HexColor('#326295').withOpacity(0.15),
-            blurRadius: 8.0,
-            spreadRadius: 1,
-            blurStyle: BlurStyle.normal)
-      ],
-      borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 150,
-            width: 100,
-            child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                child: Image.network(
-                  image,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(Icons.broken_image,
-                        color: Colors.grey); // Fallback widget
-                  },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child; // When loading is complete
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null, // Show progress indicator
+    String location, String id) {
+  return InkWell(
+    onTap: () {
+      Get.toNamed('/dr-profile', arguments: id);
+      print(id);
+    },
+    child: Container(
+      height: 150,
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        color: HexColor('#FFFFFF'),
+        boxShadow: [
+          BoxShadow(
+              offset: const Offset(0, 2),
+              color: HexColor('#326295').withOpacity(0.15),
+              blurRadius: 8.0,
+              spreadRadius: 1,
+              blurStyle: BlurStyle.normal)
+        ],
+        borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 150,
+              width: 100,
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                  child: Image.network(
+                    image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.broken_image,
+                          color: Colors.grey); // Fallback widget
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child; // When loading is complete
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null, // Show progress indicator
+                        ),
+                      );
+                    },
+                  )),
+            ),
+            space(10.0, 0.0),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      name,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: HexColor('#326295')),
+                    ),
+                  ),
+                  space(0.0, 5.0),
+                  Expanded(
+                    child: Text(
+                      md,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          color: HexColor('#326295')),
+                    ),
+                  ),
+                  space(0.0, 5.0),
+                  Expanded(
+                    child: Text(
+                      work,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11,
+                          color: HexColor('#326295')),
+                    ),
+                  ),
+                  space(0.0, 5.0),
+                  Expanded(
+                    child: Text(
+                      exprience,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: HexColor('#326295')),
+                    ),
+                  ),
+                  space(0.0, 5.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        child: Icon(
+                          Icons.location_on_sharp,
+                          size: 10,
+                        ),
                       ),
-                    );
-                  },
-                )),
-          ),
-          space(10.0, 0.0),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+                      Expanded(
+                        child: Text(
+                          location,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 10,
+                              color: HexColor('#333333')),
+                        ),
+                      ),
+                    ],
+                  ),
+                  space(0.0, 5.0),
+                  Expanded(
+                    child: Text(
+                      'View Details',
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: HexColor('#0866C6')),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Column(
               children: [
-                Expanded(
-                  child: Text(
-                    name,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: HexColor('#326295')),
+                const SizedBox(
+                  child: Icon(
+                    Icons.star_rate_rounded,
+                    size: 15,
+                    color: Colors.amberAccent,
                   ),
                 ),
-                space(0.0, 5.0),
-                Expanded(
-                  child: Text(
-                    md,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: HexColor('#326295')),
-                  ),
+                Text(
+                  '4.5',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 10,
+                      color: HexColor('#333333')),
                 ),
-                space(0.0, 5.0),
-                Expanded(
-                  child: Text(
-                    work,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 11,
-                        color: HexColor('#326295')),
-                  ),
-                ),
-                space(0.0, 5.0),
-                Expanded(
-                  child: Text(
-                    exprience,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: HexColor('#326295')),
-                  ),
-                ),
-                space(0.0, 5.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      child: Icon(
-                        Icons.location_on_sharp,
-                        size: 10,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        location,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 10,
-                            color: HexColor('#333333')),
-                      ),
-                    ),
-                  ],
-                ),
-                space(0.0, 5.0),
-                Expanded(
-                  child: Text(
-                    'View Details',
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        color: HexColor('#0866C6')),
-                  ),
+                Text(
+                  'Rating',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 7,
+                      color: HexColor('#2A7FBA')),
                 ),
               ],
             ),
-          ),
-          Column(
-            children: [
-              const SizedBox(
-                child: Icon(
-                  Icons.star_rate_rounded,
-                  size: 15,
-                  color: Colors.amberAccent,
-                ),
-              ),
-              Text(
-                '4.5',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 10,
-                    color: HexColor('#333333')),
-              ),
-              Text(
-                'Rating',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 7,
-                    color: HexColor('#2A7FBA')),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     ),
   );

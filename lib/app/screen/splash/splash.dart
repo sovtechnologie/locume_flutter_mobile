@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,7 +13,16 @@ import '../../../widget/reusedwidget.dart';
 class Splash extends StatelessWidget {
   Splash({super.key}) {
     checkinternet();
+    gettoken();
   }
+  gettoken() async {
+    await FirebaseMessaging.instance.requestPermission();
+
+    // Get the FCM token
+    String? token = await FirebaseMessaging.instance.getToken();
+    print(token);
+  }
+
   checkinternet() async {
     bool result = await InternetConnectionChecker().hasConnection;
     if (result && Platform.isAndroid) {

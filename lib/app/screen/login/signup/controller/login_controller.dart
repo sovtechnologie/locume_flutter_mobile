@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:locume/api/api_provider.dart';
+import 'package:locume/api/auth_provider.dart';
 import 'package:locume/app/screen/login/signup/model/register_res.dart';
 import 'package:locume/app/screen/login/signup/model/specialtie_model.dart';
 import 'package:locume/app/screen/login/signup/model/verify_res.dart';
@@ -135,6 +136,15 @@ class LoginController extends GetxController {
     print(response.body);
     if (response.statusCode == 200) {
       startOtpTimer();
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      // Extract the OTP value
+      final otp = responseData['otp'];
+      Get.snackbar(
+        "OTP", // Title of the snackbar
+        "Your OTP is: $otp", // Message to display in snackbar
+        snackPosition: SnackPosition.TOP,
+      );
       errorMessage.value = "";
     } else if (response.statusCode == 409) {
       errorMessage.value =
@@ -207,6 +217,7 @@ class LoginController extends GetxController {
     print(map);
     print(res);
     if (res.status == 200) {
+      Get.find<AuthProvider>().setUser(res);
       Get.offAllNamed('/bottomnavigation');
     }
   }
