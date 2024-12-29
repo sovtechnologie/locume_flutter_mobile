@@ -8,6 +8,7 @@ import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/home/view/Home_view.dart';
 import 'package:locume/app/screen/hospitals/view/Hospital_view.dart';
 import 'package:locume/app/screen/locums/view/Locum_view.dart';
+import 'package:locume/app/screen/login/signup/model/category_model.dart' as c;
 import 'package:locume/app/screen/privacypolicy/view/Privacy_view.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
 import 'package:locume/widget/custom_button.dart';
@@ -125,7 +126,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                 children: [
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
-                                      items: ["Option 1", "Option 2"]
+                                      items: ["100", "200"]
                                           .map((String value) =>
                                               DropdownMenuItem<String>(
                                                 value: value,
@@ -133,6 +134,8 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                               ))
                                           .toList(),
                                       onChanged: (String? newValue) {
+                                        controller.minRate.value =
+                                            newValue.toString();
                                         // Handle dropdown selection
                                       },
                                       decoration: InputDecoration(
@@ -184,7 +187,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                   ),
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
-                                      items: ["Option 1", "Option 2"]
+                                      items: ["1000", "2000"]
                                           .map((String value) =>
                                               DropdownMenuItem<String>(
                                                 value: value,
@@ -192,6 +195,8 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                               ))
                                           .toList(),
                                       onChanged: (String? newValue) {
+                                        controller.maxRate.value =
+                                            newValue.toString();
                                         // Handle dropdown selection
                                       },
                                       decoration: InputDecoration(
@@ -252,16 +257,30 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                                 .bodyLarge,
                                           ),
                                         ),
-                                        DropdownButtonFormField<String>(
-                                          items: ["Option 1", "Option 2"]
-                                              .map((String value) =>
-                                                  DropdownMenuItem<String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  ))
-                                              .toList(),
-                                          onChanged: (String? newValue) {
-                                            // Handle dropdown selection
+                                        DropdownButtonFormField<int>(
+                                          value: controller
+                                                  .selectedType.value.isEmpty
+                                              ? null
+                                              : int.tryParse(controller
+                                                  .selectedType.value),
+                                          items: controller.categoryList
+                                              .map((c.Result category) {
+                                            return DropdownMenuItem<int>(
+                                              value: category.id,
+                                              child: Text(
+                                                category.categoryName ?? 'N/A',
+                                                overflow: TextOverflow
+                                                    .ellipsis, // Truncate long text if needed
+                                              ),
+                                            );
+                                          }).toList(),
+                                          onChanged: (int? newValue) {
+                                            if (newValue != null) {
+                                              // Set the selected category id
+                                              controller.category.value =
+                                                  newValue.toString();
+                                            }
+                                            print(controller.category);
                                           },
                                           decoration: InputDecoration(
                                             fillColor: const Color.fromRGBO(
@@ -285,21 +304,22 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                             ),
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
-                                              vertical: 0,
-                                              horizontal: 16,
-                                            ),
+                                                    vertical: 0,
+                                                    horizontal: 16),
                                           ),
                                           hint: const Center(
                                             child: Text(
-                                              "Emergancy Med", // Centered hint text
+                                              "Select Category", // Centered hint text
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400,
-                                                color: Colors
-                                                    .grey, // Customize color here
+                                                color: Colors.grey,
                                               ),
                                             ),
                                           ),
+                                          // Use the dropdown's itemHeight property to limit the number of visible items
+                                          menuMaxHeight:
+                                              200, // This sets the maximum height of the dropdown
                                         ),
                                       ],
                                     ),
@@ -321,7 +341,12 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                           ),
                                         ),
                                         DropdownButtonFormField<String>(
-                                          items: ["Option 1", "Option 2"]
+                                          items: [
+                                            "Morning",
+                                            "Afternoon",
+                                            'Evening',
+                                            "Night"
+                                          ]
                                               .map((String value) =>
                                                   DropdownMenuItem<String>(
                                                     value: value,
@@ -329,7 +354,10 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                                   ))
                                               .toList(),
                                           onChanged: (String? newValue) {
-                                            // Handle dropdown selection
+                                            controller.shift.value =
+                                                newValue.toString();
+                                            print(controller
+                                                .shift); // Handle dropdown selection for shifts
                                           },
                                           decoration: InputDecoration(
                                             fillColor: const Color.fromRGBO(
@@ -337,25 +365,22 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                             filled: true,
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: const BorderSide(
-                                                color: Color.fromRGBO(
-                                                    220, 215, 215, 1),
-                                              ),
+                                                  color: Color.fromRGBO(
+                                                      220, 215, 215, 1)),
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                color: primaryColor,
-                                                width: 1,
-                                              ),
+                                                  color: primaryColor,
+                                                  width: 1),
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
-                                              vertical: 0,
-                                              horizontal: 16,
-                                            ),
+                                                    vertical: 0,
+                                                    horizontal: 16),
                                           ),
                                           hint: const Center(
                                             child: Text(
@@ -363,8 +388,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400,
-                                                color: Colors
-                                                    .grey, // Customize color here
+                                                color: Colors.grey,
                                               ),
                                             ),
                                           ),
@@ -441,8 +465,8 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                               Align(
                                 alignment: Alignment.center,
                                 child: ElevatedButton(
-                                    onPressed: () {
-                                      controller.showBottom.value = false;
+                                    onPressed: () async {
+                                      await controller.requestLocum();
                                     },
                                     style: ElevatedButton.styleFrom(
                                       foregroundColor: white,
@@ -451,7 +475,10 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                     ),
-                                    child: Text("Book Now")),
+                                    child: Text(
+                                        (controller.isLoading.value == true)
+                                            ? "Book Now"
+                                            : "Lodaing")),
                               )
                             ],
                           ),

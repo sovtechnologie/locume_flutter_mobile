@@ -245,7 +245,9 @@ class DrProfileView extends GetView<DrProfileController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   mylabel("Total Experience"),
-                                  boxfield(data.totalExp?.toString() ?? 'N/A')
+                                  boxfield(
+                                      "${data.totalExp?.toString()} year" ??
+                                          'N/A')
                                 ],
                               ),
                             ],
@@ -270,7 +272,7 @@ class DrProfileView extends GetView<DrProfileController> {
                                   spacing: 10, // Horizontal space between items
                                   runSpacing:
                                       10, // Vertical space between lines
-                                  children: data.preferredSpecialities!
+                                  children: controller.selectedSpecialtiesNames!
                                       .map((preferredSpecialities) {
                                     return boxfield(
                                         preferredSpecialities.toString());
@@ -287,12 +289,14 @@ class DrProfileView extends GetView<DrProfileController> {
                             height: 15,
                           ),
                           mylabel("Specified category"),
-                          data.category != null && data.category!.isNotEmpty
+                          controller.selectedCategoriesNames != null &&
+                                  controller.selectedCategoriesNames!.isNotEmpty
                               ? Wrap(
                                   spacing: 10, // Horizontal space between items
                                   runSpacing:
                                       10, // Vertical space between lines
-                                  children: data.category!.map((category) {
+                                  children: controller.selectedCategoriesNames!
+                                      .map((category) {
                                     return boxfield(category.toString());
                                   }).toList(),
                                 )
@@ -438,24 +442,28 @@ class DrProfileView extends GetView<DrProfileController> {
   Widget boxfield(dynamic text) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
-      child: Container(
-        height: 35,
-        width: 120, // Fixed height for each availability container
-        padding: EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-              width: 1, color: const Color.fromARGB(124, 175, 175, 175)
-              // Border color
-              ),
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          text ?? 'N/A', // Provide fallback for null values
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: textColor,
+      child: IntrinsicWidth(
+        // This ensures the width is based on the content
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              width: 1,
+              color: const Color.fromARGB(124, 175, 175, 175), // Border color
+            ),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            text ?? 'N/A', // Provide fallback for null values
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: textColor,
+            ),
+            maxLines: null, // Allows text to take multiple lines
+            overflow: TextOverflow.visible, // Ensures text is not truncated
+            softWrap: true, // Ensures text wraps to the next line
           ),
         ),
       ),
