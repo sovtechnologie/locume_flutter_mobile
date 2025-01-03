@@ -399,7 +399,7 @@ Widget hospitalfullcard(String image, String name, String hospitalspecialty,
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   child: Image.network(
                     image,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.none,
                     errorBuilder: (context, error, stackTrace) {
                       return const Icon(Icons.broken_image,
                           color: Colors.grey); // Fallback widget
@@ -624,32 +624,30 @@ Widget buildSpecialityCard({
                   ],
                   borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                 ),
-                child: SizedBox(
-                  child: ClipRRect(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(10.0)),
-                      child: Image.network(
-                        imagePath,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.broken_image,
-                              color: Colors.grey); // Fallback widget
-                        },
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child; // When loading is complete
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null, // Show progress indicator
-                            ),
-                          );
-                        },
-                      )),
-                ),
+                child: ClipRRect(
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(10.0)),
+                    child: Image.network(
+                      imagePath,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.broken_image,
+                            color: Colors.grey); // Fallback widget
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child; // When loading is complete
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null, // Show progress indicator
+                          ),
+                        );
+                      },
+                    )),
               ),
             ),
             Expanded(

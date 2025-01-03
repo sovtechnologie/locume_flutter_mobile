@@ -7,6 +7,7 @@ class CustomizableField extends StatelessWidget {
   final VoidCallback? onSuffixTap;
   final TextEditingController controller;
   final TextInputType keyboardType; // New required parameter for keyboard type
+  final int? numbnerlenght;
 
   const CustomizableField({
     Key? key,
@@ -16,6 +17,7 @@ class CustomizableField extends StatelessWidget {
     required this.keyboardType, // Required keyboard type
     this.suffixText,
     this.onSuffixTap,
+    this.numbnerlenght
   }) : super(key: key);
 
   @override
@@ -37,6 +39,7 @@ class CustomizableField extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: TextFormField(
+            maxLength: numbnerlenght != 0 ? numbnerlenght : 10 ,
             controller: controller,
             keyboardType: keyboardType, // Customizable keyboard type
             decoration: InputDecoration(

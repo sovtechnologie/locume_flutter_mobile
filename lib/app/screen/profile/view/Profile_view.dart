@@ -30,12 +30,12 @@ class ProfileView extends GetView<ProfileController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
         if (controller.dr_data.value.isEmpty) {
-          return Center(child: Text("No data available"));
+          return const Center(child: Text("No data available"));
         }
         final data = controller.dr_data.value[0];
         String? profileImage = data.profileImage;
@@ -176,8 +176,7 @@ class ProfileView extends GetView<ProfileController> {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                const Text("""These are the professional 
-          details shown to users in the app.""")
+                                const Text("""These are the professional details shown to users in the app.""")
                               ],
                             ),
                             Image.asset("assets/Stars.png")
@@ -308,17 +307,15 @@ class ProfileView extends GetView<ProfileController> {
                         ],
                       ),
                     ),
-                    Container(
-                      width: 194,
-                      child: ElevatedButton(
-                          onPressed: () {},
-                          child: const Row(
-                            children: [
-                              Text("Download Resume "),
-                              Icon(Icons.download)
-                            ],
-                          )),
-                    ),
+                    ElevatedButton(
+                        onPressed: () {},
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Download Resume"),
+                            Icon(Icons.download)
+                          ],
+                        )),
                   ],
                 ),
               ),

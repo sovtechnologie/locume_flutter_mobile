@@ -35,18 +35,15 @@ class SpecialitiesView extends GetView<SpecialitiesController> {
                 final imagePath = special['specialties_images']?.toString();
                 final title =
                     special['specialties_name']?.toString() ?? 'No Title';
-                final description = 'Description needed in API';
+                const description = 'Description needed in API';
 
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 16.0),
-                  child: buildSpecialityCard(
-                    imagePath: imagePath != null &&
-                            Uri.tryParse(imagePath)?.isAbsolute == true
-                        ? imagePath
-                        : 'https://via.placeholder.com/150', // Fallback for invalid URL
-                    title: title,
-                    description: description,
-                  ),
+                return buildSpecialityCard(
+                  imagePath: imagePath != null &&
+                          Uri.tryParse(imagePath)?.isAbsolute == true
+                      ? imagePath
+                      : 'https://via.placeholder.com/150', // Fallback for invalid URL
+                  title: title,
+                  description: description,
                 );
               },
             )),

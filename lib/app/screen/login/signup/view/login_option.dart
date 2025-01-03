@@ -53,7 +53,8 @@ class LoginOptionView extends GetView<LoginController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SvgPicture.asset('assets/logo.svg'),
+                    //SvgPicture.asset('assets/logo.svg'),
+                    Image.asset('assets/logo.png',width: 120,),
                     Padding(
                       padding:
                           const EdgeInsets.fromLTRB(52.0, 50.0, 40.0, 50.0),

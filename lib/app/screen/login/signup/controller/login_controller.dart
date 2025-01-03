@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:get/get.dart';
 import 'package:locume/api/api_provider.dart';
 import 'package:locume/api/auth_provider.dart';
@@ -203,7 +204,7 @@ class LoginController extends GetxController {
   }
 
   Future<void> userLogin() async {
-    print("object");
+
     final response = await ApiProvider.post(
       "/api/users/userLogin",
       head: {"Content-Type": "application/json"},
@@ -214,10 +215,10 @@ class LoginController extends GetxController {
     );
     final map = jsonDecode(response.body);
     Register res = Register.fromJson(map);
-    print(map);
-    print(res);
+
     if (res.status == 200) {
       Get.find<AuthProvider>().setUser(res);
+      await SessionManager().set('isloggedIn', true);
       Get.offAllNamed('/bottomnavigation');
     }
   }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -178,8 +179,9 @@ class Start1View extends GetView<Start1Controller> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(40.0, 15.0, 40.0, 5.0),
                   child: GestureDetector(
-                    onTap: () {
-                      Get.toNamed('/login-option');
+                    onTap: () async {
+                      await SessionManager().set('ishint_viewd', true);
+                      Get.toNamed('/login');
                     },
                     child: Container(
                       alignment: Alignment.center,

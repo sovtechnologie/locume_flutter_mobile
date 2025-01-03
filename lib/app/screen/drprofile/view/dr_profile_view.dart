@@ -12,12 +12,12 @@ class DrProfileView extends GetView<DrProfileController> {
         title: Obx(() {
           // Check if data is loaded
           if (controller.isLoading.value) {
-            return Text('');
+            return const Text('');
           }
 
           // Check if the data list is empty
           if (controller.dr_data.value.isEmpty) {
-            return Text('Doctor Profile');
+            return const Text('Doctor Profile');
           }
 
           // Safely access the first item of the list and its properties
@@ -27,12 +27,12 @@ class DrProfileView extends GetView<DrProfileController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return Center(
+          return const  Center(
             child: CircularProgressIndicator(),
           );
         }
         if (controller.dr_data.value.isEmpty) {
-          return Center(child: Text("No data available"));
+          return const  Center(child: Text("No data available"));
         }
         final data = controller.dr_data.value[0];
         String? profileImage = data.profileImage;
@@ -48,8 +48,8 @@ class DrProfileView extends GetView<DrProfileController> {
 
               Container(
                 width: double.maxFinite,
-                margin: EdgeInsets.all(20),
-                padding: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(20),
+                padding:const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),

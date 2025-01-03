@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -15,6 +16,8 @@ class Splash extends StatelessWidget {
     checkinternet();
     gettoken();
   }
+  var ishint = false;
+  var isloggedin = false;
   gettoken() async {
     await FirebaseMessaging.instance.requestPermission();
 
@@ -33,7 +36,30 @@ class Splash extends StatelessWidget {
   }
 
   checkforsafety_android() async {
-    Get.toNamed('/getstarted');
+    var ishint = await SessionManager().get("ishint_viewd");
+    var isloggedin = await SessionManager().get("isloggedIn");
+
+    if (ishint == null && isloggedin == null) {
+      Get.toNamed('/getstarted');
+    } else if (ishint == true && isloggedin == null) {
+      Get.toNamed('/login');
+    }
+    else if (ishint == true && isloggedin == true) {
+      Get.offAllNamed('/bottomnavigation');
+    }
+    // await SessionManager().get("ishint_viewd").then((value) async {
+    //   if(value == true){
+    //     Get.toNamed('/login');
+    //   }
+    //   else{
+    //
+    //   }
+    // });
+    //
+    // await SessionManager().get("isloggedIn").then(onValue{
+    // Get.offAllNamed('/bottomnavigation');
+    // });
+
     // final isRealDevice = await JailbreakRootDetection.instance.isRealDevice;
     // final isJailBroken = await JailbreakRootDetection.instance.isJailBroken;
     // if (isRealDevice == false) {
@@ -50,8 +76,17 @@ class Splash extends StatelessWidget {
   }
 
   checkforsafety_ios() async {
-    Get.toNamed('/getstarted');
+    var ishint = await SessionManager().get("ishint_viewd");
+    var isloggedin = await SessionManager().get("isloggedIn");
 
+    if (ishint == null && isloggedin == null) {
+      Get.toNamed('/getstarted');
+    } else if (ishint == true && isloggedin == null) {
+      Get.toNamed('/login');
+    }
+    else if (ishint == true && isloggedin == true) {
+      Get.offAllNamed('/bottomnavigation');
+    }
     // final isJailBroken = await JailbreakRootDetection.instance.isJailBroken;
     // final isRealDevice = await JailbreakRootDetection.instance.isRealDevice;
     // final checkForIssues = await JailbreakRootDetection.instance.checkForIssues;

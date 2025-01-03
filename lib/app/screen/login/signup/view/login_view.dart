@@ -27,7 +27,7 @@ class LoginView extends GetView<LoginController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 300,
                   ),
                   Container(
@@ -75,6 +75,7 @@ class LoginView extends GetView<LoginController> {
                             controller: controller.otpcontroller,
                             heading: "OTP",
                             hintText: "Enter OTP",
+                            numbnerlenght: 6,
                             keyboardType: TextInputType.number,
                           ),
                           CustomisableButton(
