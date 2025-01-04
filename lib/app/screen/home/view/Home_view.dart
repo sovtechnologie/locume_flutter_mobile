@@ -21,6 +21,22 @@ class HomeView extends GetView<HomeControlller> {
   final firstName = Get.find<AuthProvider>().getUser?.firstName;
   final lastName = Get.find<AuthProvider>().getUser?.lastName;
 
+
+  // appBar: AppBar(
+  // automaticallyImplyLeading: false,
+  // backgroundColor: primaryColor,
+  // title: const Text(
+  // 'All Hospitals',
+  // ),
+  // actions: [
+  // Transform.translate(
+  // offset: Offset(-15, 0),
+  // child: Icon(
+  // Icons.notifications_active_rounded,
+  // color: HexColor('#0866C6'),
+  // ))
+  // ],
+  // ),
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -156,7 +172,7 @@ class HomeView extends GetView<HomeControlller> {
                     ),
                   ),
                 ),
-                space(double.maxFinite, 50.0),
+                space(double.maxFinite, 30.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,7 +198,7 @@ class HomeView extends GetView<HomeControlller> {
                     ),
                   ],
                 ),
-                space(double.maxFinite, 30.0),
+                space(double.maxFinite, 10.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -224,7 +240,7 @@ class HomeView extends GetView<HomeControlller> {
                             'assets/type8.svg', 'Medical Oncology')),
                   ],
                 ),
-                space(double.maxFinite, 50.0),
+                space(double.maxFinite, 30.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -245,33 +261,43 @@ class HomeView extends GetView<HomeControlller> {
                     ),
                   ],
                 ),
-                space(double.maxFinite, 30.0),
+                space(double.maxFinite, 10.0),
 
+                Obx(() => controller.data.isEmpty
+                    ? Text('hello ${controller.data.length}')
+                    : LimitedBox(
+                        maxHeight: 680,
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: 4,
+                          itemBuilder: (context, index) {
+                            final doctor = controller.data[index];
+                            final imagePath = doctor['profile_image']?.toString();
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  8.0, 0.0, 8.0, 16.0),
+                              child: doctorcard(
+                                imagePath.toString(),
+                                '${doctor['first_name'] ?? ''} ${doctor['last_name'] ?? ''}',
+                                doctor['medical_id']?.toString() ?? '',
+                                doctor['about_me']?.toString() ??
+                                    'No details provided',
+                                doctor['total_exp']?.toString() ?? '0',
+                                doctor['location']?.toString() ??
+                                    'Not specified',
+                                doctor['custom_id']?.toString() ?? '0',
+                              ),
+                            );
+                          },
+                        ),
+                      )),
 
-                doctorcard(
-                    'assets/dc-2.png',
-                    'Akshay Bhadresha Akshay Bhadresha Akshay Bhadresha ',
-                    'md',
-                    'work',
-                    'exprience',
-                    'location',
-                    'custom_id'),
-                space(double.maxFinite, 20.0),
-                doctorcard('assets/hospital1.png', 'name', 'md', 'work',
-                    'exprience', 'location', 'custom_id'),
-                space(double.maxFinite, 20.0),
-                doctorcard('assets/doctor1.png', 'name', 'md', 'work',
-                    'exprience', 'location', 'custom_id'),
-                space(double.maxFinite, 20.0),
-                doctorcard('assets/doctor1.png', 'name', 'md', 'work',
-                    'exprience', 'location', 'custom_id'),
-                space(double.maxFinite, 50.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Top Hospitals',
+                      'Top Hospital',
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
@@ -286,7 +312,7 @@ class HomeView extends GetView<HomeControlller> {
                     ),
                   ],
                 ),
-                space(double.maxFinite, 40.0),
+
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -305,13 +331,13 @@ class HomeView extends GetView<HomeControlller> {
                     ],
                   ),
                 ),
-                space(double.maxFinite, 65.0),
+                space(double.maxFinite, 35.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Top Clinic`s',
+                      'Top Clinic',
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
@@ -331,7 +357,7 @@ class HomeView extends GetView<HomeControlller> {
                     ),
                   ],
                 ),
-                space(double.maxFinite, 40.0),
+                space(double.maxFinite, 10.0),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -378,3 +404,35 @@ class HomeView extends GetView<HomeControlller> {
 // ],
 // onTap: (int i) => print('click index=$i'),
 // )
+// SizedBox(
+// width: 50,
+// height: 50,
+// child: LoadingAnimationWidget.hexagonDots(
+// color: Colors.yellow,
+// size: 20,
+// ),
+// )
+//     : Expanded(
+// child: ListView.builder(
+// itemCount: controller.data.length,
+// itemBuilder: (context, index) {
+// final doctor = controller.data[index];
+// final imagePath = doctor['profile_image']?.toString();
+//
+// return Padding(
+// padding:
+// const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 16.0),
+// child: doctorcard(
+// imagePath.toString(),
+// '${doctor['first_name'] ?? ''} ${doctor['last_name'] ?? ''}',
+// doctor['medical_id']?.toString() ?? '',
+// doctor['about_me']?.toString() ??
+// 'No details provided',
+// doctor['total_exp']?.toString() ?? '0',
+// doctor['location']?.toString() ?? 'Not specified',
+// doctor['custom_id']?.toString() ?? '0',
+// ),
+// );
+// },
+// ),
+// ),

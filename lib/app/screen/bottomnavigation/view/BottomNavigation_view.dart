@@ -57,436 +57,422 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                     child: AnimatedContainer(
                       duration: const Duration(seconds: 5),
                       curve: Curves.easeIn,
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.5,
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(30.0),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                spreadRadius: 2,
-                                blurRadius: 8,
-                              ),
-                            ],
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(30.0),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 15, bottom: 10),
-                                child: Text(
-                                  "Hospital/Clinic Name",
-                                  style: Theme.of(context).textTheme.bodyLarge,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              spreadRadius: 2,
+                              blurRadius: 8,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 10),
+                              child: Text(
+                                "Hospital/Clinic Name",
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ),
+                            TextFormField(
+                              controller: controller.hospitalname,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                hintText: "Hospital/Clinic Name",
+                                fillColor:
+                                    const Color.fromRGBO(248, 247, 247, 1),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color.fromRGBO(220, 215, 215, 1),
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: primaryColor,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0,
+                                  horizontal: 16,
                                 ),
                               ),
-                              TextFormField(
-                                controller: controller.hospitalname,
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                  hintText: "Hospital/Clinic Name",
-                                  fillColor:
-                                      const Color.fromRGBO(248, 247, 247, 1),
-                                  filled: true,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color.fromRGBO(220, 215, 215, 1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: primaryColor,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 0,
-                                    horizontal: 16,
-                                  ),
-                                ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 10),
+                              child: Text(
+                                "Rate/Range",
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 15, bottom: 10),
-                                child: Text(
-                                  "Rate/Range",
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: DropdownButtonFormField<String>(
-                                      items: ["100", "200"]
-                                          .map((String value) =>
-                                              DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
-                                              ))
-                                          .toList(),
-                                      onChanged: (String? newValue) {
-                                        controller.minRate.value =
-                                            newValue.toString();
-                                        // Handle dropdown selection
-                                      },
-                                      decoration: InputDecoration(
-                                        fillColor: const Color.fromRGBO(
-                                            248, 247, 247, 1),
-                                        filled: true,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color.fromRGBO(
-                                                220, 215, 215, 1),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: DropdownButtonFormField<String>(
+                                    items: ["100", "200"]
+                                        .map((String value) =>
+                                            DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            ))
+                                        .toList(),
+                                    onChanged: (String? newValue) {
+                                      controller.minRate.value =
+                                          newValue.toString();
+                                      // Handle dropdown selection
+                                    },
+                                    decoration: InputDecoration(
+                                      fillColor: const Color.fromRGBO(
+                                          248, 247, 247, 1),
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(220, 215, 215, 1),
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: primaryColor,
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                          vertical: 0,
-                                          horizontal: 16,
-                                        ),
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
-                                      hint: const Center(
-                                        child: Text(
-                                          "Select Rate", // Centered hint text
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors
-                                                .grey, // Customize color here
-                                          ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                          width: 1,
                                         ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                        vertical: 0,
+                                        horizontal: 16,
                                       ),
                                     ),
-                                  ),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text(
-                                      "-",
-                                      style: TextStyle(fontSize: 30),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: DropdownButtonFormField<String>(
-                                      items: ["1000", "2000"]
-                                          .map((String value) =>
-                                              DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
-                                              ))
-                                          .toList(),
-                                      onChanged: (String? newValue) {
-                                        controller.maxRate.value =
-                                            newValue.toString();
-                                        // Handle dropdown selection
-                                      },
-                                      decoration: InputDecoration(
-                                        fillColor: const Color.fromRGBO(
-                                            248, 247, 247, 1),
-                                        filled: true,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color.fromRGBO(
-                                                220, 215, 215, 1),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: primaryColor,
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                          vertical: 0,
-                                          horizontal: 16,
-                                        ),
-                                      ),
-                                      hint: const Center(
-                                        child: Text(
-                                          "Select Rate", // Centered hint text
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors
-                                                .grey, // Customize color here
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 15, bottom: 10),
-                                          child: Text(
-                                            "Specified category",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge,
-                                          ),
-                                        ),
-                                        DropdownButtonFormField<int>(
-                                          value: controller
-                                                  .selectedType.value.isEmpty
-                                              ? null
-                                              : int.tryParse(controller
-                                                  .selectedType.value),
-                                          items: controller.categoryList
-                                              .map((c.Result category) {
-                                            return DropdownMenuItem<int>(
-                                              value: category.id,
-                                              child: Text(
-                                                category.categoryName ?? 'N/A',
-                                                overflow: TextOverflow
-                                                    .ellipsis, // Truncate long text if needed
-                                              ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (int? newValue) {
-                                            if (newValue != null) {
-                                              // Set the selected category id
-                                              controller.category.value =
-                                                  newValue.toString();
-                                            }
-                                            print(controller.category);
-                                          },
-                                          decoration: InputDecoration(
-                                            fillColor: const Color.fromRGBO(
-                                                248, 247, 247, 1),
-                                            filled: true,
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                color: Color.fromRGBO(
-                                                    220, 215, 215, 1),
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: primaryColor,
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 0,
-                                                    horizontal: 16),
-                                          ),
-                                          hint: const Center(
-                                            child: Text(
-                                              "Select Category", // Centered hint text
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                          ),
-                                          // Use the dropdown's itemHeight property to limit the number of visible items
-                                          menuMaxHeight:
-                                              200, // This sets the maximum height of the dropdown
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 15, bottom: 10),
-                                          child: Text(
-                                            "Shift",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge,
-                                          ),
-                                        ),
-                                        DropdownButtonFormField<String>(
-                                          items: [
-                                            "Morning",
-                                            "Afternoon",
-                                            'Evening',
-                                            "Night"
-                                          ]
-                                              .map((String value) =>
-                                                  DropdownMenuItem<String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  ))
-                                              .toList(),
-                                          onChanged: (String? newValue) {
-                                            controller.shift.value =
-                                                newValue.toString();
-                                            print(controller
-                                                .shift); // Handle dropdown selection for shifts
-                                          },
-                                          decoration: InputDecoration(
-                                            fillColor: const Color.fromRGBO(
-                                                248, 247, 247, 1),
-                                            filled: true,
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  color: Color.fromRGBO(
-                                                      220, 215, 215, 1)),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: primaryColor,
-                                                  width: 1),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 0,
-                                                    horizontal: 16),
-                                          ),
-                                          hint: const Center(
-                                            child: Text(
-                                              "Your Shift", // Centered hint text
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Radio<String>(
-                                        value: "Schedule",
-                                        groupValue:
-                                            controller.selectedType.value,
-                                        onChanged: (value) {
-                                          controller.selectedType.value =
-                                              value!;
-                                        },
-                                        activeColor:
-                                            primaryColor, // primary color when selected
-                                      ),
-                                      Text(
-                                        "Schedule",
+                                    hint: const Center(
+                                      child: Text(
+                                        "Select Rate", // Centered hint text
                                         style: TextStyle(
-                                            fontSize: 16,
-                                            color: controller
-                                                        .selectedType.value ==
-                                                    "Schedule"
-                                                ? primaryColor
-                                                : secondaryColor // Text color based on selection
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors
+                                              .grey, // Customize color here
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: Text(
+                                    "-",
+                                    style: TextStyle(fontSize: 30),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: DropdownButtonFormField<String>(
+                                    items: ["1000", "2000"]
+                                        .map((String value) =>
+                                            DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            ))
+                                        .toList(),
+                                    onChanged: (String? newValue) {
+                                      controller.maxRate.value =
+                                          newValue.toString();
+                                      // Handle dropdown selection
+                                    },
+                                    decoration: InputDecoration(
+                                      fillColor: const Color.fromRGBO(
+                                          248, 247, 247, 1),
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(220, 215, 215, 1),
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                        vertical: 0,
+                                        horizontal: 16,
+                                      ),
+                                    ),
+                                    hint: const Center(
+                                      child: Text(
+                                        "Select Rate", // Centered hint text
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors
+                                              .grey, // Customize color here
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 15, bottom: 10),
+                                        child: Text(
+                                          "Specified category",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                      ),
+                                      DropdownButtonFormField<int>(
+                                        value: controller
+                                                .selectedType.value.isEmpty
+                                            ? null
+                                            : int.tryParse(
+                                                controller.selectedType.value),
+                                        items: controller.categoryList
+                                            .map((c.Result category) {
+                                          return DropdownMenuItem<int>(
+                                            value: category.id,
+                                            child: Text(
+                                              category.categoryName ?? 'N/A',
+                                              overflow: TextOverflow
+                                                  .ellipsis, // Truncate long text if needed
                                             ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (int? newValue) {
+                                          if (newValue != null) {
+                                            // Set the selected category id
+                                            controller.category.value =
+                                                newValue.toString();
+                                          }
+                                          print(controller.category);
+                                        },
+                                        decoration: InputDecoration(
+                                          fillColor: const Color.fromRGBO(
+                                              248, 247, 247, 1),
+                                          filled: true,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color.fromRGBO(
+                                                  220, 215, 215, 1),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: primaryColor,
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 0, horizontal: 16),
+                                        ),
+                                        hint: const Center(
+                                          child: Text(
+                                            "Select Category", // Centered hint text
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                        // Use the dropdown's itemHeight property to limit the number of visible items
+                                        menuMaxHeight:
+                                            200, // This sets the maximum height of the dropdown
                                       ),
                                     ],
                                   ),
-                                  Row(
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Radio<String>(
-                                        value: "Emergency",
-                                        groupValue:
-                                            controller.selectedType.value,
-                                        onChanged: (value) {
-                                          controller.selectedType.value =
-                                              value!;
-                                        },
-                                        activeColor:
-                                            primaryColor, // primary color when selected
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 15, bottom: 10),
+                                        child: Text(
+                                          "Shift",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
                                       ),
-                                      Text(
-                                        "Emergency",
-                                        style: TextStyle(
-                                          fontSize: 16,
+                                      DropdownButtonFormField<String>(
+                                        items: [
+                                          "Morning",
+                                          "Afternoon",
+                                          'Evening',
+                                          "Night"
+                                        ]
+                                            .map((String value) =>
+                                                DropdownMenuItem<String>(
+                                                  value: value,
+                                                  child: Text(value),
+                                                ))
+                                            .toList(),
+                                        onChanged: (String? newValue) {
+                                          controller.shift.value =
+                                              newValue.toString();
+                                          print(controller
+                                              .shift); // Handle dropdown selection for shifts
+                                        },
+                                        decoration: InputDecoration(
+                                          fillColor: const Color.fromRGBO(
+                                              248, 247, 247, 1),
+                                          filled: true,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                                color: Color.fromRGBO(
+                                                    220, 215, 215, 1)),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: primaryColor, width: 1),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 0, horizontal: 16),
+                                        ),
+                                        hint: const Center(
+                                          child: Text(
+                                            "Your Shift", // Centered hint text
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    Radio<String>(
+                                      value: "Schedule",
+                                      groupValue: controller.selectedType.value,
+                                      onChanged: (value) {
+                                        controller.selectedType.value = value!;
+                                      },
+                                      activeColor:
+                                          primaryColor, // primary color when selected
+                                    ),
+                                    Text(
+                                      "Schedule",
+                                      style: TextStyle(
+                                          fontSize: 14,
                                           color: controller
                                                       .selectedType.value ==
-                                                  "Emergency"
+                                                  "Schedule"
                                               ? primaryColor
-                                              : secondaryColor, // Text color based on selection
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: ElevatedButton(
-                                    onPressed: () async {
-                                      await controller.requestLocum();
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      foregroundColor: white,
-                                      backgroundColor: primaryColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
+                                              : secondaryColor // Text color based on selection
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                                const Spacer(),
+                                Row(
+                                  children: [
+                                    Radio<String>(
+                                      value: "Emergency",
+                                      groupValue: controller.selectedType.value,
+                                      onChanged: (value) {
+                                        controller.selectedType.value = value!;
+                                      },
+                                      activeColor:
+                                          primaryColor, // primary color when selected
+                                    ),
+                                    Text(
+                                      "Emergency",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: controller.selectedType.value ==
+                                                "Emergency"
+                                            ? primaryColor
+                                            : secondaryColor, // Text color based on selection
                                       ),
                                     ),
-                                    child: Text(
-                                        (controller.isLoading.value == true)
-                                            ? "Book Now"
-                                            : "Lodaing")),
-                              )
-                            ],
-                          ),
+                                  ],
+                                ),
+                                const Spacer(),
+                              ],
+                            ),
+
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: ElevatedButton(
+                                  onPressed: () async {
+                                    await controller.requestLocum();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: white,
+                                    backgroundColor: primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  child: Text(
+                                      (controller.isLoading.value == true)
+                                          ? "Book Now"
+                                          : "Lodaing")),
+                            )
+                          ],
                         ),
                       ),
                     ),
                   )
-                : SizedBox.shrink(),
+                : const SizedBox.shrink(),
           ),
         ],
       ),

@@ -36,19 +36,22 @@ specialcard(String svg, String title) {
         ),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: SvgPicture.asset(svg),
+          child: SizedBox(
+              width: 40,
+              height: 40,
+              child: SvgPicture.asset(svg,fit: BoxFit.contain,)),
         ),
       ),
       space(double.maxFinite, 10.0),
       Text(
-        overflow: TextOverflow.ellipsis,
+        overflow: TextOverflow.visible,
         maxLines: 1,
         softWrap: true,
         textAlign: TextAlign.center,
         title,
         style: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 10,
+            fontSize: 9,
             color: HexColor('#326295')),
       ),
     ],
@@ -90,10 +93,9 @@ doctorcard(String image, String name, String md, String work, String exprience,
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   child: Image.network(
                     image,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.cover,// Image.asset('assets/logo.png',width: 120,),
                     errorBuilder: (context, error, stackTrace) {
-                      return const Icon(Icons.broken_image,
-                          color: Colors.grey); // Fallback widget
+                      return Image.asset('assets/doctor-icon.jpg'); // Fallback widget
                     },
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) {
@@ -608,47 +610,31 @@ Widget buildSpecialityCard({
           children: [
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Container(
-                width: 70,
-                height: 70,
-                decoration: BoxDecoration(
-                  color: white,
-                  boxShadow: [
-                    BoxShadow(
-                      offset: const Offset(0, 2),
-                      color: textColor.withOpacity(0.15),
-                      blurRadius: 4.0,
-                      spreadRadius: 0,
-                      blurStyle: BlurStyle.normal,
-                    )
-                  ],
-                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                ),
-                child: ClipRRect(
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(10.0)),
-                    child: Image.network(
-                      imagePath,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons.broken_image,
-                            color: Colors.grey); // Fallback widget
-                      },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child; // When loading is complete
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null, // Show progress indicator
-                          ),
-                        );
-                      },
-                    )),
-              ),
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                  child: Image.network(
+                    imagePath,
+                    width: 60,
+                    height: 60,
+                    fit: BoxFit.none,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.broken_image,
+                          color: Colors.grey); // Fallback widget
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child; // When loading is complete
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null, // Show progress indicator
+                        ),
+                      );
+                    },
+                  )),
             ),
             Expanded(
               child: Padding(
