@@ -21,7 +21,6 @@ class HomeView extends GetView<HomeControlller> {
   final firstName = Get.find<AuthProvider>().getUser?.firstName;
   final lastName = Get.find<AuthProvider>().getUser?.lastName;
 
-
   // appBar: AppBar(
   // automaticallyImplyLeading: false,
   // backgroundColor: primaryColor,
@@ -42,76 +41,76 @@ class HomeView extends GetView<HomeControlller> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-            backgroundColor: Colors.white,
-            centerTitle: false,
-            leading: Builder(
-              builder: (context) => IconButton(
-                icon: Icon(
-                  Icons.menu_rounded,
-                  color: HexColor('#0866C6'),
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              ),
-            ),
-            title: Text(
-              'Hi, $firstName $lastName',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: HexColor('#174666')),
-            ),
-            actions: [
-              InkWell(
-                onTap: () {
-                  Get.toNamed('/notification');
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.all(8.0), // Adjust the padding as needed
-                  child: Transform.translate(
-                    offset: const Offset(-15, 0),
-                    child: Icon(
-                      Icons.notifications_active_rounded,
-                      color: HexColor('#0866C6'),
-                    ),
-                  ),
-                ),
-              ),
-            ]),
-        drawer: Drawer(
-          child: Material(
-            color: Colors.white,
-            borderRadius: BorderRadius.zero, // Remove rounded corners
-            child: SafeArea(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  ListTile(
-                    title: const Text('About us'),
-                    onTap: () {
-                      Get.to(const AboutUs());
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Contact us'),
-                    onTap: () {
-                      Get.to(const ContactUs());
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Privacy policy'),
-                    onTap: () {
-                      Get.toNamed('/privacy');
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        // appBar: AppBar(
+        //     backgroundColor: Colors.white,
+        //     centerTitle: false,
+        //     leading: Builder(
+        //       builder: (context) => IconButton(
+        //         icon: Icon(
+        //           Icons.menu_rounded,
+        //           color: HexColor('#0866C6'),
+        //         ),
+        //         onPressed: () {
+        //           Scaffold.of(context).openDrawer();
+        //         },
+        //       ),
+        //     ),
+        //     title: Text(
+        //       'Hi, $firstName $lastName',
+        //       style: TextStyle(
+        //           fontWeight: FontWeight.w500,
+        //           fontSize: 14,
+        //           color: HexColor('#174666')),
+        //     ),
+        //     actions: [
+        //       InkWell(
+        //         onTap: () {
+        //           Get.toNamed('/notification');
+        //         },
+        //         child: Container(
+        //           padding:
+        //               const EdgeInsets.all(8.0), // Adjust the padding as needed
+        //           child: Transform.translate(
+        //             offset: const Offset(-15, 0),
+        //             child: Icon(
+        //               Icons.notifications_active_rounded,
+        //               color: HexColor('#0866C6'),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ]),
+        // drawer: Drawer(
+        //   child: Material(
+        //     color: Colors.white,
+        //     borderRadius: BorderRadius.zero, // Remove rounded corners
+        //     child: SafeArea(
+        //       child: ListView(
+        //         padding: EdgeInsets.zero,
+        //         children: <Widget>[
+        //           ListTile(
+        //             title: const Text('About us'),
+        //             onTap: () {
+        //               Get.to(const AboutUs());
+        //             },
+        //           ),
+        //           ListTile(
+        //             title: const Text('Contact us'),
+        //             onTap: () {
+        //               Get.to(const ContactUs());
+        //             },
+        //           ),
+        //           ListTile(
+        //             title: const Text('Privacy policy'),
+        //             onTap: () {
+        //               Get.toNamed('/privacy');
+        //             },
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 0.0),
@@ -262,7 +261,6 @@ class HomeView extends GetView<HomeControlller> {
                   ],
                 ),
                 space(double.maxFinite, 10.0),
-
                 Obx(() => controller.data.isEmpty
                     ? Text('hello ${controller.data.length}')
                     : LimitedBox(
@@ -272,7 +270,8 @@ class HomeView extends GetView<HomeControlller> {
                           itemCount: 4,
                           itemBuilder: (context, index) {
                             final doctor = controller.data[index];
-                            final imagePath = doctor['profile_image']?.toString();
+                            final imagePath =
+                                doctor['profile_image']?.toString();
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(
                                   8.0, 0.0, 8.0, 16.0),
@@ -291,7 +290,6 @@ class HomeView extends GetView<HomeControlller> {
                           },
                         ),
                       )),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -312,7 +310,6 @@ class HomeView extends GetView<HomeControlller> {
                     ),
                   ],
                 ),
-
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(

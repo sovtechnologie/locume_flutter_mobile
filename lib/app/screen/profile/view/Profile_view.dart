@@ -13,45 +13,45 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-            backgroundColor: Colors.white,
-            centerTitle: false,
-            leading: Builder(
-              builder: (context) => IconButton(
-                icon: Icon(
-                  Icons.menu_rounded,
-                  color: HexColor('#0866C6'),
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              ),
-            ),
-            title: Text(
-              'Hi, sdf',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: HexColor('#174666')),
-            ),
-            actions: [
-              InkWell(
-                onTap: () {
-                  Get.toNamed('/notification');
-                },
-                child: Container(
-                  padding:
-                  const EdgeInsets.all(8.0), // Adjust the padding as needed
-                  child: Transform.translate(
-                    offset: const Offset(-15, 0),
-                    child: Icon(
-                      Icons.notifications_active_rounded,
-                      color: HexColor('#0866C6'),
-                    ),
-                  ),
-                ),
-              ),
-            ]),
+        // appBar: AppBar(
+        //     backgroundColor: Colors.white,
+        //     centerTitle: false,
+        //     leading: Builder(
+        //       builder: (context) => IconButton(
+        //         icon: Icon(
+        //           Icons.menu_rounded,
+        //           color: HexColor('#0866C6'),
+        //         ),
+        //         onPressed: () {
+        //           Scaffold.of(context).openDrawer();
+        //         },
+        //       ),
+        //     ),
+        //     title: Text(
+        //       'Hi, sdf',
+        //       style: TextStyle(
+        //           fontWeight: FontWeight.w500,
+        //           fontSize: 14,
+        //           color: HexColor('#174666')),
+        //     ),
+        //     actions: [
+        //       InkWell(
+        //         onTap: () {
+        //           Get.toNamed('/notification');
+        //         },
+        //         child: Container(
+        //           padding:
+        //           const EdgeInsets.all(8.0), // Adjust the padding as needed
+        //           child: Transform.translate(
+        //             offset: const Offset(-15, 0),
+        //             child: Icon(
+        //               Icons.notifications_active_rounded,
+        //               color: HexColor('#0866C6'),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ]),
         body: Obx(() {
           if (controller.isLoading.value) {
             return const Center(
@@ -94,15 +94,16 @@ class ProfileView extends GetView<ProfileController> {
                             ? CircleAvatar(
                                 radius: 55, // Avatar size
                                 backgroundImage: NetworkImage(profileImage),
-                                onBackgroundImageError: (exception, stackTrace) {
+                                onBackgroundImageError:
+                                    (exception, stackTrace) {
                                   // Handle image load failure
                                   print('Error loading image');
                                 },
                               )
                             : CircleAvatar(
                                 radius: 60, // Avatar size
-                                backgroundColor:
-                                    Colors.grey[200], // Background color for icon
+                                backgroundColor: Colors
+                                    .grey[200], // Background color for icon
                                 child: Icon(
                                   Icons.person,
                                   size: 40, // Icon size
@@ -120,7 +121,8 @@ class ProfileView extends GetView<ProfileController> {
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                                 width: 1,
-                                color: const Color.fromARGB(124, 175, 175, 175))),
+                                color:
+                                    const Color.fromARGB(124, 175, 175, 175))),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
@@ -149,7 +151,8 @@ class ProfileView extends GetView<ProfileController> {
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                                 width: 1,
-                                color: const Color.fromARGB(124, 175, 175, 175))),
+                                color:
+                                    const Color.fromARGB(124, 175, 175, 175))),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
@@ -181,7 +184,8 @@ class ProfileView extends GetView<ProfileController> {
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                                 width: 1,
-                                color: const Color.fromARGB(124, 175, 175, 175))),
+                                color:
+                                    const Color.fromARGB(124, 175, 175, 175))),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Row(
@@ -200,7 +204,8 @@ class ProfileView extends GetView<ProfileController> {
                                   const SizedBox(
                                     height: 5,
                                   ),
-                                  const Text("""These are the professional details shown to users in the app.""")
+                                  const Text(
+                                      """These are the professional details shown to users in the app.""")
                                 ],
                               ),
                               Image.asset("assets/Stars.png")
@@ -238,7 +243,8 @@ class ProfileView extends GetView<ProfileController> {
                             data.availability != null &&
                                     data.availability!.isNotEmpty
                                 ? Wrap(
-                                    spacing: 10, // Horizontal space between items
+                                    spacing:
+                                        10, // Horizontal space between items
                                     runSpacing:
                                         10, // Vertical space between lines
                                     children:
@@ -247,8 +253,8 @@ class ProfileView extends GetView<ProfileController> {
                                     }).toList(),
                                   )
                                 : Container(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 15),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
                                     child: Text("No availability listed",
                                         style: TextStyle(fontSize: 16)),
                                   ),
@@ -261,7 +267,8 @@ class ProfileView extends GetView<ProfileController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     mylabel("Rate/Hourly  "),
-                                    boxfield(data.hourlyRate?.toString() ?? 'N/A')
+                                    boxfield(
+                                        data.hourlyRate?.toString() ?? 'N/A')
                                   ],
                                 ),
                                 const SizedBox(
@@ -293,7 +300,8 @@ class ProfileView extends GetView<ProfileController> {
                             data.preferredSpecialities != null &&
                                     data.preferredSpecialities!.isNotEmpty
                                 ? Wrap(
-                                    spacing: 10, // Horizontal space between items
+                                    spacing:
+                                        10, // Horizontal space between items
                                     runSpacing:
                                         10, // Vertical space between lines
                                     children: data.preferredSpecialities!
@@ -303,8 +311,8 @@ class ProfileView extends GetView<ProfileController> {
                                     }).toList(),
                                   )
                                 : Container(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 15),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
                                     child: Text("No availability listed",
                                         style: TextStyle(fontSize: 16)),
                                   ),
@@ -315,7 +323,8 @@ class ProfileView extends GetView<ProfileController> {
                             mylabel("Specified category"),
                             data.category != null && data.category!.isNotEmpty
                                 ? Wrap(
-                                    spacing: 10, // Horizontal space between items
+                                    spacing:
+                                        10, // Horizontal space between items
                                     runSpacing:
                                         10, // Vertical space between lines
                                     children: data.category!.map((category) {
@@ -323,8 +332,8 @@ class ProfileView extends GetView<ProfileController> {
                                     }).toList(),
                                   )
                                 : Container(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 15),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
                                     child: Text("No availability listed",
                                         style: TextStyle(fontSize: 16)),
                                   ),

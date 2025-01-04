@@ -27,9 +27,10 @@ class LocumController extends GetxController {
       if (decodedResponse['result'] != null &&
           decodedResponse['result'] is List) {
         // Use `.assignAll()` to update reactive list
-        data.assignAll(List<Map<dynamic, dynamic>>.from(decodedResponse['result']));
+        data.assignAll(
+            List<Map<dynamic, dynamic>>.from(decodedResponse['result']));
         if (kDebugMode) {
-          print(data);
+          // print(data);
           print('Data fetched: ${data.length} items');
         }
       } else {

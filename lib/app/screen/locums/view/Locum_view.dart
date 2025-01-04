@@ -14,51 +14,49 @@ class LocumView extends GetView<LocumController> {
     Get.put(LocumController());
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-            backgroundColor: Colors.white,
-            centerTitle: false,
-            leading: Builder(
-              builder: (context) => IconButton(
-                icon: Icon(
-                  Icons.menu_rounded,
-                  color: HexColor('#0866C6'),
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              ),
-            ),
-            title: Text(
-              'Locu',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: HexColor('#174666')),
-            ),
-            actions: [
-              InkWell(
-                onTap: () {
-                  Get.toNamed('/notification');
-                },
-                child: Container(
-                  padding:
-                  const EdgeInsets.all(8.0), // Adjust the padding as needed
-                  child: Transform.translate(
-                    offset: const Offset(-15, 0),
-                    child: Icon(
-                      Icons.notifications_active_rounded,
-                      color: HexColor('#0866C6'),
-                    ),
-                  ),
-                ),
-              ),
-            ]),
+        // appBar: AppBar(
+        //     backgroundColor: Colors.white,
+        //     centerTitle: false,
+        //     leading: Builder(
+        //       builder: (context) => IconButton(
+        //         icon: Icon(
+        //           Icons.menu_rounded,
+        //           color: HexColor('#0866C6'),
+        //         ),
+        //         onPressed: () {
+        //           Scaffold.of(context).openDrawer();
+        //         },
+        //       ),
+        //     ),
+        //     title: Text(
+        //       'Locu',
+        //       style: TextStyle(
+        //           fontWeight: FontWeight.w500,
+        //           fontSize: 14,
+        //           color: HexColor('#174666')),
+        //     ),
+        //     actions: [
+        //       InkWell(
+        //         onTap: () {
+        //           Get.toNamed('/notification');
+        //         },
+        //         child: Container(
+        //           padding:
+        //           const EdgeInsets.all(8.0), // Adjust the padding as needed
+        //           child: Transform.translate(
+        //             offset: const Offset(-15, 0),
+        //             child: Icon(
+        //               Icons.notifications_active_rounded,
+        //               color: HexColor('#0866C6'),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ]),
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 0.0),
@@ -79,10 +77,8 @@ class LocumView extends GetView<LocumController> {
                   borderRadius: const BorderRadius.all(Radius.circular(15.0)),
                 ),
                 child: TextField(
-                  onChanged: (value){
-                    if(value.isEmpty){
-
-                    }
+                  onChanged: (value) {
+                    if (value.isEmpty) {}
                   },
                   strutStyle: const StrutStyle(
                       fontSize: 10, fontWeight: FontWeight.bold),
@@ -123,7 +119,7 @@ class LocumView extends GetView<LocumController> {
                   ),
                 ),
               ),
-               space(double.maxFinite, 20.0),
+              space(double.maxFinite, 20.0),
               // locationbuttonsandfilter('Mumbai'),
               // space(double.maxFinite, 10.0),
               Obx(
@@ -143,10 +139,12 @@ class LocumView extends GetView<LocumController> {
                           itemCount: controller.data.length,
                           itemBuilder: (context, index) {
                             final doctor = controller.data[index];
-                            final imagePath = doctor['profile_image']?.toString();
+                            final imagePath =
+                                doctor['profile_image']?.toString();
 
                             return Padding(
-                              padding:const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 16.0),
+                              padding: const EdgeInsets.fromLTRB(
+                                  8.0, 0.0, 8.0, 16.0),
                               child: doctorcard(
                                 imagePath.toString(),
                                 '${doctor['first_name'] ?? ''} ${doctor['last_name'] ?? ''}',
@@ -154,7 +152,8 @@ class LocumView extends GetView<LocumController> {
                                 doctor['about_me']?.toString() ??
                                     'No details provided',
                                 doctor['total_exp']?.toString() ?? '0',
-                                doctor['location']?.toString() ?? 'Not specified',
+                                doctor['location']?.toString() ??
+                                    'Not specified',
                                 doctor['custom_id']?.toString() ?? '0',
                               ),
                             );

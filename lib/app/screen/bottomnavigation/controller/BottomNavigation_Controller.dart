@@ -7,7 +7,11 @@ import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
     as s;
 import 'package:locume/app/screen/login/signup/model/category_model.dart' as c;
 
+import '../../../../api/auth_provider.dart';
+
 class BottomnavigationController extends GetxController {
+  final firstName = Get.find<AuthProvider>().getUser?.firstName;
+  final lastName = Get.find<AuthProvider>().getUser?.lastName;
   var currentStep = 0.obs;
   RxBool showBottom = false.obs;
   RxBool isLoading = false.obs;

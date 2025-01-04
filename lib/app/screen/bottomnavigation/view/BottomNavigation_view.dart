@@ -13,6 +13,8 @@ import 'package:locume/app/screen/privacypolicy/view/Privacy_view.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
 import 'package:locume/widget/custom_button.dart';
 import 'package:locume/widget/custom_textField.dart';
+import '../../statics/about.dart';
+import '../../statics/contact.dart';
 import '../controller/BottomNavigation_Controller.dart';
 
 class BottomnavigationView extends GetView<BottomnavigationController> {
@@ -24,6 +26,90 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
       systemNavigationBarColor: white,
     ));
     return Scaffold(
+      appBar: AppBar(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.white,
+          shadowColor: Colors.transparent,
+          surfaceTintColor: Colors.white,
+          elevation: 0,
+          centerTitle: false,
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: Icon(
+                Icons.menu_rounded,
+                color: HexColor('#0866C6'),
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+          ),
+          title: Text(
+            'Hi, ${controller.firstName} ${controller.lastName}',
+            style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                color: HexColor('#174666')),
+          ),
+          actions: [
+            InkWell(
+              onTap: () {
+                Get.toNamed('/notification');
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.all(8.0), // Adjust the padding as needed
+                child: Transform.translate(
+                  offset: const Offset(-15, 0),
+                  child: Icon(
+                    Icons.notifications_active_rounded,
+                    color: HexColor('#0866C6'),
+                  ),
+                ),
+              ),
+            ),
+          ]),
+      drawer: Drawer(
+        child: Material(
+          color: Colors.white,
+          borderRadius: BorderRadius.zero, // Remove rounded corners
+          child: SafeArea(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                ListTile(
+                  title: const Text('About us'),
+                  onTap: () {
+                    Get.to(const AboutUs());
+                  },
+                ),
+                ListTile(
+                  title: const Text('Contact us'),
+                  onTap: () {
+                    Get.to(const ContactUs());
+                  },
+                ),
+                ListTile(
+                  title: const Text('Privacy policy'),
+                  onTap: () {
+                    Get.toNamed('/privacy');
+                  },
+                ),
+                const ListTile(
+                  title: Text(
+                    'Logout',
+                    softWrap: true,
+                    style: TextStyle(color: Colors.redAccent),
+                  ),
+                  // onTap: () {
+                  //   Get.toNamed('/privacy');
+                  // },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Stack(
         children: [
@@ -448,7 +534,6 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                 const Spacer(),
                               ],
                             ),
-
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButton(

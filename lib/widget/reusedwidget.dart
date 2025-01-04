@@ -39,7 +39,10 @@ specialcard(String svg, String title) {
           child: SizedBox(
               width: 40,
               height: 40,
-              child: SvgPicture.asset(svg,fit: BoxFit.contain,)),
+              child: SvgPicture.asset(
+                svg,
+                fit: BoxFit.contain,
+              )),
         ),
       ),
       space(double.maxFinite, 10.0),
@@ -66,7 +69,6 @@ doctorcard(String image, String name, String md, String work, String exprience,
       print(id);
     },
     child: Container(
-      height: 150,
       width: double.maxFinite,
       decoration: BoxDecoration(
         color: HexColor('#FFFFFF'),
@@ -87,15 +89,17 @@ doctorcard(String image, String name, String md, String work, String exprience,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 150,
+              height: 100,
               width: 100,
               child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   child: Image.network(
                     image,
-                    fit: BoxFit.cover,// Image.asset('assets/logo.png',width: 120,),
+                    fit: BoxFit
+                        .cover, // Image.asset('assets/logo.png',width: 120,),
                     errorBuilder: (context, error, stackTrace) {
-                      return Image.asset('assets/doctor-icon.jpg'); // Fallback widget
+                      return Image.asset(
+                          'assets/doctor-icon.jpg'); // Fallback widget
                     },
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) {
@@ -113,124 +117,75 @@ doctorcard(String image, String name, String md, String work, String exprience,
                   )),
             ),
             space(10.0, 0.0),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(
-                      name,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: HexColor('#326295')),
-                    ),
-                  ),
-                  space(0.0, 5.0),
-                  Expanded(
-                    child: Text(
-                      md,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                          color: HexColor('#326295')),
-                    ),
-                  ),
-                  space(0.0, 5.0),
-                  Expanded(
-                    child: Text(
-                      work,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 11,
-                          color: HexColor('#326295')),
-                    ),
-                  ),
-                  space(0.0, 5.0),
-                  Expanded(
-                    child: Text(
-                      exprience,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: HexColor('#326295')),
-                    ),
-                  ),
-                  space(0.0, 5.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        child: Icon(
-                          Icons.location_on_sharp,
-                          size: 10,
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          location,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 10,
-                              color: HexColor('#333333')),
-                        ),
-                      ),
-                    ],
-                  ),
-                  space(0.0, 5.0),
-                  Expanded(
-                    child: Text(
-                      'View Details',
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                          color: HexColor('#0866C6')),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  child: Icon(
-                    Icons.star_rate_rounded,
-                    size: 15,
-                    color: Colors.amberAccent,
-                  ),
-                ),
+                space(10.0, 0.0),
                 Text(
-                  '4.5',
-                  overflow: TextOverflow.ellipsis,
+                  name,
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      color: HexColor('#326295')),
+                ),
+                space(0.0, 5.0),
+                Text(
+                  'MBBS, MD',
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                      color: HexColor('#326295')),
+                ),
+                space(0.0, 5.0),
+                Text(
+                  '$exprience year experience',
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      color: HexColor('#326295')),
+                ),
+                space(0.0, 5.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      child: Icon(
+                        Icons.location_on_sharp,
+                        size: 10,
+                      ),
+                    ),
+                    space(5.0, 0.0),
+                    Text(
+                      location,
+                      overflow: TextOverflow.visible,
+                      softWrap: true,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 10,
+                          color: HexColor('#333333')),
+                    ),
+                  ],
+                ),
+                space(0.0, 5.0),
+                Text(
+                  'View Details',
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 10,
-                      color: HexColor('#333333')),
-                ),
-                Text(
-                  'Rating',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 7,
-                      color: HexColor('#2A7FBA')),
+                      fontSize: 12,
+                      color: HexColor('#0866C6')),
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),
@@ -238,12 +193,11 @@ doctorcard(String image, String name, String md, String work, String exprience,
   );
 }
 
-hospitalcard(String image, String name, String location, String distance) {
+hospitalcard(String image, String name, String location, String doctors) {
   return Container(
-    height: 200,
+    // height: 200,
     width: double.maxFinite,
-    constraints: const BoxConstraints(
-        minHeight: 200, maxHeight: 220, minWidth: 220, maxWidth: 250),
+    constraints: const BoxConstraints(minWidth: 220, maxWidth: 250),
     decoration: BoxDecoration(
       color: HexColor('#F0F3F5'),
       borderRadius: const BorderRadius.all(Radius.circular(10.0)),
@@ -251,90 +205,120 @@ hospitalcard(String image, String name, String location, String distance) {
     child: Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 80,
-            width: 100,
-            child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                child: Image.network(
-                  image,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(Icons.broken_image,
-                        color: Colors.grey); // Fallback widget
-                  },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child; // When loading is complete
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null, // Show progress indicator
-                      ),
-                    );
-                  },
-                )),
+          Center(
+            child: SizedBox(
+              height: 80,
+              // width: 100,
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                  child: Image.network(
+                    image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return SvgPicture.asset(
+                          'assets/type7.svg'); // Fallback widget
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child; // When loading is complete
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null, // Show progress indicator
+                        ),
+                      );
+                    },
+                  )),
+            ),
           ),
           space(0.0, 10.0),
-          Expanded(
-            child: Text(
-              name,
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12,
-                  color: HexColor('#000000')),
+          Text(
+            name,
+            overflow: TextOverflow.visible,
+            softWrap: true,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+            ),
+          ),
+          space(0.0, 7.0),
+          const Text(
+            'Multi Super Specialty Hospital',
+            overflow: TextOverflow.visible,
+            softWrap: true,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
             ),
           ),
           space(0.0, 9.0),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                child: Icon(
-                  Icons.location_on_sharp,
-                  size: 10,
-                ),
+              const Icon(
+                Icons.location_on_sharp,
+                size: 15,
               ),
               space(5.0, 0.0),
-              Expanded(
-                child: Text(
-                  location,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 10,
-                      color: HexColor('#333333')),
-                ),
+              Text(
+                location,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    color: HexColor('#333333')),
               ),
             ],
           ),
           space(0.0, 10.0),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(child: SvgPicture.asset('assets/distancesvg.svg')),
+              Icon(
+                Icons.schedule_send_outlined,
+                color: HexColor('#2A7FBA'),
+                size: 15,
+              ),
               space(5.0, 0.0),
-              Expanded(
-                child: Text(
-                  distance,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 10,
-                      color: HexColor('#333333')),
-                ),
+              Text(
+                '$doctors Doctors',
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    color: HexColor('#2A7FBA')),
+              ),
+            ],
+          ),
+          space(0.0, 10.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.front_hand_sharp,
+                color: HexColor('#2A7FBA'),
+                size: 15,
+              ),
+              space(5.0, 0.0),
+              Text(
+                '$doctors Specialties',
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    color: HexColor('#2A7FBA')),
               ),
             ],
           ),

@@ -123,6 +123,7 @@ class HospitalController extends GetxController {
         data.assignAll(
             List<Map<dynamic, dynamic>>.from(decodedResponse['result']));
         if (kDebugMode) {
+          // print(data);
           print('Data fetched: ${data.length} items');
         }
       } else {

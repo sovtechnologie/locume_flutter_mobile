@@ -19,45 +19,45 @@ class HospitalView extends GetView<HospitalController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-            backgroundColor: Colors.white,
-            centerTitle: false,
-            leading: Builder(
-              builder: (context) => IconButton(
-                icon: Icon(
-                  Icons.menu_rounded,
-                  color: HexColor('#0866C6'),
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              ),
-            ),
-            title: Text(
-              'Hi, Sa',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: HexColor('#174666')),
-            ),
-            actions: [
-              InkWell(
-                onTap: () {
-                  Get.toNamed('/notification');
-                },
-                child: Container(
-                  padding:
-                  const EdgeInsets.all(8.0), // Adjust the padding as needed
-                  child: Transform.translate(
-                    offset: const Offset(-15, 0),
-                    child: Icon(
-                      Icons.notifications_active_rounded,
-                      color: HexColor('#0866C6'),
-                    ),
-                  ),
-                ),
-              ),
-            ]),
+        // appBar: AppBar(
+        //     backgroundColor: Colors.white,
+        //     centerTitle: false,
+        //     leading: Builder(
+        //       builder: (context) => IconButton(
+        //         icon: Icon(
+        //           Icons.menu_rounded,
+        //           color: HexColor('#0866C6'),
+        //         ),
+        //         onPressed: () {
+        //           Scaffold.of(context).openDrawer();
+        //         },
+        //       ),
+        //     ),
+        //     title: Text(
+        //       'Hi, Sa',
+        //       style: TextStyle(
+        //           fontWeight: FontWeight.w500,
+        //           fontSize: 14,
+        //           color: HexColor('#174666')),
+        //     ),
+        //     actions: [
+        //       InkWell(
+        //         onTap: () {
+        //           Get.toNamed('/notification');
+        //         },
+        //         child: Container(
+        //           padding:
+        //           const EdgeInsets.all(8.0), // Adjust the padding as needed
+        //           child: Transform.translate(
+        //             offset: const Offset(-15, 0),
+        //             child: Icon(
+        //               Icons.notifications_active_rounded,
+        //               color: HexColor('#0866C6'),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ]),
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 0.0),
@@ -77,8 +77,8 @@ class HospitalView extends GetView<HospitalController> {
                   borderRadius: const BorderRadius.all(Radius.circular(15.0)),
                 ),
                 child: TextField(
-                  strutStyle:
-                      const StrutStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                  strutStyle: const StrutStyle(
+                      fontSize: 10, fontWeight: FontWeight.bold),
                   style: GoogleFonts.inter(
                       color: Colors.black, fontWeight: FontWeight.w300),
                   keyboardType: TextInputType.text,
@@ -132,16 +132,17 @@ class HospitalView extends GetView<HospitalController> {
                             final hospital = controller.data[index];
                             // final imagePath =
                             //     hospital['profile_image']?.toString();
-      
+
                             return Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     8.0, 0.0, 8.0, 16.0),
                                 child: hospitalcard(
-                                    'image',
-                                    hospital['hospital_name']?.toString() ?? '',
-                                    hospital['hospital_location']?.toString() ??
-                                        '',
-                                    'distance'));
+                                  hospital['hospital_image']?.toString() ?? '',
+                                  hospital['hospital_name']?.toString() ?? '',
+                                  hospital['hospital_location']?.toString() ??
+                                      '',
+                                  hospital['id']?.toString() ?? '',
+                                ));
                           },
                         ),
                       ),
