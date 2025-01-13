@@ -113,8 +113,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: cf1b19f21410b029b6786a54e9764a0cacad3c99
-  firebase_core: b62a5080210edad3f2934314a8b2c6f5124e8e10
-  firebase_messaging: 98619a0572d82cfb3668e78859ba9f1110e268c9
+  firebase_core: 726c34112998e66d1ddaf4b1bef78ed2dd4b9804
+  firebase_messaging: a538130cb2bca3ea0ff0892b8c948bd7d20ecaed
   FirebaseCore: e0510f1523bc0eb21653cac00792e1e2bd6f1771
   FirebaseCoreInternal: f47dd28ae7782e6a4738aad3106071a8fe0af604
   FirebaseInstallations: 6ef4a1c7eb2a61ee1f74727d7f6ce2e72acf1414
@@ -123,12 +123,12 @@ SPEC CHECKSUMS:
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   IOSSecuritySuite: b51056d5411aee567153ca86ce7f6edfdc5d2654
-  jailbreak_root_detection: b95de80c3e51eec1fc7d0225784d2fc038fa95ed
+  jailbreak_root_detection: 9201e1dfd51dc23069cbfb8d4f4a2d18305170bf
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
-  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
 
 PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

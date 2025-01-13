@@ -24,6 +24,8 @@ import 'package:locume/app/screen/privacypolicy/binding/Privacy_Binding.dart';
 import 'package:locume/app/screen/privacypolicy/view/Privacy_view.dart';
 import 'package:locume/app/screen/profile/binding/Profile_Binding.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
+import 'package:locume/app/screen/requestLocum/binding/req-locum-binding.dart';
+import 'package:locume/app/screen/requestLocum/view/req-locum-view.dart';
 import 'package:locume/app/screen/splash/splash.dart';
 
 import '../screen/clinics/view/Clinics_view.dart';
@@ -99,6 +101,10 @@ class AppPages {
     GetPage(
         name: _Paths.DrProfile,
         page: () => DrProfileView(),
-        binding: DrProfileBinding())
+        binding: DrProfileBinding()),
+    GetPage(
+        name: _Paths.RequestLocum,
+        page: () => RequestLocumView(),
+        binding: RequestLocumBinding())
   ];
 }

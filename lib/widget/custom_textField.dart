@@ -9,16 +9,16 @@ class CustomizableField extends StatelessWidget {
   final TextInputType keyboardType; // New required parameter for keyboard type
   final int? numbnerlenght;
 
-  const CustomizableField({
-    Key? key,
-    required this.heading,
-    required this.hintText,
-    required this.controller,
-    required this.keyboardType, // Required keyboard type
-    this.suffixText,
-    this.onSuffixTap,
-    this.numbnerlenght
-  }) : super(key: key);
+  const CustomizableField(
+      {Key? key,
+      required this.heading,
+      required this.hintText,
+      required this.controller,
+      required this.keyboardType, // Required keyboard type
+      this.suffixText,
+      this.onSuffixTap,
+      this.numbnerlenght})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class CustomizableField extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: TextFormField(
-            maxLength: numbnerlenght != 0 ? numbnerlenght : 10 ,
+            maxLength: numbnerlenght != 0 ? numbnerlenght : 10,
             controller: controller,
             keyboardType: keyboardType, // Customizable keyboard type
             decoration: InputDecoration(
@@ -67,7 +67,7 @@ class CustomizableField extends StatelessWidget {
                   ? Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 13,
-                        horizontal: 10,
+                        horizontal: 13,
                       ),
                       child: InkWell(
                         onTap: onSuffixTap,

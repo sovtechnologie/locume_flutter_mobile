@@ -62,7 +62,13 @@ class LoginView extends GetView<LoginController> {
                             heading: "Mobile Number",
                             hintText: "Enter mobile number",
                             suffixText: Obx(() => controller.isLoading.value
-                                ? CircularProgressIndicator()
+                                ? Container(
+                                    height: 3,
+                                    width: 5,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 1.5,
+                                    ),
+                                  )
                                 : Text(controller.otpButtonText.value)),
                             onSuffixTap: () {
                               if (controller.isButtonEnabled == true) {

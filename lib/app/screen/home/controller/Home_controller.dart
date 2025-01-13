@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
@@ -6,6 +7,7 @@ import '../../../../config.dart';
 
 class HomeControlller extends GetxController {
   var index = 1.obs;
+  var currentIndex = 0.obs;
 
   RxList<Map<dynamic, dynamic>> data = <Map<dynamic, dynamic>>[].obs;
   var config = CONFIG.apiUrl();
@@ -18,6 +20,28 @@ class HomeControlller extends GetxController {
     getalllocums();
   }
 
+  final List<Map<String, dynamic>> carouselItems = [
+    {
+      "text": "Apollo international hospital",
+      "date": "22-24 Jan 2025 (Sat-Mon)",
+      "price": "₹100/hour"
+    },
+    {
+      "text": "Apollo international hospital",
+      "date": "22-24 Jan 2025 (Sat-Mon)",
+      "price": "₹100/hour"
+    },
+    {
+      "text": "Apollo international hospital",
+      "date": "22-24 Jan 2025 (Sat-Mon)",
+      "price": "₹100/hour"
+    },
+    {
+      "text": "Apollo international hospital",
+      "date": "22-24 Jan 2025 (Sat-Mon)",
+      "price": "₹100/hour"
+    },
+  ];
   getalllocums() async {
     final headers = {
       'Content-Type': 'application/json',
