@@ -70,6 +70,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
     },
     child: Container(
       width: double.maxFinite,
+      // width: double.maxFinite,
       decoration: BoxDecoration(
         color: HexColor('#FFFFFF'),
         boxShadow: [
@@ -89,17 +90,19 @@ doctorcard(String image, String name, String md, String work, String exprience,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 100,
+              height: 120,
               width: 100,
               child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   child: Image.network(
                     image,
                     fit: BoxFit
-                        .cover, // Image.asset('assets/logo.png',width: 120,),
+                        .fill, // Image.asset('assets/logo.png',width: 120,),
                     errorBuilder: (context, error, stackTrace) {
                       return Image.asset(
-                          'assets/doctor-icon.jpg'); // Fallback widget
+                        'assets/doctor-icon.jpg',
+                        fit: BoxFit.cover,
+                      ); // Fallback widget
                     },
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) {
@@ -133,7 +136,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                 ),
                 space(0.0, 5.0),
                 Text(
-                  'MBBS, MD',
+                  md,
                   overflow: TextOverflow.visible,
                   softWrap: true,
                   style: TextStyle(
@@ -143,23 +146,34 @@ doctorcard(String image, String name, String md, String work, String exprience,
                 ),
                 space(0.0, 5.0),
                 Text(
+                  work,
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
+                      color: HexColor("#333333")),
+                ),
+                space(0.0, 5.0),
+                Text(
                   '$exprience year experience',
                   overflow: TextOverflow.visible,
                   softWrap: true,
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: HexColor('#326295')),
+                      fontSize: 10,
+                      color: HexColor("#333333")),
                 ),
                 space(0.0, 5.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       child: Icon(
                         Icons.location_on_sharp,
                         size: 10,
+                        color: Colors.grey[600],
                       ),
                     ),
                     space(5.0, 0.0),
@@ -168,7 +182,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                       overflow: TextOverflow.visible,
                       softWrap: true,
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           fontSize: 10,
                           color: HexColor('#333333')),
                     ),
@@ -193,136 +207,308 @@ doctorcard(String image, String name, String md, String work, String exprience,
   );
 }
 
-hospitalcard(String image, String name, String location, String doctors) {
-  return Container(
-    // height: 200,
-    width: double.maxFinite,
-    constraints: const BoxConstraints(minWidth: 220, maxWidth: 250),
-    decoration: BoxDecoration(
-      color: HexColor('#F0F3F5'),
-      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: SizedBox(
-              height: 80,
-              // width: 100,
-              child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  child: Image.network(
-                    image,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return SvgPicture.asset(
-                          'assets/type7.svg'); // Fallback widget
-                    },
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child; // When loading is complete
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null, // Show progress indicator
+Widget smalldoctorcard(String image, String name, String md, String work,
+    String experience, String location, String id) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    child: InkWell(
+      onTap: () {
+        Get.toNamed('/dr-profile', arguments: id);
+      },
+      child: Container(
+        width: 300,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.10),
+              spreadRadius: 1,
+              blurRadius: 8,
+              offset: Offset(0, 3), // Offset to make shadow visible
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  image,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      'assets/doctor-icon.jpg',
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
+                    );
+                  },
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          color: HexColor('#326295')),
+                    ),
+                    SizedBox(height: 3),
+                    Text(md,
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w500)),
+                    SizedBox(height: 3),
+                    Text(work,
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w400)),
+                    SizedBox(height: 3),
+                    Text('$experience years experience',
+                        style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
+                            color: HexColor('#333333'))),
+                    SizedBox(height: 3),
+                    Row(
+                      children: [
+                        Icon(Icons.location_on,
+                            size: 10, color: Colors.grey[600]),
+                        SizedBox(width: 5),
+                        Expanded(
+                          child: Text(
+                            location,
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400,
+                                color: HexColor('#333333')),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      );
-                    },
-                  )),
-            ),
-          ),
-          space(0.0, 10.0),
-          Text(
-            name,
-            overflow: TextOverflow.visible,
-            softWrap: true,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-            ),
-          ),
-          space(0.0, 7.0),
-          const Text(
-            'Multi Super Specialty Hospital',
-            overflow: TextOverflow.visible,
-            softWrap: true,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
-            ),
-          ),
-          space(0.0, 9.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.location_on_sharp,
-                size: 15,
-              ),
-              space(5.0, 0.0),
-              Text(
-                location,
-                overflow: TextOverflow.ellipsis,
-                softWrap: true,
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
-                    color: HexColor('#333333')),
+                      ],
+                    ),
+                    SizedBox(height: 3),
+                    Text(
+                      'View Details',
+                      style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                          color: primaryColor),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-          space(0.0, 10.0),
-          Row(
+        ),
+      ),
+    ),
+  );
+}
+
+hospitalcard(String image, String name, String location, String distance,
+    String numDoctor, String numSpeciality, String Rating) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: InkWell(
+      onTap: () {},
+      child: Container(
+        decoration: BoxDecoration(
+          color: HexColor('#FFFFFF'),
+          boxShadow: [
+            BoxShadow(
+                offset: const Offset(0, 2),
+                color: HexColor('#326295').withOpacity(0.15),
+                blurRadius: 8.0,
+                spreadRadius: 1,
+                blurStyle: BlurStyle.normal)
+          ],
+          borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.schedule_send_outlined,
-                color: HexColor('#2A7FBA'),
-                size: 15,
+              Column(
+                children: [
+                  SizedBox(
+                    height: 120,
+                    width: 100,
+                    child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                        child: Image.network(
+                          image,
+                          fit: BoxFit
+                              .fill, // Image.asset('assets/logo.png',width: 120,),
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              image,
+                              fit: BoxFit.cover,
+                            ); // Fallback widget
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child; // When loading is complete
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null, // Show progress indicator
+                              ),
+                            );
+                          },
+                        )),
+                  ),
+                  space(0.0, 5.0),
+                  Row(
+                    children: [
+                      Image.asset(
+                        "assets/Star.png",
+                        height: 12,
+                        width: 12,
+                      ),
+                      space(5.0, 0.0),
+                      Text(
+                        Rating,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 12),
+                      ),
+                      space(5.0, 0.0),
+                      Text("Rating",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 10,
+                              color: HexColor('#2A7FBA'))),
+                    ],
+                  )
+                ],
               ),
-              space(5.0, 0.0),
-              Text(
-                '$doctors Doctors',
-                overflow: TextOverflow.ellipsis,
-                softWrap: true,
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    color: HexColor('#2A7FBA')),
-              ),
+              space(10.0, 0.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  space(10.0, 0.0),
+                  Text(
+                    name,
+                    overflow: TextOverflow.visible,
+                    softWrap: true,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: HexColor('#326295')),
+                  ),
+                  space(0.0, 5.0),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        child: Icon(
+                          Icons.location_on_sharp,
+                          size: 10,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                      space(5.0, 0.0),
+                      SizedBox(
+                        width: 180,
+                        child: Text(
+                          location,
+                          overflow: TextOverflow.visible,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 10,
+                            color: HexColor('#333333'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  space(0.0, 5.0),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset('assets/distancesvg.svg'),
+                      space(5.0, 0.0),
+                      Text(
+                        distance,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 10,
+                          color: HexColor('#333333'),
+                        ),
+                      )
+                    ],
+                  ),
+                  space(0.0, 5.0),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/Stethoscope.png',
+                        height: 10,
+                        width: 10,
+                      ),
+                      space(5.0, 0.0),
+                      Text(
+                        "$numDoctor doctors",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 10,
+                          color: HexColor('#2A7FBA'),
+                        ),
+                      )
+                    ],
+                  ),
+                  space(0.0, 5.0),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/Nurturing.png',
+                        height: 10,
+                        width: 10,
+                      ),
+                      space(5.0, 0.0),
+                      Text(
+                        "$numSpeciality specialties",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 10,
+                          color: HexColor('#2A7FBA'),
+                        ),
+                      )
+                    ],
+                  ),
+                  space(0.0, 15.0),
+                  Text(
+                    '    View Details',
+                    overflow: TextOverflow.visible,
+                    softWrap: true,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        color: HexColor('#0866C6')),
+                  ),
+                ],
+              )
             ],
           ),
-          space(0.0, 10.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.front_hand_sharp,
-                color: HexColor('#2A7FBA'),
-                size: 15,
-              ),
-              space(5.0, 0.0),
-              Text(
-                '$doctors Specialties',
-                overflow: TextOverflow.ellipsis,
-                softWrap: true,
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    color: HexColor('#2A7FBA')),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     ),
   );

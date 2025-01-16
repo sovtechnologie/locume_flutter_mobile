@@ -137,12 +137,15 @@ class HospitalView extends GetView<HospitalController> {
                                 padding: const EdgeInsets.fromLTRB(
                                     8.0, 0.0, 8.0, 16.0),
                                 child: hospitalcard(
-                                  hospital['hospital_image']?.toString() ?? '',
-                                  hospital['hospital_name']?.toString() ?? '',
-                                  hospital['hospital_location']?.toString() ??
-                                      '',
-                                  hospital['id']?.toString() ?? '',
-                                ));
+                                    hospital['hospital_image']?.toString() ??
+                                        '',
+                                    hospital['hospital_name']?.toString() ?? '',
+                                    hospital['hospital_location']?.toString() ??
+                                        '',
+                                    "",
+                                    "23",
+                                    "13",
+                                    "4.5"));
                           },
                         ),
                       ),

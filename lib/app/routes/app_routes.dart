@@ -21,6 +21,7 @@ abstract class Routes {
   static const Notification = _Paths.Notification;
   static const DrProfile = _Paths.DrProfile;
   static const RequestLocum = _Paths.RequestLocum;
+  static const RequestDetails = _Paths.RequestDetails;
 }
 
 abstract class _Paths {
@@ -41,4 +42,5 @@ abstract class _Paths {
   static const Notification = '/notification';
   static const DrProfile = '/dr-profile';
   static const RequestLocum = '/request-locum';
+  static const RequestDetails = '/request-details';
 }

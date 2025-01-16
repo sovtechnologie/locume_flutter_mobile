@@ -168,7 +168,7 @@ Widget request_card(
               children: [
                 InkWell(
                   onTap: () {
-                    print("View Details");
+                    Get.toNamed('/request-details');
                   },
                   child: Text(
                     "View Details",

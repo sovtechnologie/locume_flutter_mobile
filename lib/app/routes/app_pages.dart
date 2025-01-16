@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:locume/app/screen/allSpecialities/binding/specialities_binding.dart';
 import 'package:locume/app/screen/allSpecialities/view/specialities_view.dart';
 import 'package:locume/app/screen/bottomnavigation/binding/BottomNavigation_Binding.dart';
@@ -26,6 +27,8 @@ import 'package:locume/app/screen/profile/binding/Profile_Binding.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
 import 'package:locume/app/screen/requestLocum/binding/req-locum-binding.dart';
 import 'package:locume/app/screen/requestLocum/view/req-locum-view.dart';
+import 'package:locume/app/screen/requestLocumDetails/binding/request_details_binding.dart';
+import 'package:locume/app/screen/requestLocumDetails/view/request_details_view.dart';
 import 'package:locume/app/screen/splash/splash.dart';
 
 import '../screen/clinics/view/Clinics_view.dart';
@@ -105,6 +108,10 @@ class AppPages {
     GetPage(
         name: _Paths.RequestLocum,
         page: () => RequestLocumView(),
-        binding: RequestLocumBinding())
+        binding: RequestLocumBinding()),
+    GetPage(
+        name: _Paths.RequestDetails,
+        page: () => RequestDetailsView(),
+        binding: RequestDetailsBinding()),
   ];
 }
