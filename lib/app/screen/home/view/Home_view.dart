@@ -31,7 +31,7 @@ class HomeView extends GetView<HomeControlller> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
             child: Column(
               children: [
                 Row(
@@ -107,7 +107,7 @@ class HomeView extends GetView<HomeControlller> {
                                   Spacer(),
                                   InkWell(
                                     onTap: () {
-                                      print("View Details");
+                                      Get.toNamed('/request-details');
                                     },
                                     child: Row(
                                       children: [

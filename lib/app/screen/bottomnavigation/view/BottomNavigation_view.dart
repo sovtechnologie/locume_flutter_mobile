@@ -100,6 +100,12 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
               padding: EdgeInsets.zero,
               children: <Widget>[
                 ListTile(
+                  title: const Text('Manage'),
+                  onTap: () {
+                    Get.toNamed('/manage');
+                  },
+                ),
+                ListTile(
                   title: const Text('About us'),
                   onTap: () {
                     Get.to(const AboutUs());

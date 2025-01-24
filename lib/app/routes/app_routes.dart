@@ -22,6 +22,8 @@ abstract class Routes {
   static const DrProfile = _Paths.DrProfile;
   static const RequestLocum = _Paths.RequestLocum;
   static const RequestDetails = _Paths.RequestDetails;
+  static const HospitalDetails = _Paths.HospitalDetails;
+  static const Manage = _Paths.Manage;
 }
 
 abstract class _Paths {
@@ -43,4 +45,6 @@ abstract class _Paths {
   static const DrProfile = '/dr-profile';
   static const RequestLocum = '/request-locum';
   static const RequestDetails = '/request-details';
+  static const HospitalDetails = '/hospital-details';
+  static const Manage = '/manage';
 }

@@ -19,48 +19,9 @@ class HospitalView extends GetView<HospitalController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //     backgroundColor: Colors.white,
-        //     centerTitle: false,
-        //     leading: Builder(
-        //       builder: (context) => IconButton(
-        //         icon: Icon(
-        //           Icons.menu_rounded,
-        //           color: HexColor('#0866C6'),
-        //         ),
-        //         onPressed: () {
-        //           Scaffold.of(context).openDrawer();
-        //         },
-        //       ),
-        //     ),
-        //     title: Text(
-        //       'Hi, Sa',
-        //       style: TextStyle(
-        //           fontWeight: FontWeight.w500,
-        //           fontSize: 14,
-        //           color: HexColor('#174666')),
-        //     ),
-        //     actions: [
-        //       InkWell(
-        //         onTap: () {
-        //           Get.toNamed('/notification');
-        //         },
-        //         child: Container(
-        //           padding:
-        //           const EdgeInsets.all(8.0), // Adjust the padding as needed
-        //           child: Transform.translate(
-        //             offset: const Offset(-15, 0),
-        //             child: Icon(
-        //               Icons.notifications_active_rounded,
-        //               color: HexColor('#0866C6'),
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ]),
         backgroundColor: Colors.white,
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 0.0),
+          padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
           child: Column(
             children: [
               space(double.maxFinite, 20.0),
@@ -133,19 +94,14 @@ class HospitalView extends GetView<HospitalController> {
                             // final imagePath =
                             //     hospital['profile_image']?.toString();
 
-                            return Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    8.0, 0.0, 8.0, 16.0),
-                                child: hospitalcard(
-                                    hospital['hospital_image']?.toString() ??
-                                        '',
-                                    hospital['hospital_name']?.toString() ?? '',
-                                    hospital['hospital_location']?.toString() ??
-                                        '',
-                                    "",
-                                    "23",
-                                    "13",
-                                    "4.5"));
+                            return hospitalcard(
+                                hospital['hospital_image']?.toString() ?? '',
+                                hospital['hospital_name']?.toString() ?? '',
+                                hospital['hospital_location']?.toString() ?? '',
+                                "",
+                                "23",
+                                "13",
+                                "4.5");
                           },
                         ),
                       ),

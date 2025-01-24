@@ -59,7 +59,7 @@ ThemeData themeData(BuildContext context) {
       ),
     ),
     appBarTheme:
-        AppBarTheme(backgroundColor: primaryColor, foregroundColor: white),
+        AppBarTheme(backgroundColor: white, foregroundColor: primaryColor),
     primaryColor: primaryColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
     scaffoldBackgroundColor: scaffoldBackgroundColor,

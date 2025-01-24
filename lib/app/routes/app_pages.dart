@@ -11,6 +11,8 @@ import 'package:locume/app/screen/drprofile/view/dr_profile_view.dart';
 import 'package:locume/app/screen/getstarted/binding/getstart_binding.dart';
 import 'package:locume/app/screen/home/binding/Home_binding.dart';
 import 'package:locume/app/screen/home/view/Home_view.dart';
+import 'package:locume/app/screen/hospitalDetails/binding/h_details_binding.dart';
+import 'package:locume/app/screen/hospitalDetails/view/h_details_view.dart';
 import 'package:locume/app/screen/hospitals/binding/Hospital_binding.dart';
 import 'package:locume/app/screen/hospitals/view/Hospital_view.dart';
 import 'package:locume/app/screen/locums/binding/Locum_Binding.dart';
@@ -19,6 +21,8 @@ import 'package:locume/app/screen/login/signup/binding/login_binding.dart';
 import 'package:locume/app/screen/login/signup/view/login_option.dart';
 import 'package:locume/app/screen/login/signup/view/login_view.dart';
 import 'package:locume/app/screen/login/signup/view/reqister_view.dart';
+import 'package:locume/app/screen/manage/binding/manage_Binding.dart';
+import 'package:locume/app/screen/manage/view/manage_view.dart';
 import 'package:locume/app/screen/notification/binding/notification_binding.dart';
 import 'package:locume/app/screen/notification/view/notification_view.dart';
 import 'package:locume/app/screen/privacypolicy/binding/Privacy_Binding.dart';
@@ -113,5 +117,13 @@ class AppPages {
         name: _Paths.RequestDetails,
         page: () => RequestDetailsView(),
         binding: RequestDetailsBinding()),
+    GetPage(
+        name: _Paths.HospitalDetails,
+        page: () => HDetailsView(),
+        binding: HDetailsBinding()),
+    GetPage(
+        name: _Paths.Manage,
+        page: () => ManageView(),
+        binding: ManageBinding()),
   ];
 }

@@ -207,6 +207,89 @@ doctorcard(String image, String name, String md, String work, String exprience,
   );
 }
 
+Widget reviewscard(String name, int Rating, String review, String date) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 5),
+    child: Container(
+      width: 270,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: HexColor('#F0F3F5'), // Background color
+        border: Border.all(color: HexColor('#0866C6'), width: 1),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 30, // Adjust size as needed
+                  backgroundImage: AssetImage('assets/doctor-icon.jpg'),
+                  backgroundColor: Colors.grey,
+                ),
+                SizedBox(width: 10), // Space between avatar and text
+                Expanded(
+                  // Prevents overflow
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Sam Curren",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            '12/12/2023',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      // Dynamic star rating
+                      Row(
+                        children: List.generate(
+                          Rating, // Generate stars dynamically
+                          (index) => Padding(
+                            padding: const EdgeInsets.only(
+                                right: 4.0), // Space between stars
+                            child: Image.asset(
+                              'assets/Star.png', // Your star asset
+                              width: 12, // Adjust size as needed
+                              height: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Responsible for diagnosing, examining, diseases, disorders, and illnesses of patients.',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+              softWrap: true,
+            )
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 Widget smalldoctorcard(String image, String name, String md, String work,
     String experience, String location, String id) {
   return Padding(
@@ -319,7 +402,9 @@ hospitalcard(String image, String name, String location, String distance,
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: InkWell(
-      onTap: () {},
+      onTap: () {
+        Get.toNamed('/hospital-details');
+      },
       child: Container(
         decoration: BoxDecoration(
           color: HexColor('#FFFFFF'),
