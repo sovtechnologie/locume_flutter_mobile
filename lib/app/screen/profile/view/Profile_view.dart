@@ -1,6 +1,10 @@
+import 'dart:ffi';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/profile/controller/Profile_Controller.dart';
 
@@ -9,49 +13,11 @@ class ProfileView extends GetView<ProfileController> {
     // Lazily load the controller when the view is initialized
     Get.lazyPut(() => ProfileController());
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //     backgroundColor: Colors.white,
-        //     centerTitle: false,
-        //     leading: Builder(
-        //       builder: (context) => IconButton(
-        //         icon: Icon(
-        //           Icons.menu_rounded,
-        //           color: HexColor('#0866C6'),
-        //         ),
-        //         onPressed: () {
-        //           Scaffold.of(context).openDrawer();
-        //         },
-        //       ),
-        //     ),
-        //     title: Text(
-        //       'Hi, sdf',
-        //       style: TextStyle(
-        //           fontWeight: FontWeight.w500,
-        //           fontSize: 14,
-        //           color: HexColor('#174666')),
-        //     ),
-        //     actions: [
-        //       InkWell(
-        //         onTap: () {
-        //           Get.toNamed('/notification');
-        //         },
-        //         child: Container(
-        //           padding:
-        //           const EdgeInsets.all(8.0), // Adjust the padding as needed
-        //           child: Transform.translate(
-        //             offset: const Offset(-15, 0),
-        //             child: Icon(
-        //               Icons.notifications_active_rounded,
-        //               color: HexColor('#0866C6'),
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ]),
         body: Obx(() {
           if (controller.isLoading.value) {
             return const Center(
@@ -67,336 +33,267 @@ class ProfileView extends GetView<ProfileController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Check if data is still loading
-
-                // Safely access the first item of the list
-
-                // Safely handle profileImage (in case it's null)
-
                 Container(
                   width: double.maxFinite,
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                          width: 2,
-                          color: const Color.fromRGBO(235, 235, 238, 1))),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Circle Avatar with image or fallback to profile icon
-                      ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(50), // Rounded corners
-                        child: profileImage != null && profileImage.isNotEmpty
-                            ? CircleAvatar(
-                                radius: 55, // Avatar size
-                                backgroundImage: NetworkImage(profileImage),
-                                onBackgroundImageError:
-                                    (exception, stackTrace) {
-                                  // Handle image load failure
-                                  print('Error loading image');
-                                },
-                              )
-                            : CircleAvatar(
-                                radius: 60, // Avatar size
-                                backgroundColor: Colors
-                                    .grey[200], // Background color for icon
-                                child: Icon(
-                                  Icons.person,
-                                  size: 40, // Icon size
-                                  color: Colors.grey[600], // Icon color
-                                ),
+                      Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Obx(() {
+                            return CircleAvatar(
+                              radius: 55,
+                              backgroundColor: Colors
+                                  .grey[200], // Grey background when no image
+                              backgroundImage: controller.profileImage.value !=
+                                      null
+                                  ? FileImage(controller
+                                      .profileImage.value!) // New picked image
+                                  : (profileImage != null &&
+                                          profileImage.isNotEmpty
+                                      ? NetworkImage(
+                                          profileImage) // Show existing profile image
+                                      : null), // If no network image, show default icon
+                              child: (controller.profileImage.value == null &&
+                                      (profileImage == null ||
+                                          profileImage.isEmpty))
+                                  ? Icon(Icons.person,
+                                      size: 40, color: Colors.grey[600])
+                                  : null, // Show icon only if no image is available
+                            );
+                          }),
+                          Positioned(
+                            right: 4,
+                            bottom: 4,
+                            child: GestureDetector(
+                              onTap: () => _showImageOptions(context),
+                              child: CircleAvatar(
+                                radius: 18,
+                                backgroundColor: Colors.white,
+                                child: Icon(Icons.add_a_photo_rounded,
+                                    size: 18, color: textColor),
                               ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                                width: 1,
-                                color:
-                                    const Color.fromARGB(124, 175, 175, 175))),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              profileTextField("Your Name",
-                                  "${data.firstName ?? 'N/A'} ${data.lastName ?? 'N/A'}"),
-                              profileTextField("Email", data.emailId ?? 'N/A'),
-                              profileTextField(
-                                  "Phone Number", data.mobileNumber ?? "N/A"),
-                              profileTextField(
-                                  "Location", data.location ?? 'N/A'),
-                              profileTextField(
-                                  "Medical ID", data.medicalId ?? 'N/A')
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Container(
                         width: double.maxFinite,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                                width: 1,
-                                color:
-                                    const Color.fromARGB(124, 175, 175, 175))),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "About Sid",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: primaryColor),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Text(
-                                  "Lorem ipsum dolor sit amet consectetur. Erat auctor a aliquam vel congue luctus. Leo diam cras neque mauris ac arcu elit ipsum dolor sit amet consectetur.")
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                                width: 1,
-                                color:
-                                    const Color.fromARGB(124, 175, 175, 175))),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Professional Details",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500,
-                                        color: primaryColor),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  const Text(
-                                      """These are the professional details shown to users in the app.""")
-                                ],
-                              ),
-                              Image.asset("assets/Stars.png")
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      // Availability Section
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
+                        child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Your Availability ",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: primaryColor),
-                                ),
-                                const Text(
-                                  "(Available time slot)",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
+                                profileTextField("Your Name",
+                                    "${data.firstName ?? 'N/A'} ${data.lastName ?? 'N/A'}"),
+                                profileTextField(
+                                    "Phone Number", data.mobileNumber ?? "N/A"),
+                                profileTextField(
+                                    "Location", data.location ?? 'N/A'),
+                                profileTextField("Total Experience",
+                                    data.totalExp.toString() ?? 'N/A'),
                               ],
                             ),
-
-                            // Wrap widget to display availability in rows and wrap when overflowed
-                            data.availability != null &&
-                                    data.availability!.isNotEmpty
-                                ? Wrap(
-                                    spacing:
-                                        10, // Horizontal space between items
-                                    runSpacing:
-                                        10, // Vertical space between lines
-                                    children:
-                                        data.availability!.map((availability) {
-                                      return boxfield(availability);
-                                    }).toList(),
-                                  )
-                                : Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15),
-                                    child: Text("No availability listed",
-                                        style: TextStyle(fontSize: 16)),
-                                  ),
-                            const SizedBox(
-                              height: 15,
+                            const Spacer(),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: InkWell(
+                                  onTap: () => _showEditProfileDialog(context),
+                                  child: const Text("Edit Profile")),
                             ),
-                            Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    mylabel("Rate/Hourly  "),
-                                    boxfield(
-                                        data.hourlyRate?.toString() ?? 'N/A')
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    mylabel("Total Experience"),
-                                    boxfield(data.totalExp?.toString() ?? 'N/A')
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            mylabel("Clinic Name"),
-                            boxfield(data.clinicName ?? 'N/A'),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            mylabel("Clinic Address"),
-                            boxfield(data.clinicLocation ?? 'N/A'),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            mylabel("Preferred Specialities"),
-                            data.preferredSpecialities != null &&
-                                    data.preferredSpecialities!.isNotEmpty
-                                ? Wrap(
-                                    spacing:
-                                        10, // Horizontal space between items
-                                    runSpacing:
-                                        10, // Vertical space between lines
-                                    children: data.preferredSpecialities!
-                                        .map((preferredSpecialities) {
-                                      return boxfield(
-                                          preferredSpecialities.toString());
-                                    }).toList(),
-                                  )
-                                : Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15),
-                                    child: Text("No availability listed",
-                                        style: TextStyle(fontSize: 16)),
-                                  ),
-
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            mylabel("Specified category"),
-                            data.category != null && data.category!.isNotEmpty
-                                ? Wrap(
-                                    spacing:
-                                        10, // Horizontal space between items
-                                    runSpacing:
-                                        10, // Vertical space between lines
-                                    children: data.category!.map((category) {
-                                      return boxfield(category.toString());
-                                    }).toList(),
-                                  )
-                                : Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15),
-                                    child: Text("No availability listed",
-                                        style: TextStyle(fontSize: 16)),
-                                  ),
                           ],
                         ),
                       ),
-                      ElevatedButton(
-                          onPressed: () {},
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Download Resume"),
-                              Icon(Icons.download)
-                            ],
-                          )),
+                      Divider(
+                        thickness: 0.5,
+                        color: const Color.fromARGB(182, 158, 158, 158),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5.0, bottom: 5),
+                            child: Text(
+                              "Preferred Specialities",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: primaryColor),
+                            ),
+                          ),
+                          data.preferredSpecialities != null &&
+                                  data.preferredSpecialities!.isNotEmpty
+                              ? SizedBox(
+                                  width: double.infinity,
+                                  child: GridView.builder(
+                                    shrinkWrap:
+                                        true, // Important to wrap content inside a column
+                                    physics:
+                                        const NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 10,
+                                      childAspectRatio: 4,
+                                    ),
+                                    itemCount:
+                                        data.preferredSpecialities!.length,
+                                    itemBuilder: (context, index) {
+                                      return Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          data.preferredSpecialities![index]
+                                                  .toString() ??
+                                              'N/A',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          // Center align text inside the grid
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                              : Container(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Text("No availability listed",
+                                      style: TextStyle(fontSize: 16)),
+                                ),
+                          mylabel("Education Qualifications & Proof"),
+                          mytextfield("Add Education", controller.addeducation),
+                          mylabel2(
+                              "Upload image or PDF of qualification proofs*"),
+                          Text(
+                              "Non allied practitioners should submit council registration proof with metioned degree name. Allied practitioners should submit mark sheets or passing certificated from UGC approved university."),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          buildFilePickerCard(
+                            selectedFile: controller.selectedQualificationfile,
+                            fileName: controller.fileName,
+                            onRemove: () =>
+                                controller.removeFile('qualification'),
+                            onPickFile: () =>
+                                controller.pickFile('qualification'),
+                          ),
+
+                          SizedBox(height: 10),
+                          mylabel("Identity Proof"),
+                          mytextfield("Documents to be uploaded",
+                              controller.addeducation),
+                          Text("Upload image or PDF of identity proofs*"),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          buildFilePickerCard(
+                            selectedFile: controller.selectIdentityfile,
+                            fileName: controller.IndentityName,
+                            onRemove: () => controller.removeFile('identity'),
+                            onPickFile: () => controller.pickFile('identity'),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ), // data.category != null && data.category!.isNotEmpty
+                          //     ? SizedBox(
+                          //         width: double.infinity,
+                          //         child: GridView.builder(
+                          //           shrinkWrap:
+                          //               true, // Important to wrap content inside a column
+                          //           physics:
+                          //               const NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
+                          //           gridDelegate:
+                          //               const SliverGridDelegateWithFixedCrossAxisCount(
+                          //             crossAxisCount: 3,
+                          //             crossAxisSpacing: 10,
+                          //             childAspectRatio: 4,
+                          //           ),
+                          //           itemCount: data.category!.length,
+                          //           itemBuilder: (context, index) {
+                          //             return Align(
+                          //               alignment: Alignment.topLeft,
+                          //               child: Text(
+                          //                 data.category![index].toString() ??
+                          //                     'N/A',
+                          //                 style: TextStyle(
+                          //                   fontSize: 12,
+                          //                   fontWeight: FontWeight.w400,
+                          //                 ),
+                          //                 // Center align text inside the grid
+                          //               ),
+                          //             );
+                          //           },
+                          //         ),
+                          //       )
+                          //     : Container(
+                          //         padding: EdgeInsets.only(top: 10),
+                          //         child: Text("No availability listed",
+                          //             style: TextStyle(fontSize: 16)),
+                          //       ),
+                          if (data.clinicName == null)
+                            InkWell(
+                                onTap: () => addclinic(context),
+                                child: Container(
+                                    margin: EdgeInsets.symmetric(vertical: 10),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 5),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1, color: primaryColor),
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Row(children: [
+                                      Icon(
+                                        Icons.add,
+                                        color: primaryColor,
+                                      ),
+                                      Text(
+                                        " Add Your Clinic",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: primaryColor),
+                                      )
+                                    ]))),
+                          if (controller.addClinic == true) ClinicDetails(),
+                          if (data.hospitalName == null)
+                            InkWell(
+                                onTap: () => addclinic(context),
+                                child: Container(
+                                    margin: EdgeInsets.symmetric(vertical: 10),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 5),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1, color: primaryColor),
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Row(children: [
+                                      Icon(
+                                        Icons.add,
+                                        color: primaryColor,
+                                      ),
+                                      Text(
+                                        " Add Your Hospital",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: primaryColor),
+                                      )
+                                    ]))),
+                          if (controller.addHosiptial == true) addHospital(),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        mylabel('Communication preferences'),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Text(
-                            "Medrecruit and our partner Medworld will occasionally email you about news and opportunities we think you'll be interested in Your profile is currently being created, please check back in 15-30 minutes if you would like to update your communication preferences. In the meantime, let's get a running start on the next step in your career"),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        mylabel('Register your account'),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Text(
-                            "Register your account to unlock a world of possibilities! Signing up is simple and fast, allowing you to personalize your experience and enjoy exclusive benefits. Don’t miss out—create your account today and start exploring all that we have to offer."),
-                        InkWell(
-                            onTap: () {
-                              print("object");
-                            },
-                            child: Text(
-                              "Register your account",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: primaryColor),
-                            )),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        comment(
-                            "Great experience. [Melissa] really dedicates time to make sure she understands your past and current skills and puts it to paper to make you as attractive as you really are. Thank you. My wife's CV is next.",
-                            "Eyako Wurapa"),
-                        comment(
-                            "I found a job! Thanks to locum.com , a recruiter, who actually read my background, put me in touch with a client looking for someone with my qualifications. Given that I work in a very small health care niche the chances of my finding this employer on my own would be slim. Thanks for your help.",
-                            "Susan Pearson"),
-                        comment(
-                            "Thank you for all that you do. I started getting interviews almost immediately after using your resume, and I now have an offer in hand that I have accepted. It's all thanks to your new and improved resume that I got the job.",
-                            "Rebecca Dickerson")
-                      ],
-                    ))
               ],
             ),
           );
@@ -462,10 +359,438 @@ class ProfileView extends GetView<ProfileController> {
   }
 
   Widget mylabel(String label) {
-    return Text(
-      label,
-      style: TextStyle(
-          fontSize: 18, fontWeight: FontWeight.w500, color: primaryColor),
+    return Padding(
+      padding: const EdgeInsets.only(top: 15.0, bottom: 5),
+      child: Text(
+        label,
+        style: TextStyle(
+            fontSize: 18, fontWeight: FontWeight.w500, color: primaryColor),
+      ),
+    );
+  }
+
+  Widget mylabel2(String label) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0, bottom: 5),
+      child: Text(
+        label,
+        style: TextStyle(
+            fontSize: 14, fontWeight: FontWeight.w500, color: primaryColor),
+      ),
+    );
+  }
+
+  Widget buildFilePickerCard({
+    required Rx<File?> selectedFile,
+    required RxString fileName,
+    required VoidCallback onRemove,
+    required VoidCallback onPickFile,
+  }) {
+    return Obx(() => GestureDetector(
+          onTap: selectedFile.value == null ? onPickFile : null,
+          child: Container(
+            width: selectedFile.value == null ? 60 : 200,
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: primaryColor),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: selectedFile.value == null
+                ? Icon(Icons.add, size: 40, color: primaryColor)
+                : Row(
+                    children: [
+                      Icon(
+                        selectedFile.value!.path.endsWith('.pdf')
+                            ? Icons.picture_as_pdf
+                            : Icons.image,
+                        color: primaryColor,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          fileName.value,
+                          style: TextStyle(color: primaryColor),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.red),
+                        onPressed: onRemove,
+                      ),
+                    ],
+                  ),
+          ),
+        ));
+  }
+
+  Widget ClinicDetails() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            mylabel("Clinic Name"),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 5),
+              child: InkWell(
+                  onTap: () {
+                    controller.addClinic.value = true;
+                  },
+                  child: Text("Add More +")),
+            )
+          ],
+        ),
+        mytextfield("Enter Clinic Name", controller.clinicName),
+        mylabel("Clinic Address"),
+        mytextfield("Enter Clininc Address", controller.clinicAddress),
+        mylabel("Clinic Time Slot"),
+        const SizedBox(
+          height: 5,
+        ),
+        Wrap(
+          spacing: 5, // Horizontal space between items
+          runSpacing: 10, // Vertical space between lines
+          children: [
+            selectableBoxField(text: "9:00 am - 1.00 pm"),
+            selectableBoxField(text: "10:00 am - 2.00 pm"),
+            selectableBoxField(text: "1:00 am - 2.00 pm")
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget addHospital() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            mylabel("Hospital Name"),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 5),
+              child: InkWell(
+                  onTap: () {
+                    controller.addHosiptial.value = false;
+                  },
+                  child: Text("Cancel")),
+            )
+          ],
+        ),
+        mytextfield("Enter Hospital Name", controller.hospitalName),
+        mylabel("Hospital Address"),
+        mytextfield("Enter Hospital Address", controller.hospitalAddress),
+      ],
+    );
+  }
+
+  Widget HospitalDetails() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            mylabel("Hospital Name"),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 5),
+              child: InkWell(
+                  onTap: () {
+                    controller.addHosiptial.value = true;
+                  },
+                  child: Text("Add More +")),
+            )
+          ],
+        ),
+        mytextfield("Enter Hospital Name", controller.hospitalName),
+        mylabel("Hospital Address"),
+        mytextfield("Enter Hospital Address", controller.hospitalAddress),
+      ],
+    );
+  }
+
+  Widget mytextfield(String hint, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: hint,
+          contentPadding: EdgeInsets.symmetric(
+              vertical: 5, horizontal: 12), // Adjust padding
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20), // Rounded corners
+            borderSide: BorderSide(
+                color: const Color.fromARGB(124, 175, 175, 175),
+                width: 1), // Gray when disabled
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20), // Rounded corners
+            borderSide:
+                BorderSide(color: primaryColor, width: 1), // Blue when enabled
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20), // Rounded corners
+            borderSide: BorderSide(
+                color: Color.fromARGB(124, 175, 175, 175),
+                width: 1), // Default border
+          ),
+        ),
+        style: TextStyle(fontSize: 14), // Adjust text size if needed
+      ),
+    );
+  }
+
+  Widget selectableBoxField({
+    required String text,
+  }) {
+    return Obx(() {
+      bool isSelected = controller.selectedOptions.contains(text);
+
+      return GestureDetector(
+        onTap: () {
+          if (isSelected) {
+            controller.selectedOptions.remove(text); // Unselect
+          } else {
+            controller.selectedOptions.add(text); // Select
+          }
+        },
+        child: Container(
+          height: 40,
+          width: 120, // Increased width for better UI
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            color:
+                isSelected ? primaryColor.withOpacity(0.1) : Colors.transparent,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              width: 1.5,
+              color: isSelected
+                  ? primaryColor
+                  : Colors.grey, // Change border color
+            ),
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 25,
+                child: Icon(
+                  isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+                  color: isSelected ? primaryColor : Colors.grey,
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: isSelected ? primaryColor : Colors.grey,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  void _showImageOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) {
+        return Obx(() {
+          bool hasImage = controller.profileImage.value != null;
+
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SizedBox(
+              height: 120, // Keeps bottom sheet height consistent
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  if (hasImage)
+                    _buildImageOption(
+                      icon: Icons.remove_red_eye,
+                      label: "View",
+                      onTap: () {
+                        Get.back();
+                        _viewImage(context);
+                      },
+                    ),
+                  _buildImageOption(
+                    icon: Icons.camera_alt,
+                    label: "Capture",
+                    onTap: () {
+                      controller.pickImage(ImageSource.camera);
+                      Get.back();
+                    },
+                  ),
+                  _buildImageOption(
+                    icon: Icons.photo,
+                    label: "Gallery",
+                    onTap: () {
+                      controller.pickImage(ImageSource.gallery);
+                      Get.back();
+                    },
+                  ),
+                  if (hasImage)
+                    _buildImageOption(
+                      icon: Icons.delete,
+                      label: "Delete",
+                      onTap: () {
+                        controller.profileImage.value = null;
+                        Get.back();
+                      },
+                    ),
+                ],
+              ),
+            ),
+          );
+        });
+      },
+    );
+  }
+
+  Widget _buildImageOption(
+      {required IconData icon,
+      required String label,
+      required VoidCallback onTap}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircleAvatar(
+              radius: 30,
+              backgroundColor: Colors.grey[200],
+              child: Icon(icon, size: 24, color: textColor),
+            ),
+            const SizedBox(height: 8),
+            Text(label,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _viewImage(BuildContext context) {
+    Get.dialog(
+      Dialog(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.file(controller.profileImage.value!),
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text("Close"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void addclinic(BuildContext context) {
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          "Add Clinic details",
+          style: TextStyle(color: primaryColor, fontSize: 20),
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // Ensures minimal height
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              mylabel("Clinic Name"),
+              mytextfield("Enter Clinic Name", controller.clinicName),
+              mylabel("Clinic Address"),
+              mytextfield("Enter Clinic Address", controller.clinicAddress),
+              mylabel("Clinic Time Slot"),
+              const SizedBox(height: 5),
+              Wrap(
+                spacing: 5, // Horizontal space between items
+                runSpacing: 10, // Vertical space between lines
+                children: [
+                  selectableBoxField(text: "Morning"),
+                  selectableBoxField(text: "Afternoon"),
+                  selectableBoxField(text: "Night"),
+                ],
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Save data logic (API call if needed)
+              Get.back(); // Close dialog
+            },
+            child: Text("Save"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showEditProfileDialog(BuildContext context) {
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          "Edit Profile",
+          style: TextStyle(color: primaryColor, fontSize: 20),
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            mylabel2("Name"),
+            mytextfield("Enter your name", controller.name),
+            mylabel2("Number"),
+            mytextfield("Enter your number", controller.number),
+            mylabel2("Location"),
+            mytextfield("Enter location", controller.location),
+            mylabel2("Total Experience"),
+            mytextfield("Total Experience", controller.experience)
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Save data logic (API call if needed)
+              Get.back(); // Close dialog
+            },
+            child: Text("Save"),
+          ),
+        ],
+      ),
     );
   }
 

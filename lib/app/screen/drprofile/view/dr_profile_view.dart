@@ -27,12 +27,12 @@ class DrProfileView extends GetView<DrProfileController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const  Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
         if (controller.dr_data.value.isEmpty) {
-          return const  Center(child: Text("No data available"));
+          return const Center(child: Text("No data available"));
         }
         final data = controller.dr_data.value[0];
         String? profileImage = data.profileImage;
@@ -40,22 +40,10 @@ class DrProfileView extends GetView<DrProfileController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Check if data is still loading
-
-              // Safely access the first item of the list
-
-              // Safely handle profileImage (in case it's null)
-
               Container(
                 width: double.maxFinite,
-                margin: const EdgeInsets.all(20),
-                padding:const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(
-                        width: 2,
-                        color: const Color.fromRGBO(235, 235, 238, 1))),
+                // margin: const EdgeInsets.all(20),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -84,290 +72,308 @@ class DrProfileView extends GetView<DrProfileController> {
                             ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
+                    ),
+                    Container(
+                      width: 124,
+                      height: 30,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 4), // Reduce horizontal padding
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                8), // Optional: Adjust the border radius
+                          ),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment
+                              .center, // Center the content horizontally
+                          children: [
+                            Text(
+                              "Download Resume",
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            SizedBox(
+                                width:
+                                    4), // Add small spacing between the text and the icon
+                            Icon(
+                              Icons.download,
+                              color: Colors.white,
+                              size: 14,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     Container(
                       width: double.maxFinite,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                              width: 1,
-                              color: const Color.fromARGB(124, 175, 175, 175))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            profileTextField("Your Name",
-                                "${data.firstName ?? 'N/A'} ${data.lastName ?? 'N/A'}"),
-                            profileTextField("Email", data.emailId ?? 'N/A'),
-                            profileTextField(
-                                "Phone Number", data.mobileNumber ?? "N/A"),
-                            profileTextField(
-                                "Location", data.location ?? 'N/A'),
-                            profileTextField(
-                                "Medical ID", data.medicalId ?? 'N/A')
-                          ],
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          profileTextField("Your Name",
+                              "${data.firstName ?? 'N/A'} ${data.lastName ?? 'N/A'}"),
+                          profileTextField("Email", data.emailId ?? 'N/A'),
+                          profileTextField(
+                              "Phone Number", data.mobileNumber ?? "N/A"),
+                          profileTextField("Location", data.location ?? 'N/A'),
+                          profileTextField(
+                              "Medical ID", data.medicalId ?? 'N/A')
+                        ],
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                              width: 1,
-                              color: const Color.fromARGB(124, 175, 175, 175))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    // Container(
+                    //   width: double.maxFinite,
+                    //   decoration: BoxDecoration(
+                    //       color: Colors.white,
+                    //       borderRadius: BorderRadius.circular(12),
+                    //       border: Border.all(
+                    //           width: 1,
+                    //           color: const Color.fromARGB(124, 175, 175, 175))),
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(15.0),
+                    //     child: Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         Text(
+                    //           "About Sid",
+                    //           style: TextStyle(
+                    //               fontSize: 18,
+                    //               fontWeight: FontWeight.w500,
+                    //               color: primaryColor),
+                    //         ),
+                    //         const SizedBox(
+                    //           height: 5,
+                    //         ),
+                    //         const Text(
+                    //             "Lorem ipsum dolor sit amet consectetur. Erat auctor a aliquam vel congue luctus. Leo diam cras neque mauris ac arcu elit ipsum dolor sit amet consectetur.")
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    //           Container(
+                    //             width: double.maxFinite,
+                    //             decoration: BoxDecoration(
+                    //                 color: Colors.white,
+                    //                 borderRadius: BorderRadius.circular(12),
+                    //                 border: Border.all(
+                    //                     width: 1,
+                    //                     color: const Color.fromARGB(124, 175, 175, 175))),
+                    //             child: Padding(
+                    //               padding: const EdgeInsets.all(15.0),
+                    //               child: Row(
+                    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //                 children: [
+                    //                   Column(
+                    //                     crossAxisAlignment: CrossAxisAlignment.start,
+                    //                     children: [
+                    //                       Text(
+                    //                         "Professional Details",
+                    //                         style: TextStyle(
+                    //                             fontSize: 18,
+                    //                             fontWeight: FontWeight.w500,
+                    //                             color: primaryColor),
+                    //                       ),
+                    //                       const SizedBox(
+                    //                         height: 5,
+                    //                       ),
+                    //                       const Text("""These are the professional
+                    // details shown to users in the app.""")
+                    //                     ],
+                    //                   ),
+                    //                   Image.asset("assets/Stars.png")
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           const SizedBox(height: 5),
+                    // Availability Section
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
                             Text(
-                              "About Sid",
+                              "Your Availability ",
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                   color: primaryColor),
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
                             const Text(
-                                "Lorem ipsum dolor sit amet consectetur. Erat auctor a aliquam vel congue luctus. Leo diam cras neque mauris ac arcu elit ipsum dolor sit amet consectetur.")
+                              "(Available time slot)",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                              width: 1,
-                              color: const Color.fromARGB(124, 175, 175, 175))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                        // Wrap widget to display availability in rows and wrap when overflowed
+                        data.availability != null &&
+                                data.availability!.isNotEmpty
+                            ? Wrap(
+                                spacing: 10, // Horizontal space between items
+                                runSpacing: 10, // Vertical space between lines
+                                children:
+                                    data.availability!.map((availability) {
+                                  return boxfield(availability);
+                                }).toList(),
+                              )
+                            : Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                child: const Text("No availability listed",
+                                    style: TextStyle(fontSize: 16)),
+                              ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Professional Details",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: primaryColor),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                const Text("""These are the professional 
-          details shown to users in the app.""")
+                                mylabel("Rate/Hourly  "),
+                                boxfield(data.hourlyRate?.toString() ?? 'N/A')
                               ],
                             ),
-                            Image.asset("assets/Stars.png")
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                mylabel("Total Experience"),
+                                boxfield("${data.totalExp?.toString()} year" ??
+                                    'N/A')
+                              ],
+                            ),
                           ],
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    // Availability Section
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "Your Availability ",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: primaryColor),
-                              ),
-                              const Text(
-                                "(Available time slot)",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
-                            ],
-                          ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        mylabel("Clinic Name"),
 
-                          // Wrap widget to display availability in rows and wrap when overflowed
-                          data.availability != null &&
-                                  data.availability!.isNotEmpty
-                              ? Wrap(
-                                  spacing: 10, // Horizontal space between items
-                                  runSpacing:
-                                      10, // Vertical space between lines
-                                  children:
-                                      data.availability!.map((availability) {
-                                    return boxfield(availability);
-                                  }).toList(),
-                                )
-                              : Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  child: Text("No availability listed",
-                                      style: TextStyle(fontSize: 16)),
-                                ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  mylabel("Rate/Hourly  "),
-                                  boxfield(data.hourlyRate?.toString() ?? 'N/A')
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  mylabel("Total Experience"),
-                                  boxfield(
-                                      "${data.totalExp?.toString()} year" ??
-                                          'N/A')
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          mylabel("Clinic Name"),
-                          boxfield(data.clinicName ?? 'N/A'),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          mylabel("Clinic Address"),
-                          boxfield(data.clinicLocation ?? 'N/A'),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          mylabel("Preferred Specialities"),
-                          data.preferredSpecialities != null &&
-                                  data.preferredSpecialities!.isNotEmpty
-                              ? Wrap(
-                                  spacing: 10, // Horizontal space between items
-                                  runSpacing:
-                                      10, // Vertical space between lines
-                                  children: controller.selectedSpecialtiesNames!
-                                      .map((preferredSpecialities) {
-                                    return boxfield(
-                                        preferredSpecialities.toString());
-                                  }).toList(),
-                                )
-                              : Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  child: Text("No availability listed",
-                                      style: TextStyle(fontSize: 16)),
-                                ),
+                        boxfield(data.clinicName ?? 'N/A'),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        mylabel("Clinic Address"),
+                        boxfield(data.clinicLocation ?? 'N/A'),
+                        const SizedBox(
+                          height: 15,
+                        ),
 
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          mylabel("Specified category"),
-                          controller.selectedCategoriesNames != null &&
-                                  controller.selectedCategoriesNames!.isNotEmpty
-                              ? Wrap(
-                                  spacing: 10, // Horizontal space between items
-                                  runSpacing:
-                                      10, // Vertical space between lines
-                                  children: controller.selectedCategoriesNames!
-                                      .map((category) {
-                                    return boxfield(category.toString());
-                                  }).toList(),
-                                )
-                              : Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  child: Text("No availability listed",
-                                      style: TextStyle(fontSize: 16)),
-                                ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 194,
-                      child: ElevatedButton(
-                          onPressed: () {},
-                          child: const Row(
-                            children: [
-                              Text("Download Resume "),
-                              Icon(Icons.download)
-                            ],
-                          )),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize
+                              .min, // Prevents extra space in column
+                          children: [
+                            mylabel("Preferred Specialities"),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            data.preferredSpecialities != null &&
+                                    data.preferredSpecialities!.isNotEmpty
+                                ? SizedBox(
+                                    width: double.infinity,
+                                    child: GridView.builder(
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets
+                                          .zero, // Removes default padding
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 10,
+                                        childAspectRatio: 4,
+                                      ),
+                                      itemCount: controller
+                                              .selectedSpecialtiesNames
+                                              .length ??
+                                          0,
+                                      itemBuilder: (context, index) {
+                                        return Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            controller
+                                                .selectedSpecialtiesNames[index]
+                                                .toString(),
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                : const Text("No availability listed",
+                                    style: TextStyle(fontSize: 16)),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            mylabel("Specified category"),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            controller.selectedCategoriesNames != null &&
+                                    controller
+                                        .selectedCategoriesNames!.isNotEmpty
+                                ? SizedBox(
+                                    width: double.infinity,
+                                    child: GridView.builder(
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets
+                                          .zero, // Removes default padding
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 10,
+                                        childAspectRatio: 4,
+                                      ),
+                                      itemCount: controller
+                                              .selectedCategoriesNames.length ??
+                                          0,
+                                      itemBuilder: (context, index) {
+                                        return Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            controller
+                                                .selectedCategoriesNames[index]
+                                                .toString(),
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                : const Text("No availability listed",
+                                    style: TextStyle(fontSize: 16)),
+                            const SizedBox(
+                              height: 20,
+                            )
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      mylabel('Communication preferences'),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text(
-                          "Medrecruit and our partner Medworld will occasionally email you about news and opportunities we think you'll be interested in Your profile is currently being created, please check back in 15-30 minutes if you would like to update your communication preferences. In the meantime, let's get a running start on the next step in your career"),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      mylabel('Register your account'),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text(
-                          "Register your account to unlock a world of possibilities! Signing up is simple and fast, allowing you to personalize your experience and enjoy exclusive benefits. Don’t miss out—create your account today and start exploring all that we have to offer."),
-                      InkWell(
-                          onTap: () {
-                            print("object");
-                          },
-                          child: Text(
-                            "Register your account",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: primaryColor),
-                          )),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      comment(
-                          "Great experience. [Melissa] really dedicates time to make sure she understands your past and current skills and puts it to paper to make you as attractive as you really are. Thank you. My wife's CV is next.",
-                          "Eyako Wurapa"),
-                      comment(
-                          "I found a job! Thanks to locum.com , a recruiter, who actually read my background, put me in touch with a client looking for someone with my qualifications. Given that I work in a very small health care niche the chances of my finding this employer on my own would be slim. Thanks for your help.",
-                          "Susan Pearson"),
-                      comment(
-                          "Thank you for all that you do. I started getting interviews almost immediately after using your resume, and I now have an offer in hand that I have accepted. It's all thanks to your new and improved resume that I got the job.",
-                          "Rebecca Dickerson")
-                    ],
-                  ))
             ],
           ),
         );

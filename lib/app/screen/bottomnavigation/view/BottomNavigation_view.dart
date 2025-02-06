@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -92,50 +93,109 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
         ),
       ),
       drawer: Drawer(
-        child: Material(
-          color: Colors.white,
-          borderRadius: BorderRadius.zero, // Remove rounded corners
-          child: SafeArea(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                ListTile(
-                  title: const Text('Manage'),
-                  onTap: () {
-                    Get.toNamed('/manage');
-                  },
-                ),
-                ListTile(
-                  title: const Text('About us'),
-                  onTap: () {
-                    Get.to(const AboutUs());
-                  },
-                ),
-                ListTile(
-                  title: const Text('Contact us'),
-                  onTap: () {
-                    Get.to(const ContactUs());
-                  },
-                ),
-                ListTile(
-                  title: const Text('Privacy policy'),
-                  onTap: () {
-                    Get.toNamed('/privacy');
-                  },
-                ),
-                const ListTile(
-                  title: Text(
-                    'Logout',
-                    softWrap: true,
-                    style: TextStyle(color: Colors.redAccent),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Drawer Header with dynamic profile picture, name, and description
+            const DrawerHeader(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      'https://locumedocument.s3.ap-south-1.amazonaws.com/dav.jpeg', // Replace with dynamic image URL
+                    ),
+                    radius: 40, // Size of the avatar
                   ),
-                  // onTap: () {
-                  //   Get.toNamed('/privacy');
-                  // },
-                ),
-              ],
+                  // Spacing between avatar and text
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'Dr. Akhil Kumar', // Replace with dynamic name
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                            height: 3), // Space between name and description
+                        Text(
+                          'MBBS, MD Medicine', // Replace with dynamic description
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color:
+                                Colors.grey, // Optional color for description
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+            Divider(
+              color: Colors.grey[300],
+            ),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  ListTile(
+                    title: const Text('Manage'),
+                    onTap: () {
+                      Get.toNamed('/manage');
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('About us'),
+                    onTap: () {
+                      Get.to(const AboutUs());
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Contact us'),
+                    onTap: () {
+                      Get.to(const ContactUs());
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Privacy policy'),
+                    onTap: () {
+                      Get.toNamed('/privacy');
+                    },
+                  ),
+                  Divider(
+                    color: Colors.grey[300],
+                  ),
+                ],
+              ),
+            ),
+            // Logout button at the bottom of the drawer
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 45.0),
+              child: ListTile(
+                leading: const Icon(Icons.logout, color: Colors.redAccent),
+                title: const Text(
+                  'Logout',
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () async {
+                  await SessionManager().set('isloggedIn', false);
+                  Get.offAllNamed('/login');
+                },
+              ),
+            ),
+          ],
         ),
       ),
       backgroundColor: Colors.white,
@@ -183,7 +243,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                         duration: const Duration(seconds: 5),
                         curve: Curves.easeIn,
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.5,
+                          height: MediaQuery.of(context).size.height * 0.58,
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -520,8 +580,113 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 10,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 15, bottom: 10),
+                                          child: Text(
+                                            "Start date",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                        ),
+                                        TextFormField(
+                                          controller: controller.startDate,
+                                          readOnly: true,
+                                          onTap: () => controller
+                                              .selectDateRange(context),
+                                          decoration: InputDecoration(
+                                            hintText: "Select start date",
+                                            fillColor: const Color.fromRGBO(
+                                                248, 247, 247, 1),
+                                            filled: true,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                color: Color.fromRGBO(
+                                                    220, 215, 215, 1),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.blue,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                              vertical: 0,
+                                              horizontal: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      width: 16), // Add spacing between fields
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 15, bottom: 10),
+                                          child: Text(
+                                            "End date",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                        ),
+                                        TextFormField(
+                                          controller: controller.endDate,
+                                          readOnly: true,
+                                          onTap: () => controller
+                                              .selectDateRange(context),
+                                          decoration: InputDecoration(
+                                            hintText: "Select end date",
+                                            fillColor: const Color.fromRGBO(
+                                                248, 247, 247, 1),
+                                            filled: true,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                color: Color.fromRGBO(
+                                                    220, 215, 215, 1),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.blue,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                              vertical: 0,
+                                              horizontal: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                               Row(
                                 mainAxisAlignment:

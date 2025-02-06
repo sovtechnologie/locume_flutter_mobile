@@ -420,11 +420,12 @@ hospitalcard(String image, String name, String location, String distance,
         ),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: 120,
@@ -459,127 +460,132 @@ hospitalcard(String image, String name, String location, String distance,
                         )),
                   ),
                   space(0.0, 5.0),
-                  Row(
+                  space(10.0, 0.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.asset(
-                        "assets/Star.png",
-                        height: 12,
-                        width: 12,
-                      ),
-                      space(5.0, 0.0),
+                      space(10.0, 0.0),
                       Text(
-                        Rating,
+                        name,
+                        overflow: TextOverflow.visible,
+                        softWrap: true,
                         style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: HexColor('#326295')),
                       ),
-                      space(5.0, 0.0),
-                      Text("Rating",
-                          style: TextStyle(
+                      space(0.0, 5.0),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            child: Icon(
+                              Icons.location_on_sharp,
+                              size: 10,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                          space(5.0, 0.0),
+                          SizedBox(
+                            width: 180,
+                            child: Text(
+                              location,
+                              overflow: TextOverflow.visible,
+                              softWrap: true,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10,
+                                color: HexColor('#333333'),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      space(0.0, 5.0),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset('assets/distancesvg.svg'),
+                          space(5.0, 0.0),
+                          Text(
+                            distance,
+                            style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 10,
-                              color: HexColor('#2A7FBA'))),
+                              color: HexColor('#333333'),
+                            ),
+                          )
+                        ],
+                      ),
+                      space(0.0, 5.0),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/Stethoscope.png',
+                            height: 10,
+                            width: 10,
+                          ),
+                          space(5.0, 0.0),
+                          Text(
+                            "$numDoctor doctors",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 10,
+                              color: HexColor('#2A7FBA'),
+                            ),
+                          )
+                        ],
+                      ),
+                      space(0.0, 5.0),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/Nurturing.png',
+                            height: 10,
+                            width: 10,
+                          ),
+                          space(5.0, 0.0),
+                          Text(
+                            "$numSpeciality specialties",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 10,
+                              color: HexColor('#2A7FBA'),
+                            ),
+                          )
+                        ],
+                      ),
                     ],
                   )
                 ],
               ),
-              space(10.0, 0.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
                 children: [
-                  space(10.0, 0.0),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Image.asset(
+                    "assets/Star.png",
+                    height: 12,
+                    width: 12,
+                  ),
+                  space(5.0, 0.0),
                   Text(
-                    name,
-                    overflow: TextOverflow.visible,
-                    softWrap: true,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: HexColor('#326295')),
+                    Rating,
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
                   ),
-                  space(0.0, 5.0),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        child: Icon(
-                          Icons.location_on_sharp,
-                          size: 10,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      space(5.0, 0.0),
-                      SizedBox(
-                        width: 180,
-                        child: Text(
-                          location,
-                          overflow: TextOverflow.visible,
-                          softWrap: true,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: HexColor('#333333'),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  space(0.0, 5.0),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset('assets/distancesvg.svg'),
-                      space(5.0, 0.0),
-                      Text(
-                        distance,
-                        style: TextStyle(
+                  space(5.0, 0.0),
+                  Text("Rating",
+                      style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 10,
-                          color: HexColor('#333333'),
-                        ),
-                      )
-                    ],
-                  ),
-                  space(0.0, 5.0),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/Stethoscope.png',
-                        height: 10,
-                        width: 10,
-                      ),
-                      space(5.0, 0.0),
-                      Text(
-                        "$numDoctor doctors",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 10,
-                          color: HexColor('#2A7FBA'),
-                        ),
-                      )
-                    ],
-                  ),
-                  space(0.0, 5.0),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/Nurturing.png',
-                        height: 10,
-                        width: 10,
-                      ),
-                      space(5.0, 0.0),
-                      Text(
-                        "$numSpeciality specialties",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 10,
-                          color: HexColor('#2A7FBA'),
-                        ),
-                      )
-                    ],
-                  ),
-                  space(0.0, 15.0),
+                          color: HexColor('#2A7FBA'))),
+                  space(25.0, 0.0),
                   Text(
                     '    View Details',
                     overflow: TextOverflow.visible,

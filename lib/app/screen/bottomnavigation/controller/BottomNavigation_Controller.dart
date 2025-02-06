@@ -1,13 +1,17 @@
 import 'dart:convert';
 
+import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:locume/Theme/theme.dart';
 import 'package:locume/api/api_provider.dart';
 import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
     as s;
 import 'package:locume/app/screen/login/signup/model/category_model.dart' as c;
 
 import '../../../../api/auth_provider.dart';
+
+import 'package:intl/intl.dart';
 
 class BottomnavigationController extends GetxController {
   final firstName = Get.find<AuthProvider>().getUser?.firstName;
@@ -16,6 +20,9 @@ class BottomnavigationController extends GetxController {
   RxBool showBottom = false.obs;
   RxBool isLoading = false.obs;
   TextEditingController hospitalname = TextEditingController();
+  final TextEditingController startDate = TextEditingController();
+  final TextEditingController endDate = TextEditingController();
+
   RxString selectedType = "".obs;
   RxString category = "".obs;
   RxString shift = "".obs;
@@ -78,5 +85,22 @@ class BottomnavigationController extends GetxController {
       isLoading.value = false;
       showBottom.value = false;
     }
+  }
+
+  Future<void> selectDateRange(BuildContext context) async {
+    showCustomDateRangePicker(
+      context,
+      dismissible: true,
+      minimumDate: DateTime.now(),
+      maximumDate: DateTime(2100),
+      onApplyClick: (start, end) {
+        startDate.text = DateFormat('dd-MM-yyyy').format(start);
+        endDate.text = DateFormat('dd-MM-yyyy').format(end);
+        update(); // Notify UI to update in GetX
+      },
+      onCancelClick: () {},
+      backgroundColor: Colors.white,
+      primaryColor: primaryColor,
+    );
   }
 }
