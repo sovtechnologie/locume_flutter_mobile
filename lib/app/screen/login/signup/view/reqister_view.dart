@@ -53,17 +53,17 @@ class RegisterView extends GetView<LoginController> {
                             height: 15,
                           ),
                           CustomizableField(
-                            controller: controller.firstname,
-                            heading: "First Name",
-                            hintText: "Your first name",
+                            controller: controller.fullname,
+                            heading: "Full Name",
+                            hintText: "Your full name",
                             keyboardType: TextInputType.name,
                           ),
-                          CustomizableField(
-                            controller: controller.lastname,
-                            heading: "Last Name",
-                            hintText: "Your last name",
-                            keyboardType: TextInputType.name,
-                          ),
+                          // CustomizableField(
+                          //   controller: controller.lastname,
+                          //   heading: "Last Name",
+                          //   hintText: "Your last name",
+                          //   keyboardType: TextInputType.name,
+                          // ),
                           CustomizableField(
                             controller: controller.phonenumber,
                             heading: "Mobile Number",
@@ -105,51 +105,57 @@ class RegisterView extends GetView<LoginController> {
                               },
                             );
                           }),
+                          // CustomizableField(
+                          //   controller: controller.medicalid,
+                          //   heading: "Medical ID",
+                          //   hintText: "Medical ID",
+                          //   keyboardType: TextInputType.number,
+                          // ),
                           CustomizableField(
-                            controller: controller.medicalid,
-                            heading: "Medical ID",
-                            hintText: "Medical ID",
-                            keyboardType: TextInputType.number,
-                          ),
-                          CustomizableField(
-                            controller: controller.location,
-                            heading: "Location",
-                            hintText: "Location",
+                            controller: controller.state,
+                            heading: "State",
+                            hintText: "State",
                             keyboardType: TextInputType.text,
                           ),
-                          CustomDropdown(
-                            heading: "Availability",
-                            options: controller.availability,
-                            selectedValues: controller.selectedavailability,
-                            controller: _shiftController,
+                          CustomizableField(
+                            controller: controller.city,
+                            heading: "City",
+                            hintText: "City",
+                            keyboardType: TextInputType.text,
                           ),
-                          Obx(() {
-                            if (controller.specialtiesList.isEmpty) {
-                              return Center(child: CircularProgressIndicator());
-                            }
+                          // CustomDropdown(
+                          //   heading: "Availability",
+                          //   options: controller.availability,
+                          //   selectedValues: controller.selectedavailability,
+                          //   controller: _shiftController,
+                          // ),
+                          // Obx(() {
+                          //   if (controller.specialtiesList.isEmpty) {
+                          //     return Center(child: CircularProgressIndicator());
+                          //   }
 
-                            return CustomDropdown(
-                              heading: "Specialties",
-                              options: controller.getSpecialtyNames(),
-                              selectedValues: controller.selectedSpecialty,
-                              controller: specialties,
-                            );
-                          }),
+                          //   return CustomDropdown(
+                          //     heading: "Specialties",
+                          //     options: controller.getSpecialtyNames(),
+                          //     selectedValues: controller.selectedSpecialty,
+                          //     controller: specialties,
+                          //   );
+                          // }),
                           SingleSelectionDropdown(
                             heading: "Gender",
-                            options: ["Male", "Female", "Other"],
+                            options: ["Male", "Female"],
                             selectedValue: controller.gender.value,
                             controller: genderController,
                             onChanged: (value) {
                               controller.gender.value = value!;
                             },
                           ),
-                          CustomizableField(
-                            controller: controller.rate,
-                            heading: "Rate/Hourly",
-                            hintText: "Rate/Hourly",
-                            keyboardType: TextInputType.number,
-                          ),
+                          // CustomizableField(
+                          //   controller: controller.rate,
+                          //   heading: "Rate/Hourly",
+                          //   hintText: "Rate/Hourly",
+                          //   keyboardType: TextInputType.number,
+                          // ),
                           CustomisableButton(
                               text: "Sign Up",
                               onTap: () async {

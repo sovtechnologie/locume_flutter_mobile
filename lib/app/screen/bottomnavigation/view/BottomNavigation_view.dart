@@ -50,7 +50,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                 ),
               ),
               title: Text(
-                'Hi, ${controller.firstName} ${controller.lastName}',
+                'Hi, ${controller.firstName}',
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
@@ -97,47 +97,54 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Drawer Header with dynamic profile picture, name, and description
-            const DrawerHeader(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://locumedocument.s3.ap-south-1.amazonaws.com/dav.jpeg', // Replace with dynamic image URL
+            GestureDetector(
+              onTap: () {
+                controller.currentStep.value = 4;
+                print(controller.currentStep);
+                Navigator.pop(context);
+              },
+              child: const DrawerHeader(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://locumedocument.s3.ap-south-1.amazonaws.com/dav.jpeg', // Replace with dynamic image URL
+                      ),
+                      radius: 40, // Size of the avatar
                     ),
-                    radius: 40, // Size of the avatar
-                  ),
-                  // Spacing between avatar and text
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'Dr. Akhil Kumar', // Replace with dynamic name
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                    // Spacing between avatar and text
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 5,
                           ),
-                        ),
-                        SizedBox(
-                            height: 3), // Space between name and description
-                        Text(
-                          'MBBS, MD Medicine', // Replace with dynamic description
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color:
-                                Colors.grey, // Optional color for description
+                          Text(
+                            'Dr. Akhil Kumar', // Replace with dynamic name
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                              height: 3), // Space between name and description
+                          Text(
+                            'MBBS, MD Medicine', // Replace with dynamic description
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color:
+                                  Colors.grey, // Optional color for description
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Divider(
@@ -766,7 +773,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                                     ),
                                     child: Text(
                                         (controller.isLoading.value == false)
-                                            ? "Book Now"
+                                            ? "Request Locum"
                                             : "Lodaing")),
                               )
                             ],
@@ -779,100 +786,82 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
           ),
         ],
       ),
-      bottomNavigationBar: ConvexAppBar(
-        curveSize: 120.0,
-        style: TabStyle.fixedCircle,
-        activeColor: primaryColor,
-        shadowColor: HexColor('#C4C4C4'),
-        color: Colors.grey,
-        height: 75.0,
-        initialActiveIndex: 0,
-        backgroundColor: white,
-        items: [
-          TabItem(
-            icon: const Icon(
-              size: 25.0,
-              Icons.home,
-              color: Colors.grey,
-            ),
-            title: 'Home',
-            activeIcon: Transform.translate(
-              offset: Offset(-2, -5),
-              child: Icon(size: 30, Icons.home, color: primaryColor),
-            ),
-          ),
-          TabItem(
-            icon: SvgPicture.asset(
-              'assets/doctor.svg',
-              color: Colors.grey,
-            ),
-            title: 'Locum',
-            activeIcon: Transform.translate(
-              offset: const Offset(0, -5),
-              child: SvgPicture.asset('assets/doctor.svg', color: primaryColor),
-            ),
-          ),
-          TabItem(
-            icon: Obx(() => InkWell(
-                  onTap: () {
-                    controller.showBottom.value = !controller.showBottom.value;
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: primaryColor, shape: BoxShape.circle),
-                    child: Center(
-                      child: controller.showBottom.value
-                          ? Transform.translate(
-                              offset: Offset(0, -7),
-                              child: const Icon(
-                                Icons.minimize_rounded,
-                                color: Colors.white,
-                              ),
-                            )
-                          : const Icon(
-                              Icons.add_rounded,
-                              color: Colors.white,
-                            ),
-                    ),
-                  ),
-                )),
-            title: 'Add',
-          ),
-          TabItem(
-            icon: SvgPicture.asset(
-              'assets/hospital.svg',
-              color: Colors.grey,
-            ),
-            title: 'Hospitals',
-            activeIcon: Transform.translate(
-              offset: const Offset(0, -5),
-              child: SvgPicture.asset(
-                'assets/hospital.svg',
-                color: primaryColor,
+      bottomNavigationBar: Obx(() => ConvexAppBar(
+            key: ValueKey(controller.currentStep.value), // Force rebuild
+            curveSize: 120.0,
+            style: TabStyle.fixedCircle,
+            activeColor: primaryColor,
+            shadowColor: HexColor('#C4C4C4'),
+            color: Colors.grey,
+            height: 75.0,
+            backgroundColor: white,
+            initialActiveIndex:
+                controller.currentStep.value, // Ensure it updates
+            items: [
+              TabItem(
+                icon: Icon(Icons.home, color: Colors.grey),
+                title: 'Home',
+                activeIcon: Transform.translate(
+                  offset: Offset(-2, -5),
+                  child: Icon(Icons.home, color: primaryColor),
+                ),
               ),
-            ),
-          ),
-          TabItem(
-            icon: const Icon(
-              Icons.person,
-              color: Colors.grey,
-            ),
-            title: 'Profile',
-            activeIcon: Transform.translate(
-              offset: const Offset(0, -5),
-              child: Icon(
-                Icons.person,
-                color: primaryColor,
+              TabItem(
+                icon: SvgPicture.asset('assets/doctor.svg', color: Colors.grey),
+                title: 'Locum',
+                activeIcon: Transform.translate(
+                  offset: Offset(0, -5),
+                  child: SvgPicture.asset('assets/doctor.svg',
+                      color: primaryColor),
+                ),
               ),
-            ),
-          ),
-        ],
-        onTap: (int i) {
-          if (i != 2) {
-            controller.currentStep.value = i;
-          }
-        },
-      ),
+              TabItem(
+                icon: Obx(() => InkWell(
+                      onTap: () {
+                        controller.showBottom.value =
+                            !controller.showBottom.value;
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: primaryColor, shape: BoxShape.circle),
+                        child: Center(
+                          child: controller.showBottom.value
+                              ? Transform.translate(
+                                  offset: Offset(0, -7),
+                                  child: Icon(Icons.minimize_rounded,
+                                      color: Colors.white),
+                                )
+                              : Icon(Icons.add_rounded, color: Colors.white),
+                        ),
+                      ),
+                    )),
+                title: 'Add',
+              ),
+              TabItem(
+                icon:
+                    SvgPicture.asset('assets/hospital.svg', color: Colors.grey),
+                title: 'Clinic',
+                activeIcon: Transform.translate(
+                  offset: Offset(0, -5),
+                  child: SvgPicture.asset('assets/hospital.svg',
+                      color: primaryColor),
+                ),
+              ),
+              TabItem(
+                icon: Icon(Icons.person, color: Colors.grey),
+                title: 'Profile',
+                activeIcon: Transform.translate(
+                  offset: Offset(0, -5),
+                  child: Icon(Icons.person, color: primaryColor),
+                ),
+              ),
+            ],
+            onTap: (int i) {
+              if (i != 2) {
+                controller.currentStep.value = i;
+              }
+            },
+          )),
     );
   }
 }

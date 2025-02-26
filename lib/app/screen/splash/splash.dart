@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:jailbreak_root_detection/jailbreak_root_detection.dart';
+import 'package:locume/app/screen/login/signup/controller/login_controller.dart';
 
 import '../../../widget/reusedwidget.dart';
 
@@ -15,6 +16,7 @@ class Splash extends StatelessWidget {
   Splash({super.key}) {
     checkinternet();
     gettoken();
+    Get.lazyPut(() => LoginController());
   }
   var ishint = false;
   var isloggedin = false;
@@ -38,14 +40,17 @@ class Splash extends StatelessWidget {
   checkforsafety_android() async {
     var ishint = await SessionManager().get("ishint_viewd");
     var isloggedin = await SessionManager().get("isloggedIn");
+    var token = await SessionManager().get('token');
 
     if (ishint == null && isloggedin == null) {
       Get.toNamed('/getstarted');
     } else if (ishint == true && isloggedin == null) {
       Get.toNamed('/login');
-    }
-    else if (ishint == true && isloggedin == true) {
+    } else if (ishint == true && isloggedin == true && token != null) {
+      await Get.find<LoginController>().userLoginwithToken(token);
       Get.offAllNamed('/bottomnavigation');
+    } else {
+      Get.toNamed('/login');
     }
     // await SessionManager().get("ishint_viewd").then((value) async {
     //   if(value == true){
@@ -78,14 +83,17 @@ class Splash extends StatelessWidget {
   checkforsafety_ios() async {
     var ishint = await SessionManager().get("ishint_viewd");
     var isloggedin = await SessionManager().get("isloggedIn");
+    var token = await SessionManager().get('token');
 
-    if (ishint == null && isloggedin == null) {
+    if (ishint == false && isloggedin == null) {
       Get.toNamed('/getstarted');
     } else if (ishint == true && isloggedin == null) {
       Get.toNamed('/login');
-    }
-    else if (ishint == true && isloggedin == true) {
+    } else if (ishint == true && isloggedin == true && token != null) {
+      await Get.find<LoginController>().userLoginwithToken(token);
       Get.offAllNamed('/bottomnavigation');
+    } else {
+      Get.toNamed('/login');
     }
     // final isJailBroken = await JailbreakRootDetection.instance.isJailBroken;
     // final isRealDevice = await JailbreakRootDetection.instance.isRealDevice;

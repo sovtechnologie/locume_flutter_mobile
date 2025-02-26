@@ -245,7 +245,7 @@ class _SingleSelectionDropdownState extends State<SingleSelectionDropdown> {
                 ),
                 if (_isExpanded)
                   Container(
-                    height: 150,
+                    height: 90,
                     child: SingleChildScrollView(
                       child: Column(
                         children: widget.options.map((option) {

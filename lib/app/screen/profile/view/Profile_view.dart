@@ -7,6 +7,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/profile/controller/Profile_Controller.dart';
+import 'package:locume/app/screen/profile/view/AddSpecialities.dart';
+import 'package:locume/app/screen/profile/view/Edit_Profile.dart';
+import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
+    as specialtie;
 
 class ProfileView extends GetView<ProfileController> {
   ProfileView({super.key}) {
@@ -91,7 +95,7 @@ class ProfileView extends GetView<ProfileController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 profileTextField("Your Name",
-                                    "${data.firstName ?? 'N/A'} ${data.lastName ?? 'N/A'}"),
+                                    "${data.firstName ?? 'N/A'} ${data.lastName ?? ''}"),
                                 profileTextField(
                                     "Phone Number", data.mobileNumber ?? "N/A"),
                                 profileTextField(
@@ -105,7 +109,15 @@ class ProfileView extends GetView<ProfileController> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: InkWell(
-                                  onTap: () => _showEditProfileDialog(context),
+                                  onTap: () {
+                                    Get.to(EditProfilePage(
+                                      nameController: controller.name,
+                                      numberController: controller.number,
+                                      locationController: controller.location,
+                                      experienceController:
+                                          controller.experience,
+                                    ));
+                                  },
                                   child: const Text("Edit Profile")),
                             ),
                           ],
@@ -120,16 +132,32 @@ class ProfileView extends GetView<ProfileController> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 5.0, bottom: 5),
-                            child: Text(
-                              "Preferred Specialities",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  color: primaryColor),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Preferred Specialities",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      color: primaryColor),
+                                ),
+                                Spacer(),
+                                InkWell(
+                                    onTap: () {
+                                      Get.to(Addspecialities());
+                                    },
+                                    child: Text(
+                                        controller.selectedSpecialties !=
+                                                    null &&
+                                                controller.selectedSpecialties!
+                                                    .isNotEmpty
+                                            ? "+Add more"
+                                            : "+Add Specialities"))
+                              ],
                             ),
                           ),
-                          data.preferredSpecialities != null &&
-                                  data.preferredSpecialities!.isNotEmpty
+                          controller.selectedSpecialties != null &&
+                                  controller.selectedSpecialties!.isNotEmpty
                               ? SizedBox(
                                   width: double.infinity,
                                   child: GridView.builder(
@@ -144,19 +172,30 @@ class ProfileView extends GetView<ProfileController> {
                                       childAspectRatio: 4,
                                     ),
                                     itemCount:
-                                        data.preferredSpecialities!.length,
+                                        controller.selectedSpecialties.length,
                                     itemBuilder: (context, index) {
+                                      // Find the corresponding specialty object from specialtiesList using the ID
+                                      final specialty =
+                                          controller.specialtiesList.firstWhere(
+                                        (s) =>
+                                            s.id ==
+                                            controller
+                                                .selectedSpecialties[index],
+                                        orElse: () => specialtie.Result(
+                                            id: 0,
+                                            specialtiesName:
+                                                "Unknown"), // Default object
+                                      );
+
                                       return Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          data.preferredSpecialities![index]
-                                                  .toString() ??
-                                              'N/A',
+                                          specialty.specialtiesName ??
+                                              'Unknown', // Show name or fallback
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400,
                                           ),
-                                          // Center align text inside the grid
                                         ),
                                       );
                                     },
@@ -164,7 +203,7 @@ class ProfileView extends GetView<ProfileController> {
                                 )
                               : Container(
                                   padding: const EdgeInsets.only(top: 10),
-                                  child: Text("No availability listed",
+                                  child: Text("No Specialities listed",
                                       style: TextStyle(fontSize: 16)),
                                 ),
                           mylabel("Education Qualifications & Proof"),
@@ -735,47 +774,6 @@ class ProfileView extends GetView<ProfileController> {
               ),
             ],
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: Text("Cancel"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Save data logic (API call if needed)
-              Get.back(); // Close dialog
-            },
-            child: Text("Save"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showEditProfileDialog(BuildContext context) {
-    Get.dialog(
-      AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        title: Text(
-          "Edit Profile",
-          style: TextStyle(color: primaryColor, fontSize: 20),
-        ),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            mylabel2("Name"),
-            mytextfield("Enter your name", controller.name),
-            mylabel2("Number"),
-            mytextfield("Enter your number", controller.number),
-            mylabel2("Location"),
-            mytextfield("Enter location", controller.location),
-            mylabel2("Total Experience"),
-            mytextfield("Total Experience", controller.experience)
-          ],
         ),
         actions: [
           TextButton(

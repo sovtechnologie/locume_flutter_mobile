@@ -14,6 +14,7 @@ class DrProfileController extends GetxController {
   Rx<List<DrProfile.Result>> dr_data = Rx<List<DrProfile.Result>>([]);
   RxBool isLoading = true.obs; // To track loading state
   final RxList<s.Result> specialtiesList = <s.Result>[].obs;
+  RxList selectedSpecialties = [].obs;
   final RxList<c.Result> categoryList = <c.Result>[].obs;
 
   // To store the filtered names of specialties and categories
@@ -64,6 +65,7 @@ class DrProfileController extends GetxController {
         // Call category and specialty APIs
         await getCatgory();
         await getSpecialites();
+        selectedSpecialties.value = dr_data.value[0].category ?? [];
         // Map the IDs to their names
         mapCategoryNames(res.result?.first.category ?? []);
         mapSpecialtiesNames(res.result?.first.preferredSpecialities ?? []);

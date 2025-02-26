@@ -291,7 +291,8 @@ Widget reviewscard(String name, int Rating, String review, String date) {
 }
 
 Widget smalldoctorcard(String image, String name, String md, String work,
-    String experience, String location, String id) {
+    String experience, String location, String id,
+    [bool forRequest = false]) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8.0),
     child: InkWell(
@@ -314,81 +315,148 @@ Widget smalldoctorcard(String image, String name, String md, String work,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  image,
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Image.asset(
-                      'assets/doctor-icon.jpg',
-                      fit: BoxFit.cover,
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      image,
                       width: 100,
                       height: 100,
-                    );
-                  },
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                          color: HexColor('#326295')),
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/doctor-icon.jpg',
+                          fit: BoxFit.cover,
+                          width: 100,
+                          height: 100,
+                        );
+                      },
                     ),
-                    SizedBox(height: 3),
-                    Text(md,
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.w500)),
-                    SizedBox(height: 3),
-                    Text(work,
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.w400)),
-                    SizedBox(height: 3),
-                    Text('$experience years experience',
-                        style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
-                            color: HexColor('#333333'))),
-                    SizedBox(height: 3),
-                    Row(
+                  ),
+                  SizedBox(width: 5),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.location_on,
-                            size: 10, color: Colors.grey[600]),
-                        SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            location,
+                        Text(
+                          name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                              color: HexColor('#326295')),
+                        ),
+                        SizedBox(height: 3),
+                        Text(md,
+                            style: TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.w500)),
+                        SizedBox(height: 3),
+                        Text(work,
+                            style: TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.w400)),
+                        SizedBox(height: 3),
+                        Text('$experience years experience',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w400,
-                                color: HexColor('#333333')),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                                color: HexColor('#333333'))),
+                        SizedBox(height: 3),
+                        Row(
+                          children: [
+                            Icon(Icons.location_on,
+                                size: 10, color: Colors.grey[600]),
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: Text(
+                                location,
+                                style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400,
+                                    color: HexColor('#333333')),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
                         ),
+                        SizedBox(height: 3),
+                        Text(
+                          'View Details',
+                          style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: primaryColor),
+                        ),
+                        // Row(
+                        //   children: [
+                        //     Icon(
+                        //       Icons.done,
+                        //       color: const Color.fromARGB(255, 84, 175, 76),
+                        //     ),
+                        //     SizedBox(
+                        //       width: 10,
+                        //     ),
+                        //     Icon(
+                        //       Icons.close,
+                        //       color: Colors.red,
+                        //     )
+                        //   ],
+                        // )
                       ],
                     ),
-                    SizedBox(height: 3),
-                    Text(
-                      'View Details',
-                      style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                          color: primaryColor),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              if (forRequest == true)
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  height: 30,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Accept Button (Green Border & Text)
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.green, // Text color
+                            side: BorderSide(
+                                color: Colors.green, width: 1), // Green border
+                            backgroundColor:
+                                Colors.transparent, // Transparent background
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(10), // Border radius
+                            ),
+                          ),
+                          child: Text("Accept"),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      // Reject Button (Red Border & Text)
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.red, // Text color
+                            side: BorderSide(
+                                color: Colors.red, width: 1), // Red border
+                            backgroundColor:
+                                Colors.transparent, // Transparent background
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(10), // Border radius
+                            ),
+                          ),
+                          child: Text("Reject"),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
@@ -439,7 +507,7 @@ hospitalcard(String image, String name, String location, String distance,
                               .fill, // Image.asset('assets/logo.png',width: 120,),
                           errorBuilder: (context, error, stackTrace) {
                             return Image.asset(
-                              image,
+                              'assets/hospital1.png',
                               fit: BoxFit.cover,
                             ); // Fallback widget
                           },
@@ -835,6 +903,49 @@ policy(String title, String body) {
         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
       ),
     ],
+  );
+}
+
+Widget mylabel2(String label) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10.0, bottom: 5),
+    child: Text(
+      label,
+      style: TextStyle(
+          fontSize: 14, fontWeight: FontWeight.w500, color: primaryColor),
+    ),
+  );
+}
+
+Widget mytextfield(String hint, TextEditingController controller) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5.0),
+    child: TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: hint,
+        contentPadding:
+            EdgeInsets.symmetric(vertical: 5, horizontal: 12), // Adjust padding
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20), // Rounded corners
+          borderSide: BorderSide(
+              color: const Color.fromARGB(124, 175, 175, 175),
+              width: 1), // Gray when disabled
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20), // Rounded corners
+          borderSide:
+              BorderSide(color: primaryColor, width: 1), // Blue when enabled
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20), // Rounded corners
+          borderSide: BorderSide(
+              color: Color.fromARGB(124, 175, 175, 175),
+              width: 1), // Default border
+        ),
+      ),
+      style: TextStyle(fontSize: 14), // Adjust text size if needed
+    ),
   );
 }
 

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 class RequestDetailsController extends GetxController {
+  RxBool reqStatus = true.obs;
   var doctorList = <Map<String, String>>[
     {
       "image": "https://via.placeholder.com/100",

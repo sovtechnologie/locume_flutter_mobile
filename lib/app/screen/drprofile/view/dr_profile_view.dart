@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/drprofile/controller/dr_profile_controller.dart';
 import 'package:locume/widget/custom_button.dart';
+import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
+    as specialtie;
 
 class DrProfileView extends GetView<DrProfileController> {
   @override
@@ -22,7 +24,7 @@ class DrProfileView extends GetView<DrProfileController> {
 
           // Safely access the first item of the list and its properties
           final data = controller.dr_data.value[0];
-          return Text("${data.firstName ?? 'N/A'} ${data.lastName ?? 'N/A'}");
+          return Text("${data.firstName ?? 'N/A'}");
         }),
       ),
       body: Obx(() {
@@ -283,87 +285,101 @@ class DrProfileView extends GetView<DrProfileController> {
                             const SizedBox(
                               height: 5,
                             ),
-                            data.preferredSpecialities != null &&
-                                    data.preferredSpecialities!.isNotEmpty
+                            controller.selectedSpecialties != null &&
+                                    controller.selectedSpecialties!.isNotEmpty
                                 ? SizedBox(
                                     width: double.infinity,
                                     child: GridView.builder(
-                                      shrinkWrap: true,
-                                      padding: EdgeInsets
-                                          .zero, // Removes default padding
+                                      shrinkWrap:
+                                          true, // Important to wrap content inside a column
                                       physics:
-                                          const NeverScrollableScrollPhysics(),
+                                          const NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 3,
                                         crossAxisSpacing: 10,
                                         childAspectRatio: 4,
                                       ),
-                                      itemCount: controller
-                                              .selectedSpecialtiesNames
-                                              .length ??
-                                          0,
+                                      itemCount:
+                                          controller.selectedSpecialties.length,
                                       itemBuilder: (context, index) {
+                                        // Find the corresponding specialty object from specialtiesList using the ID
+                                        final specialty = controller
+                                            .specialtiesList
+                                            .firstWhere(
+                                          (s) =>
+                                              s.id ==
+                                              controller
+                                                  .selectedSpecialties[index],
+                                          orElse: () => specialtie.Result(
+                                              id: 0,
+                                              specialtiesName:
+                                                  "Unknown"), // Default object
+                                        );
+
                                         return Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            controller
-                                                .selectedSpecialtiesNames[index]
-                                                .toString(),
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w400),
+                                            specialty.specialtiesName ??
+                                                'Unknown', // Show name or fallback
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                            ),
                                           ),
                                         );
                                       },
                                     ),
                                   )
-                                : const Text("No availability listed",
-                                    style: TextStyle(fontSize: 16)),
+                                : Container(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Text("No Specialities listed",
+                                        style: TextStyle(fontSize: 16)),
+                                  ),
                             const SizedBox(
                               height: 15,
                             ),
-                            mylabel("Specified category"),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            controller.selectedCategoriesNames != null &&
-                                    controller
-                                        .selectedCategoriesNames!.isNotEmpty
-                                ? SizedBox(
-                                    width: double.infinity,
-                                    child: GridView.builder(
-                                      shrinkWrap: true,
-                                      padding: EdgeInsets
-                                          .zero, // Removes default padding
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 10,
-                                        childAspectRatio: 4,
-                                      ),
-                                      itemCount: controller
-                                              .selectedCategoriesNames.length ??
-                                          0,
-                                      itemBuilder: (context, index) {
-                                        return Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            controller
-                                                .selectedCategoriesNames[index]
-                                                .toString(),
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  )
-                                : const Text("No availability listed",
-                                    style: TextStyle(fontSize: 16)),
+                            // mylabel("Specified category"),
+                            // const SizedBox(
+                            //   height: 5,
+                            // ),
+                            // controller.selectedCategoriesNames != null &&
+                            //         controller
+                            //             .selectedCategoriesNames!.isNotEmpty
+                            //     ? SizedBox(
+                            //         width: double.infinity,
+                            //         child: GridView.builder(
+                            //           shrinkWrap: true,
+                            //           padding: EdgeInsets
+                            //               .zero, // Removes default padding
+                            //           physics:
+                            //               const NeverScrollableScrollPhysics(),
+                            //           gridDelegate:
+                            //               const SliverGridDelegateWithFixedCrossAxisCount(
+                            //             crossAxisCount: 3,
+                            //             crossAxisSpacing: 10,
+                            //             childAspectRatio: 4,
+                            //           ),
+                            //           itemCount: controller
+                            //                   .selectedCategoriesNames.length ??
+                            //               0,
+                            //           itemBuilder: (context, index) {
+                            //             return Align(
+                            //               alignment: Alignment.topLeft,
+                            //               child: Text(
+                            //                 controller
+                            //                     .selectedCategoriesNames[index]
+                            //                     .toString(),
+                            //                 style: const TextStyle(
+                            //                     fontSize: 12,
+                            //                     fontWeight: FontWeight.w400),
+                            //               ),
+                            //             );
+                            //           },
+                            //         ),
+                            //       )
+                            //     : const Text("No availability listed",
+                            //         style: TextStyle(fontSize: 16)),
                             const SizedBox(
                               height: 20,
                             )

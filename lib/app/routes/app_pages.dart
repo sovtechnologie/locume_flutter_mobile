@@ -33,6 +33,7 @@ import 'package:locume/app/screen/requestLocum/binding/req-locum-binding.dart';
 import 'package:locume/app/screen/requestLocum/view/req-locum-view.dart';
 import 'package:locume/app/screen/requestLocumDetails/binding/request_details_binding.dart';
 import 'package:locume/app/screen/requestLocumDetails/view/request_details_view.dart';
+import 'package:locume/app/screen/requestLocumDetails/view/request_raisedbyMe_details.dart';
 import 'package:locume/app/screen/splash/splash.dart';
 
 import '../screen/clinics/view/Clinics_view.dart';
@@ -125,5 +126,9 @@ class AppPages {
         name: _Paths.Manage,
         page: () => ManageView(),
         binding: ManageBinding()),
+    GetPage(
+        name: _Paths.RequestDetailsRaisedByMe,
+        page: () => RequestRaisedbymeDetails(),
+        binding: RequestDetailsBinding()),
   ];
 }

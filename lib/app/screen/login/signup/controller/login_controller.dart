@@ -12,10 +12,11 @@ import 'package:locume/app/screen/login/signup/model/verify_res.dart';
 class LoginController extends GetxController {
   TextEditingController phonenumber = TextEditingController();
   TextEditingController otpcontroller = TextEditingController();
-  TextEditingController firstname = TextEditingController();
-  TextEditingController lastname = TextEditingController();
+  TextEditingController fullname = TextEditingController();
+
   TextEditingController medicalid = TextEditingController();
-  TextEditingController location = TextEditingController();
+  TextEditingController state = TextEditingController();
+  TextEditingController city = TextEditingController();
   TextEditingController rate = TextEditingController();
   RxInt verifyID = 0.obs;
   RxBool verifyotp = false.obs;
@@ -73,12 +74,6 @@ class LoginController extends GetxController {
     }
   }
 
-  List<String> getSpecialtyNames() {
-    return specialtiesList
-        .map((result) => result.specialtiesName ?? '')
-        .toList();
-  }
-
   void updateSelectedShiftIds() {
     selectedShiftIds.clear();
     for (var shift in selectedavailability) {
@@ -100,11 +95,6 @@ class LoginController extends GetxController {
   }
 
   register() {
-    print("First Name: ${firstname.text}");
-    print("Last Name: ${lastname.text}");
-    print("Phone Number: ${phonenumber.text}");
-    print("Medical ID: ${medicalid.text}");
-
     List<int> selectedSpecialtyIds = [];
     for (var specialtyName in selectedSpecialty) {
       var specialty = specialtiesList.firstWhere(
@@ -114,8 +104,6 @@ class LoginController extends GetxController {
         selectedSpecialtyIds.add(specialty.id ?? 0); // Add the specialty ID
       }
     }
-    print("Selected Shift IDs: $selectedShiftIds");
-    print("Selected Specialty IDs: $selectedSpecialtyIds");
   }
 
   Future<void> userloginotp() async {
@@ -204,7 +192,6 @@ class LoginController extends GetxController {
   }
 
   Future<void> userLogin() async {
-
     final response = await ApiProvider.post(
       "/api/users/userLogin",
       head: {"Content-Type": "application/json"},
@@ -214,12 +201,33 @@ class LoginController extends GetxController {
       },
     );
     final map = jsonDecode(response.body);
+    print(map);
     Register res = Register.fromJson(map);
 
     if (res.status == 200) {
       Get.find<AuthProvider>().setUser(res);
       await SessionManager().set('isloggedIn', true);
+      await SessionManager().set('ishint_viewd', true);
+      await SessionManager().set('token', res.token);
       Get.offAllNamed('/bottomnavigation');
+    }
+  }
+
+  Future<void> userLoginwithToken(String token) async {
+    final response = await ApiProvider.post(
+      "/api/users/getUserDataUsingToken",
+      head: {"Content-Type": "application/json"},
+      data: {"token": token},
+    );
+    final map = jsonDecode(response.body);
+    print(map);
+    Register res = Register.fromJson(map);
+
+    if (res.status == 200) {
+      Get.find<AuthProvider>().setUser(res);
+      await SessionManager().set('isloggedIn', true);
+      await SessionManager().set('ishint_viewd', true);
+      await SessionManager().set('token', res.token);
     }
   }
 
@@ -234,25 +242,22 @@ class LoginController extends GetxController {
       }
     }
     final response = await ApiProvider.post(
-      "/api/users/addUsers",
+      "/api/users/addUsersV2",
       head: {"Content-Type": "application/json"},
       data: {
-        "firstName": firstname.text.trim(),
-        "lastName": lastname.text.trim(),
+        "fullName": fullname.text.trim(),
         "mobileVerficationId": verifyID.value,
         "gender": gender.value,
-        "availability": selectedShiftIds,
-        "medicalId": medicalid.text.trim(),
-        "location": location.text.trim(),
-        "specialization": selectedSpecialtyIds,
-        "hourlyRate": rate.text,
+        // "registrationId": medicalid.text.trim(),
+        "state": state.text.trim(),
+        "city": city.text.trim()
       },
     );
     print(response.body);
     final map = jsonDecode(response.body);
     Register res = Register.fromJson(map);
     if (res.status == 200) {
-      Get.offAllNamed('/home');
+      Get.offAllNamed('/bottomnavigation');
     }
   }
 }

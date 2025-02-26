@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/manage/controller/manage_Controller.dart';
+import 'package:locume/app/screen/requestLocumDetails/view/request_raisedbyMe_details.dart';
 
 class ManageView extends GetView<ManageController> {
   ManageView({super.key});
@@ -47,8 +48,8 @@ class ManageView extends GetView<ManageController> {
                   contentCenter: true,
                   width: buttonWidth, // Use calculated width for buttons
                   tabs: [
-                    _buildButtonTab("Locum Request Raised"),
-                    _buildButtonTab("Applied By Me"),
+                    _buildButtonTab("Request Raised"),
+                    _buildButtonTab("Request Responded"),
                     // _buildButtonTab("Completed"),
                   ],
                 ),
@@ -89,7 +90,8 @@ class ManageView extends GetView<ManageController> {
                 "2:00 P.M - 10:00 P.M (Evening Shift)",
                 "100",
                 "OPD Nurse",
-                "Dr denies Martine"),
+                "Dr denies Martine",
+                true),
             manage_card(
                 "Apollo international hospital",
                 "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
@@ -97,7 +99,8 @@ class ManageView extends GetView<ManageController> {
                 "2:00 P.M - 10:00 P.M (Evening Shift)",
                 "100",
                 "OPD Nurse",
-                "Dr denies Martine"),
+                "Dr denies Martine",
+                true),
             manage_card(
                 "Apollo international hospital",
                 "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
@@ -105,7 +108,8 @@ class ManageView extends GetView<ManageController> {
                 "2:00 P.M - 10:00 P.M (Evening Shift)",
                 "100",
                 "OPD Nurse",
-                "Dr denies Martine"),
+                "Dr denies Martine",
+                true),
             manage_card(
                 "Apollo international hospital",
                 "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
@@ -113,7 +117,8 @@ class ManageView extends GetView<ManageController> {
                 "2:00 P.M - 10:00 P.M (Evening Shift)",
                 "100",
                 "OPD Nurse",
-                "Dr denies Martine")
+                "Dr denies Martine",
+                true)
           ],
         ),
       ),
@@ -165,7 +170,8 @@ class ManageView extends GetView<ManageController> {
   }
 
   Widget manage_card(String title, String address, String date, String time,
-      String price, String role, String accpetedby) {
+      String price, String role, String accpetedby,
+      [bool isRequestRaised = false]) {
     return Padding(
       padding: const EdgeInsets.only(top: 18.0, left: 5.0, right: 5.0),
       child: Container(
@@ -301,7 +307,11 @@ class ManageView extends GetView<ManageController> {
                     padding: EdgeInsets.symmetric(horizontal: 8),
                   ),
                   onPressed: () {
-                    Get.toNamed('/request-details');
+                    if (isRequestRaised == true) {
+                      Get.toNamed('/request-details-raisedbyMe');
+                    } else {
+                      Get.toNamed('/request-details');
+                    }
                   },
                   child: Text(
                     "View Details",
