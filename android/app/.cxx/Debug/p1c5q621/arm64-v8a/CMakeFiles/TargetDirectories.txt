@@ -1,0 +1,2 @@
+/Users/test/Desktop/locume_flutter_mobile/android/app/.cxx/Debug/p1c5q621/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/test/Desktop/locume_flutter_mobile/android/app/.cxx/Debug/p1c5q621/arm64-v8a/CMakeFiles/rebuild_cache.dir

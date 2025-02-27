@@ -15,18 +15,11 @@ import '../../../widget/reusedwidget.dart';
 class Splash extends StatelessWidget {
   Splash({super.key}) {
     checkinternet();
-    gettoken();
+
     Get.lazyPut(() => LoginController());
   }
   var ishint = false;
   var isloggedin = false;
-  gettoken() async {
-    await FirebaseMessaging.instance.requestPermission();
-
-    // Get the FCM token
-    String? token = await FirebaseMessaging.instance.getToken();
-    print(token);
-  }
 
   checkinternet() async {
     bool result = await InternetConnectionChecker().hasConnection;
