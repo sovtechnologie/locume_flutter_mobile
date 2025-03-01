@@ -47,25 +47,51 @@ class ProfileView extends GetView<ProfileController> {
                         alignment: Alignment.bottomRight,
                         children: [
                           Obx(() {
-                            return CircleAvatar(
-                              radius: 55,
-                              backgroundColor: Colors
-                                  .grey[200], // Grey background when no image
-                              backgroundImage: controller.profileImage.value !=
-                                      null
-                                  ? FileImage(controller
-                                      .profileImage.value!) // New picked image
-                                  : (profileImage != null &&
-                                          profileImage.isNotEmpty
-                                      ? NetworkImage(
-                                          profileImage) // Show existing profile image
-                                      : null), // If no network image, show default icon
-                              child: (controller.profileImage.value == null &&
-                                      (profileImage == null ||
-                                          profileImage.isEmpty))
-                                  ? Icon(Icons.person,
-                                      size: 40, color: Colors.grey[600])
-                                  : null, // Show icon only if no image is available
+                            return Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                CircleAvatar(
+                                  radius: 55,
+                                  backgroundColor: Colors.grey[
+                                      200], // Grey background when no image
+                                  backgroundImage: (!controller
+                                              .isUploading.value &&
+                                          controller.profileImage.value != null)
+                                      ? FileImage(controller.profileImage
+                                          .value!) // New picked image
+                                      : (profileImage != null &&
+                                              profileImage.isNotEmpty
+                                          ? NetworkImage(
+                                              profileImage) // Show existing profile image
+                                          : null), // If no network image, show default icon
+                                  child: (!controller.isUploading.value &&
+                                          controller.profileImage.value ==
+                                              null &&
+                                          (profileImage == null ||
+                                              profileImage.isEmpty))
+                                      ? Icon(Icons.person,
+                                          size: 40, color: Colors.grey[600])
+                                      : null, // Show icon only if no image is available
+                                ),
+
+                                // Show round loader while uploading
+                                if (controller.isUploading.value)
+                                  Positioned.fill(
+                                    child: ClipOval(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.black.withOpacity(
+                                              0.4), // Circular overlay effect
+                                        ),
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             );
                           }),
                           Positioned(

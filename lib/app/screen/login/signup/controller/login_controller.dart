@@ -8,8 +8,16 @@ import 'package:locume/api/auth_provider.dart';
 import 'package:locume/app/screen/login/signup/model/register_res.dart';
 import 'package:locume/app/screen/login/signup/model/specialtie_model.dart';
 import 'package:locume/app/screen/login/signup/model/verify_res.dart';
+import 'package:locume/app/screen/login/signup/model/state_model.dart'
+    as allstate;
+
+import 'package:locume/app/screen/login/signup/model/city_model.dart'
+    as allcity;
 
 class LoginController extends GetxController {
+  Rx<List<allstate.Result?>> statedata = Rx<List<allstate.Result?>>([]);
+  Rx<List<allcity.Result?>> citydata = Rx<List<allcity.Result?>>([]);
+
   TextEditingController phonenumber = TextEditingController();
   TextEditingController otpcontroller = TextEditingController();
   TextEditingController fullname = TextEditingController();
@@ -39,10 +47,13 @@ class LoginController extends GetxController {
   int _remainingTime = 30;
   RxBool isLoading = false.obs; // To control the loading spinner visibility
   RxString errorMessage = ''.obs; // To store error messages
+  var isoCode = ''.obs; // Observable String
 
   void onInit() {
     super.onInit();
     getSpecialites();
+    getallstate();
+    getallcity(isoCode.value);
     _timer?.cancel();
   }
 
@@ -59,6 +70,31 @@ class LoginController extends GetxController {
         _remainingTime = 30;
         isButtonEnabled.value = true;
         otpButtonText.value = 'Resend OTP';
+      }
+    });
+  }
+
+  Future getallstate() async {
+    await ApiProvider.get("/api/list/getStateList",
+        head: {"Content-Type": "application/json"}).then((value) async {
+      final map = jsonDecode(value.body);
+
+      allstate.StateList res = allstate.StateList.fromJson(map);
+      if (res.status == 200) {
+        statedata.value = res.result?.cast<allstate.Result>() ?? [];
+      }
+    });
+  }
+
+  Future getallcity(String? isoCode) async {
+    await ApiProvider.post("/api/list/getCityList",
+        data: {"isoCode": isoCode},
+        head: {"Content-Type": "application/json"}).then((value) async {
+      final map = jsonDecode(value.body);
+
+      allcity.CityList res = allcity.CityList.fromJson(map);
+      if (res.status == 200) {
+        citydata.value = res.result?.cast<allcity.Result>() ?? [];
       }
     });
   }

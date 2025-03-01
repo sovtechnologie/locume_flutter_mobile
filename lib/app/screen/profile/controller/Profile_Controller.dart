@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import 'package:locume/app/screen/drprofile/model/drprofile_model.dart'
 import 'package:locume/app/screen/drprofile/model/drprofile_model.dart';
 import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
     as specialtie;
+import 'package:http/http.dart' as http;
 
 class ProfileController extends GetxController {
   var index = 1.obs;
@@ -37,6 +39,8 @@ class ProfileController extends GetxController {
 
   var selectIdentityfile = Rx<File?>(null);
   var IndentityName = ''.obs;
+  var imageBytes = Rx<Uint8List?>(null);
+  var isUploading = false.obs;
 
   final RxList<specialtie.Result> specialtiesList = <specialtie.Result>[].obs;
 
@@ -56,7 +60,56 @@ class ProfileController extends GetxController {
   Future<void> pickImage(ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
     if (pickedFile != null) {
-      profileImage.value = File(pickedFile.path);
+      File imageFile = File(pickedFile.path);
+      profileImage.value = imageFile;
+
+      // Convert image to bytes and upload automatically
+      imageBytes.value = await imageFile.readAsBytes();
+      uploadProfilePhoto(); // Auto-upload after selection
+    }
+  }
+
+  Future<void> uploadProfilePhoto() async {
+    if (imageBytes.value == null || imageBytes.value!.isEmpty) {
+      print("❌ Error: Image bytes are empty");
+      return;
+    }
+
+    try {
+      isUploading.value = true; // Start showing loaderq
+
+      final uri = Uri.parse(
+          'https://19u1szcoq1.execute-api.ap-south-1.amazonaws.com/api/users/editProfileV2');
+      final request = http.MultipartRequest('PUT', uri);
+
+      // Get Bearer token from AuthProvider
+      Rx<String?> token = Get.find<AuthProvider>().token;
+
+      request.headers['Authorization'] = 'Bearer $token';
+      request.headers['Content-Type'] = 'multipart/form-data';
+
+      print("✅ Uploading image...");
+      print("📂 Image Size: ${imageBytes.value!.length} bytes");
+
+      request.files.add(http.MultipartFile.fromBytes(
+        'profileImage', // API key
+        imageBytes.value!,
+        filename: 'profile_image.jpg',
+      ));
+
+      final response = await request.send();
+      final responseData = await response.stream.bytesToString();
+
+      if (response.statusCode == 200) {
+        print("✅ Upload Success: $responseData");
+      } else {
+        print(
+            "❌ Upload Failed: ${response.statusCode}, Response: $responseData");
+      }
+    } catch (e) {
+      print("❌ Error: $e");
+    } finally {
+      isUploading.value = false; // Hide loader after upload completes
     }
   }
 
@@ -67,18 +120,83 @@ class ProfileController extends GetxController {
   Future<void> pickFile(String documentType) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
+
       if (result != null && result.files.single.path != null) {
         File selectedFile = File(result.files.single.path!);
+
         if (documentType == "qualification") {
-          selectedQualificationfile(selectedFile);
-          fileName(result.files.single.name);
+          selectedQualificationfile.value = selectedFile;
+          fileName.value = result.files.single.name;
         } else if (documentType == "identity") {
-          selectIdentityfile(selectedFile);
-          IndentityName(result.files.single.name);
+          selectIdentityfile.value = selectedFile;
+          IndentityName.value = result.files.single.name;
         }
+
+        print("📄 Selected File: ${result.files.single.name}");
+
+        // Automatically Upload the File After Selection
+        await uploadDocument(documentType, selectedFile);
       }
     } catch (e) {
-      print("Error picking file: $e");
+      print("❌ Error picking file: $e");
+      Get.snackbar("Error", "Failed to pick a file.");
+    }
+  }
+
+  /// Upload Document with Bearer Token
+  Future<void> uploadDocument(String documentType, File file) async {
+    try {
+      if (file.path.isEmpty) {
+        Get.snackbar("Error", "No file selected.");
+        print("❌ Error: No file selected");
+        return;
+      }
+
+      final uri = Uri.parse(
+          'https://19u1szcoq1.execute-api.ap-south-1.amazonaws.com/api/users/editProfileV2');
+      final request = http.MultipartRequest('PUT', uri);
+
+      // ✅ Fetch Token
+      String? token = Get.find<AuthProvider>().token.value;
+
+      if (token == null || token.isEmpty) {
+        print("❌ Error: Token is missing");
+        Get.snackbar("Error", "Authentication token is missing.");
+        return;
+      }
+
+      // ✅ Add Headers
+      request.headers.addAll({
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'multipart/form-data',
+      });
+
+      print("✅ Uploading file: ${file.path}");
+
+      // ✅ Attach File
+      request.files.add(await http.MultipartFile.fromPath(
+        'certificate', // API Parameter Key
+        file.path,
+        filename: file.path.split('/').last,
+      ));
+
+      // ✅ Add Document Type
+      request.fields['documentType'] = documentType;
+
+      final response = await request.send();
+      final responseData = await response.stream.bytesToString();
+
+      if (response.statusCode == 200) {
+        print("✅ Upload Success: $responseData");
+        Get.snackbar("Success", "File uploaded successfully!");
+      } else {
+        print(
+            "❌ Upload Failed: ${response.statusCode}, Response: $responseData");
+        Get.snackbar("Error", "Upload failed: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("❌ Error: $e");
+      Get.snackbar("Error", "An unexpected error occurred.");
     }
   }
 
