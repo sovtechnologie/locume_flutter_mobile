@@ -111,18 +111,33 @@ class RegisterView extends GetView<LoginController> {
                           //   hintText: "Medical ID",
                           //   keyboardType: TextInputType.number,
                           // ),
-                          CustomizableField(
-                            controller: controller.state,
-                            heading: "State",
-                            hintText: "State",
-                            keyboardType: TextInputType.text,
-                          ),
-                          CustomizableField(
-                            controller: controller.city,
-                            heading: "City",
-                            hintText: "City",
-                            keyboardType: TextInputType.text,
-                          ),
+                          Obx(() {
+                            return SingleSelectionDropdown(
+                              heading: "State",
+                              options: controller.statedata.value
+                                  .map((state) => state?.name ?? "")
+                                  .toList(),
+                              selectedValue: controller.state.text,
+                              controller: controller.state,
+                              onChanged: (value) {
+                                controller.state.text = value ?? "";
+                              },
+                            );
+                          }),
+
+                          Obx(() {
+                            return SingleSelectionDropdown(
+                              heading: "City",
+                              options: controller.citydata.value
+                                  .map((city) => city?.name ?? "")
+                                  .toList(),
+                              selectedValue: controller.city.text,
+                              controller: controller.city,
+                              onChanged: (value) {
+                                controller.city.text = value ?? "";
+                              },
+                            );
+                          }),
                           // CustomDropdown(
                           //   heading: "Availability",
                           //   options: controller.availability,
