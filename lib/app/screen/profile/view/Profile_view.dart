@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/profile/controller/Profile_Controller.dart';
 import 'package:locume/app/screen/profile/view/AddSpecialities.dart';
+import 'package:locume/app/screen/profile/view/Add_clinic.dart';
 import 'package:locume/app/screen/profile/view/Edit_Profile.dart';
 import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
     as specialtie;
@@ -327,7 +328,10 @@ class ProfileView extends GetView<ProfileController> {
                           //       ),
                           if (data.clinicName == null)
                             InkWell(
-                                onTap: () => addclinic(context),
+                                onTap: () async {
+                                  await controller.getallstate();
+                                  Get.to(AddClinic());
+                                },
                                 child: Container(
                                     margin: EdgeInsets.symmetric(vertical: 10),
                                     padding: EdgeInsets.symmetric(

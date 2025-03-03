@@ -917,11 +917,13 @@ Widget mylabel2(String label) {
   );
 }
 
-Widget mytextfield(String hint, TextEditingController controller) {
+Widget mytextfield(String hint, TextEditingController controller,
+    [isNum = false]) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 5.0),
     child: TextField(
       controller: controller,
+      keyboardType: isNum ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         hintText: hint,
         contentPadding:
@@ -1037,4 +1039,114 @@ Widget buildSpecialityCard({
       ),
     ),
   );
+}
+
+class SearchableDropdown extends StatefulWidget {
+  final String hint;
+  final List<String> options;
+  final TextEditingController controller;
+  final void Function(String)? onChanged;
+
+  const SearchableDropdown({
+    Key? key,
+    required this.hint,
+    required this.options,
+    required this.controller,
+    this.onChanged,
+  }) : super(key: key);
+
+  @override
+  _SearchableDropdownState createState() => _SearchableDropdownState();
+}
+
+class _SearchableDropdownState extends State<SearchableDropdown> {
+  bool _isExpanded = false;
+  List<String> _filteredOptions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredOptions = widget.options;
+  }
+
+  void _filterOptions(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        _filteredOptions = widget.options;
+        _isExpanded = false;
+      } else {
+        _filteredOptions = widget.options
+            .where(
+                (option) => option.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+        _isExpanded = true;
+      }
+    });
+  }
+
+  void _selectOption(String value) {
+    widget.controller.text = value;
+    widget.onChanged?.call(value);
+    setState(() {
+      _isExpanded = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: widget.controller,
+          onChanged: _filterOptions,
+          decoration: InputDecoration(
+            hintText: widget.hint,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: const BorderSide(
+                color: Color.fromARGB(124, 175, 175, 175),
+                width: 1,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(color: Colors.blue, width: 1),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: const BorderSide(
+                color: Color.fromARGB(124, 175, 175, 175),
+                width: 1,
+              ),
+            ),
+            suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.blue),
+          ),
+          style: const TextStyle(fontSize: 14),
+        ),
+        if (_isExpanded)
+          Container(
+            margin: const EdgeInsets.only(top: 5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.grey[300]!),
+            ),
+            constraints: const BoxConstraints(maxHeight: 150),
+            child: SingleChildScrollView(
+              child: Column(
+                children: _filteredOptions.map((option) {
+                  return ListTile(
+                    title: Text(option, style: const TextStyle(fontSize: 14)),
+                    onTap: () => _selectOption(option),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
 }

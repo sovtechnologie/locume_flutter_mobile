@@ -13,14 +13,29 @@ import 'package:locume/app/screen/drprofile/model/drprofile_model.dart';
 import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
     as specialtie;
 import 'package:http/http.dart' as http;
+import 'package:locume/app/screen/login/signup/model/state_model.dart'
+    as allstate;
+
+import 'package:locume/app/screen/login/signup/model/city_model.dart'
+    as allcity;
 
 class ProfileController extends GetxController {
+  Rx<List<allstate.Result?>> statedata = Rx<List<allstate.Result?>>([]);
+  Rx<List<allcity.Result?>> citydata = Rx<List<allcity.Result?>>([]);
+
   var index = 1.obs;
+  TextEditingController state = TextEditingController();
+  TextEditingController city = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController number = TextEditingController();
   TextEditingController location = TextEditingController();
   TextEditingController experience = TextEditingController();
   TextEditingController clinicName = TextEditingController();
+  TextEditingController about = TextEditingController();
+  TextEditingController contactNumber = TextEditingController();
+
+  TextEditingController pincode = TextEditingController();
+
   TextEditingController clinicAddress = TextEditingController();
   TextEditingController hospitalName = TextEditingController();
   TextEditingController hospitalAddress = TextEditingController();
@@ -53,6 +68,31 @@ class ProfileController extends GetxController {
 
   void setIndex(int value) {
     index.value = value;
+  }
+
+  Future getallstate() async {
+    await ApiProvider.get("/api/list/getStateList",
+        head: {"Content-Type": "application/json"}).then((value) async {
+      final map = jsonDecode(value.body);
+
+      allstate.StateList res = allstate.StateList.fromJson(map);
+      if (res.status == 200) {
+        statedata.value = res.result?.cast<allstate.Result>() ?? [];
+      }
+    });
+  }
+
+  Future getallcity(String? isoCode) async {
+    await ApiProvider.post("/api/list/getCityList",
+        data: {"isoCode": isoCode},
+        head: {"Content-Type": "application/json"}).then((value) async {
+      final map = jsonDecode(value.body);
+
+      allcity.CityList res = allcity.CityList.fromJson(map);
+      if (res.status == 200) {
+        citydata.value = res.result?.cast<allcity.Result>() ?? [];
+      }
+    });
   }
 
   var profileImage = Rxn<File>(); // Observable profile image
