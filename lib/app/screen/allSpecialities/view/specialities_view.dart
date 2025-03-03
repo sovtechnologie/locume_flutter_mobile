@@ -17,7 +17,7 @@ class SpecialitiesView extends GetView<SpecialitiesController> {
       appBar: AppBar(
         title: const Text("All Specialities"),
       ),
-      body: Obx(() => controller.data.isEmpty
+      body: Obx(() => controller.specialtiesList.isEmpty
           ? Center(
               child: SizedBox(
                 width: 200,
@@ -29,22 +29,20 @@ class SpecialitiesView extends GetView<SpecialitiesController> {
               ),
             )
           : ListView.builder(
-              itemCount: controller.data.length,
+              itemCount: controller.specialtiesList.length,
               itemBuilder: (context, index) {
-                final special = controller.data[index];
-                final imagePath = special['specialties_images']?.toString();
-                final title =
-                    special['specialties_name']?.toString() ?? 'No Title';
+                final special = controller.specialtiesList[index];
+                final imagePath = special.specialtiesImages;
+                final title = special.specialtiesName;
                 const description = 'Description needed in API';
 
                 return buildSpecialityCard(
-                  imagePath: imagePath != null &&
-                          Uri.tryParse(imagePath)?.isAbsolute == true
-                      ? imagePath
-                      : 'https://via.placeholder.com/150', // Fallback for invalid URL
-                  title: title,
-                  description: description,
-                );
+                    imagePath: imagePath != null &&
+                            Uri.tryParse(imagePath)?.isAbsolute == true
+                        ? imagePath
+                        : 'https://via.placeholder.com/150', // Fallback for invalid URL
+                    title: title ?? "",
+                    description: special.specialtiesDescription ?? "");
               },
             )),
     );

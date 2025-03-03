@@ -11,10 +11,10 @@ import 'package:locume/app/screen/profile/view/AddSpecialities.dart';
 import 'package:locume/app/screen/profile/view/Edit_Profile.dart';
 import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
     as specialtie;
+import 'package:locume/app/screen/profile/view/profileimageview.dart';
 
 class ProfileView extends GetView<ProfileController> {
   ProfileView({super.key}) {
-    // Lazily load the controller when the view is initialized
     Get.lazyPut(() => ProfileController());
   }
 
@@ -50,28 +50,52 @@ class ProfileView extends GetView<ProfileController> {
                             return Stack(
                               alignment: Alignment.center,
                               children: [
-                                CircleAvatar(
-                                  radius: 55,
-                                  backgroundColor: Colors.grey[
-                                      200], // Grey background when no image
-                                  backgroundImage: (!controller
-                                              .isUploading.value &&
-                                          controller.profileImage.value != null)
-                                      ? FileImage(controller.profileImage
-                                          .value!) // New picked image
-                                      : (profileImage != null &&
-                                              profileImage.isNotEmpty
-                                          ? NetworkImage(
-                                              profileImage) // Show existing profile image
-                                          : null), // If no network image, show default icon
-                                  child: (!controller.isUploading.value &&
-                                          controller.profileImage.value ==
-                                              null &&
-                                          (profileImage == null ||
-                                              profileImage.isEmpty))
-                                      ? Icon(Icons.person,
-                                          size: 40, color: Colors.grey[600])
-                                      : null, // Show icon only if no image is available
+                                GestureDetector(
+                                  onTap: () {
+                                    if (!controller.isUploading.value &&
+                                        (controller.profileImage.value !=
+                                                null ||
+                                            (profileImage != null &&
+                                                profileImage.isNotEmpty))) {
+                                      Get.to(() => ProfileImageView(
+                                            imageUrl: controller
+                                                        .profileImage.value !=
+                                                    null
+                                                ? controller.profileImage.value!
+                                                    .path // Local file path
+                                                : profileImage, // Network image URL
+                                            personName:
+                                                "${data.firstName ?? 'N/A'} ${data.lastName ?? ''}"
+                                                    .trim(), // ✅ Pass full name
+
+                                            isLocalImage:
+                                                controller.profileImage.value !=
+                                                    null,
+                                          ));
+                                    }
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 55,
+                                    backgroundColor: Colors.grey[200],
+                                    backgroundImage:
+                                        (!controller.isUploading.value &&
+                                                controller.profileImage.value !=
+                                                    null)
+                                            ? FileImage(
+                                                controller.profileImage.value!)
+                                            : (profileImage != null &&
+                                                    profileImage.isNotEmpty
+                                                ? NetworkImage(profileImage)
+                                                : null),
+                                    child: (!controller.isUploading.value &&
+                                            controller.profileImage.value ==
+                                                null &&
+                                            (profileImage == null ||
+                                                profileImage.isEmpty))
+                                        ? Icon(Icons.person,
+                                            size: 40, color: Colors.grey[600])
+                                        : null,
+                                  ),
                                 ),
 
                                 // Show round loader while uploading
@@ -81,8 +105,7 @@ class ProfileView extends GetView<ProfileController> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Colors.black.withOpacity(
-                                              0.4), // Circular overlay effect
+                                          color: Colors.black.withOpacity(0.4),
                                         ),
                                         child: Center(
                                           child: CircularProgressIndicator(

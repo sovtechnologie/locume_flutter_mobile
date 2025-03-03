@@ -41,22 +41,26 @@ class Result {
   int? id;
   String? specialtiesName;
   String? specialtiesImages;
+  String? specialtiesDescription;
 
   Result({
     this.id,
     this.specialtiesName,
     this.specialtiesImages,
+    this.specialtiesDescription,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         id: json["id"],
         specialtiesName: json["specialties_name"],
         specialtiesImages: json["specialties_images"],
+        specialtiesDescription: json["specialties_description"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "specialties_name": specialtiesName,
         "specialties_images": specialtiesImages,
+        "specialties_description": specialtiesDescription,
       };
 }
