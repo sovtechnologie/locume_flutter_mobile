@@ -128,7 +128,7 @@ Future<void> selectNotification(
 
 Future<void> initService() async {
   String? token = await FirebaseMessaging.instance.getToken();
-  print('Device Token: \$token');
+  print('Device Token: $token');
 
   await Get.putAsync<AuthProvider>(() async => AuthProvider());
 }
