@@ -270,18 +270,20 @@ class HomeView extends GetView<HomeControlller> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
+                        child: specialcard(
+                            'assets/type1.svg', 'Anesthesiology', 1)),
+                    space(20.0, 0.0),
+                    Expanded(
                         child:
-                            specialcard('assets/type1.svg', 'Anesthesiology')),
+                            specialcard('assets/type2.svg', 'Cardiology', 2)),
                     space(20.0, 0.0),
                     Expanded(
-                        child: specialcard('assets/type2.svg', 'Cardiology')),
-                    space(20.0, 0.0),
-                    Expanded(
-                        child: specialcard('assets/type3.svg', 'Dermatology')),
+                        child:
+                            specialcard('assets/type3.svg', 'Dermatology', 4)),
                     space(20.0, 0.0),
                     Expanded(
                         child: specialcard(
-                            'assets/type4.svg', 'Emergency medicine')),
+                            'assets/type4.svg', 'Emergency medicine', 5)),
                   ],
                 ),
                 space(double.maxFinite, 30.0),
@@ -290,20 +292,20 @@ class HomeView extends GetView<HomeControlller> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
-                        child:
-                            specialcard('assets/type4.svg', 'Endocrinology')),
+                        child: specialcard(
+                            'assets/type4.svg', 'Endocrinology', 6)),
                     space(20.0, 0.0),
                     Expanded(
                         child: specialcard(
-                            'assets/type6.svg', 'Gastroenterology')),
+                            'assets/type6.svg', 'Gastroenterology', 7)),
                     space(20.0, 0.0),
                     Expanded(
                         child: specialcard(
-                            'assets/type7.svg', 'Hospital Medicine')),
+                            'assets/type7.svg', 'Hospital Medicine', 8)),
                     space(20.0, 0.0),
                     Expanded(
                         child: specialcard(
-                            'assets/type8.svg', 'Medical Oncology')),
+                            'assets/type8.svg', 'Medical Oncology', 9)),
                   ],
                 ),
                 space(double.maxFinite, 30.0),

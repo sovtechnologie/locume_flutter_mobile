@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:locume/api/api_provider.dart';
 import '../../../../config.dart';
 
 class HomeControlller extends GetxController {
   var index = 1.obs;
   var currentIndex = 0.obs;
-
   RxList<Map<dynamic, dynamic>> data = <Map<dynamic, dynamic>>[].obs;
   var config = CONFIG.apiUrl();
 

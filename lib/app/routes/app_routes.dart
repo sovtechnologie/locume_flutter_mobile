@@ -25,6 +25,7 @@ abstract class Routes {
   static const HospitalDetails = _Paths.HospitalDetails;
   static const Manage = _Paths.Manage;
   static const RequestRaisedbyMe = _Paths.RequestDetailsRaisedByMe;
+  static const SpecialitiesLocumDR = _Paths.SpecialitiesLocumDR;
 }
 
 abstract class _Paths {
@@ -49,4 +50,5 @@ abstract class _Paths {
   static const RequestDetailsRaisedByMe = '/request-details-raisedbyMe';
   static const HospitalDetails = '/hospital-details';
   static const Manage = '/manage';
+  static const SpecialitiesLocumDR = '/specialitieslocumdr';
 }

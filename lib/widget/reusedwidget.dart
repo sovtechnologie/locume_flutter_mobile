@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:locume/app/screen/SpecialitiesLocum(DR)/binding/SpecialitiesLocum(DR)_binding.dart';
+import 'package:locume/app/screen/SpecialitiesLocum(DR)/view/SpecialitiesLocums(DR).dart';
 
 import '../Theme/textTheme.dart';
 import '../Theme/theme.dart';
@@ -15,34 +17,39 @@ space(wid, hit) {
   );
 }
 
-specialcard(String svg, String title) {
+specialcard(String svg, String title, int id) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      Container(
-        width: double.maxFinite,
-        decoration: BoxDecoration(
-          color: HexColor('#FFFFFF'),
-          boxShadow: [
-            BoxShadow(
-                offset: const Offset(0, 2),
-                color: HexColor('#326295').withOpacity(0.15),
-                blurRadius: 4.0,
-                spreadRadius: 0,
-                blurStyle: BlurStyle.normal)
-          ],
-          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: SizedBox(
-              width: 40,
-              height: 40,
-              child: SvgPicture.asset(
-                svg,
-                fit: BoxFit.contain,
-              )),
+      InkWell(
+        onTap: () {
+          print(id);
+        },
+        child: Container(
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+            color: HexColor('#FFFFFF'),
+            boxShadow: [
+              BoxShadow(
+                  offset: const Offset(0, 2),
+                  color: HexColor('#326295').withOpacity(0.15),
+                  blurRadius: 4.0,
+                  spreadRadius: 0,
+                  blurStyle: BlurStyle.normal)
+            ],
+            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: SizedBox(
+                width: 40,
+                height: 40,
+                child: SvgPicture.asset(
+                  svg,
+                  fit: BoxFit.contain,
+                )),
+          ),
         ),
       ),
       space(double.maxFinite, 10.0),
@@ -957,84 +964,92 @@ messagenotifications(problem, solution) {
 }
 
 Widget buildSpecialityCard({
+  required int id,
   required String imagePath,
   required String title,
   required String description,
 }) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 13.0),
-    child: Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(0, 0),
-            color: textColor.withOpacity(0.25),
-            blurRadius: 4.0,
-            spreadRadius: 0,
-            blurStyle: BlurStyle.normal,
-          )
-        ],
-        borderRadius: BorderRadius.circular(10),
-        color: white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  child: Image.network(
-                    imagePath,
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.none,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Icon(Icons.broken_image,
-                          color: Colors.grey); // Fallback widget
-                    },
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child; // When loading is complete
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null, // Show progress indicator
+    child: InkWell(
+      onTap: () {
+        Get.to(SpecialitieslocumsDR(),
+            binding: SpecialitieslocumdrBinding(specialtyId: id, name: title));
+        print(id);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(0, 0),
+              color: textColor.withOpacity(0.25),
+              blurRadius: 4.0,
+              spreadRadius: 0,
+              blurStyle: BlurStyle.normal,
+            )
+          ],
+          borderRadius: BorderRadius.circular(10),
+          color: white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                    child: Image.network(
+                      imagePath,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.none,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.broken_image,
+                            color: Colors.grey); // Fallback widget
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child; // When loading is complete
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null, // Show progress indicator
+                          ),
+                        );
+                      },
+                    )),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 14.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: primaryColor,
+                          fontWeight: FontWeight.w500,
                         ),
-                      );
-                    },
-                  )),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 14.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: primaryColor,
-                        fontWeight: FontWeight.w500,
                       ),
-                    ),
-                    Text(
-                      description,
-                      style: TextStyle(fontSize: 12, color: textColor),
-                      overflow: TextOverflow.visible,
-                    ),
-                  ],
+                      Text(
+                        description,
+                        style: TextStyle(fontSize: 12, color: textColor),
+                        overflow: TextOverflow.visible,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ),

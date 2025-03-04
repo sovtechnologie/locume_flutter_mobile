@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:locume/app/screen/SpecialitiesLocum(DR)/binding/SpecialitiesLocum(DR)_binding.dart';
+import 'package:locume/app/screen/SpecialitiesLocum(DR)/view/SpecialitiesLocums(DR).dart';
 import 'package:locume/app/screen/allSpecialities/binding/specialities_binding.dart';
 import 'package:locume/app/screen/allSpecialities/view/specialities_view.dart';
 import 'package:locume/app/screen/bottomnavigation/binding/BottomNavigation_Binding.dart';
@@ -130,5 +132,9 @@ class AppPages {
         name: _Paths.RequestDetailsRaisedByMe,
         page: () => RequestRaisedbymeDetails(),
         binding: RequestDetailsBinding()),
+    GetPage(
+        name: _Paths.SpecialitiesLocumDR,
+        page: () => SpecialitieslocumsDR(),
+        binding: SpecialitieslocumdrBinding()),
   ];
 }

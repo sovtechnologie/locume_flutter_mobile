@@ -37,6 +37,7 @@ class SpecialitiesView extends GetView<SpecialitiesController> {
                 const description = 'Description needed in API';
 
                 return buildSpecialityCard(
+                    id: controller.specialtiesList[index].id ?? 0,
                     imagePath: imagePath != null &&
                             Uri.tryParse(imagePath)?.isAbsolute == true
                         ? imagePath

@@ -103,13 +103,14 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                 print(controller.currentStep);
                 Navigator.pop(context);
               },
-              child: const DrawerHeader(
+              child: DrawerHeader(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
                       backgroundImage: NetworkImage(
-                        'https://locumedocument.s3.ap-south-1.amazonaws.com/dav.jpeg', // Replace with dynamic image URL
+                        controller
+                            .profileimage, // Replace with dynamic image URL
                       ),
                       radius: 40, // Size of the avatar
                     ),
@@ -123,7 +124,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                             height: 5,
                           ),
                           Text(
-                            'Dr. Akhil Kumar', // Replace with dynamic name
+                            'Dr. ${controller.firstName}', // Replace with dynamic name
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

@@ -16,6 +16,7 @@ import 'package:intl/intl.dart';
 class BottomnavigationController extends GetxController {
   final firstName = Get.find<AuthProvider>().getUser?.firstName;
   final lastName = Get.find<AuthProvider>().getUser?.lastName;
+  final profileimage = Get.find<AuthProvider>().getUser?.profileImage;
   var currentStep = 0.obs;
   RxBool showBottom = false.obs;
   RxBool isLoading = false.obs;
