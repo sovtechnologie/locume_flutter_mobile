@@ -43,7 +43,8 @@ class SpecialitieslocumsDR extends GetView<SpecialitieslocumsdrController> {
                             padding:
                                 const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 16.0),
                             child: doctorcard(
-                              spedoctor.profileImage ?? '',
+                              spedoctor.profileImage ??
+                                  'https://via.placeholder.com/150',
                               '${spedoctor.firstName ?? ''} ${spedoctor.lastName ?? ''}',
                               spedoctor.medicalId ?? '',
                               spedoctor.aboutMe ?? 'No details provided',

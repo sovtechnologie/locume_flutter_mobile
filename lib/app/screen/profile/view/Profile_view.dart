@@ -9,6 +9,7 @@ import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/profile/controller/Profile_Controller.dart';
 import 'package:locume/app/screen/profile/view/AddSpecialities.dart';
 import 'package:locume/app/screen/profile/view/Add_clinic.dart';
+import 'package:locume/app/screen/profile/view/Add_hospital.dart';
 import 'package:locume/app/screen/profile/view/Edit_Profile.dart';
 import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
     as specialtie;
@@ -275,22 +276,22 @@ class ProfileView extends GetView<ProfileController> {
                           ),
 
                           SizedBox(height: 10),
-                          mylabel("Identity Proof"),
-                          mytextfield("Documents to be uploaded",
-                              controller.addeducation),
-                          Text("Upload image or PDF of identity proofs*"),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          buildFilePickerCard(
-                            selectedFile: controller.selectIdentityfile,
-                            fileName: controller.IndentityName,
-                            onRemove: () => controller.removeFile('identity'),
-                            onPickFile: () => controller.pickFile('identity'),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ), // data.category != null && data.category!.isNotEmpty
+                          // mylabel("Identity Proof"),
+                          // mytextfield("Documents to be uploaded",
+                          //     controller.addeducation),
+                          // Text("Upload image or PDF of identity proofs*"),
+                          // SizedBox(
+                          //   height: 10,
+                          // ),
+                          // buildFilePickerCard(
+                          //   selectedFile: controller.selectIdentityfile,
+                          //   fileName: controller.IndentityName,
+                          //   onRemove: () => controller.removeFile('identity'),
+                          //   onPickFile: () => controller.pickFile('identity'),
+                          // ),
+                          // SizedBox(
+                          //   height: 20,
+                          // ), // data.category != null && data.category!.isNotEmpty
                           //     ? SizedBox(
                           //         width: double.infinity,
                           //         child: GridView.builder(
@@ -357,7 +358,10 @@ class ProfileView extends GetView<ProfileController> {
                           if (controller.addClinic == true) ClinicDetails(),
                           if (data.hospitalName == null)
                             InkWell(
-                                onTap: () => addclinic(context),
+                                onTap: () async {
+                                  await controller.getallstate();
+                                  Get.to(AddHospitial());
+                                },
                                 child: Container(
                                     margin: EdgeInsets.symmetric(vertical: 10),
                                     padding: EdgeInsets.symmetric(

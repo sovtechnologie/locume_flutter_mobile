@@ -2,17 +2,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:hexcolor/hexcolor.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/requestLocum/view/req-locum-view.dart';
-import 'package:locume/app/screen/statics/about.dart';
-import 'package:locume/app/screen/statics/contact.dart';
+
 import 'package:locume/widget/reusedwidget.dart';
 
 import '../../../../api/auth_provider.dart';
-import '../../locums/controller/Locum_Controller.dart';
+
 import '../controller/Home_controller.dart';
 
 class HomeView extends GetView<HomeControlller> {
@@ -330,30 +329,28 @@ class HomeView extends GetView<HomeControlller> {
                   ],
                 ),
                 space(double.maxFinite, 10.0),
-                Obx(() => controller.data.isEmpty
-                    ? Text('hello ${controller.data.length}')
+                Obx(() => controller.data.value.isEmpty
+                    ? Text('hello ${controller.data.value.length}')
                     : LimitedBox(
                         maxHeight: 680,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: 4,
                           itemBuilder: (context, index) {
-                            final doctor = controller.data[index];
-                            final imagePath =
-                                doctor['profile_image']?.toString();
+                            final doctor = controller.data.value[index];
+                            final imagePath = doctor.profileImage;
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(
                                   8.0, 0.0, 8.0, 16.0),
                               child: doctorcard(
-                                imagePath.toString(),
-                                '${doctor['first_name'] ?? ''} ${doctor['last_name'] ?? ''}',
-                                doctor['medical_id']?.toString() ?? '',
-                                doctor['about_me']?.toString() ??
+                                "https://locumedocument.s3.ap-south-1.amazonaws.com/Screenshot%202024-06-05%20144331.png",
+                                '${doctor.firstName ?? ''} ${doctor.lastName ?? ''}',
+                                doctor.medicalId?.toString() ?? '',
+                                doctor.aboutMe?.toString() ??
                                     'No details provided',
-                                doctor['total_exp']?.toString() ?? '0',
-                                doctor['location']?.toString() ??
-                                    'Not specified',
-                                doctor['custom_id']?.toString() ?? '0',
+                                doctor.totalExp?.toString() ?? '0',
+                                doctor.location ?? 'Not specified',
+                                doctor.customId ?? '0',
                               ),
                             );
                           },

@@ -1128,7 +1128,7 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.blue, width: 1),
+              borderSide: BorderSide(color: primaryColor, width: 1),
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
@@ -1137,7 +1137,7 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
                 width: 1,
               ),
             ),
-            suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.blue),
+            // suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.blue),
           ),
           style: const TextStyle(fontSize: 14),
         ),

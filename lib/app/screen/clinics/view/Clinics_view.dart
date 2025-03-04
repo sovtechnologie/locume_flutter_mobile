@@ -109,7 +109,7 @@ class ClinicsView extends GetView<ClinicsController> {
                               padding: const EdgeInsets.fromLTRB(
                                   8.0, 0.0, 8.0, 16.0),
                               child: hospitalfullcard(
-                                  'assets/hospital1.png',
+                                  'https://locumedocument.s3.ap-south-1.amazonaws.com/1740660643574profile_image.jpg',
                                   hospital['clinic_name']?.toString() ?? '',
                                   'hospitalspecialty',
                                   hospital['clinic_location']?.toString() ?? '',
