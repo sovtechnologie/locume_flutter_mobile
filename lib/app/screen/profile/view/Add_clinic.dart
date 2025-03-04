@@ -47,8 +47,22 @@ class AddClinic extends GetView<ProfileController> {
                     children: [
                       mylabel2("Clinic Name"),
                       mytextfield("Enter Clinic Name", controller.clinicName),
+                      Obx(() => controller.clinicNameError.value.isNotEmpty
+                          ? Text(
+                              controller.clinicNameError.value,
+                              style: const TextStyle(
+                                  color: Colors.red, fontSize: 12),
+                            )
+                          : const SizedBox()),
                       mylabel2("About Clinic"),
                       mytextfield("Enter About Your Clinic", controller.about),
+                      Obx(() => controller.aboutError.value.isNotEmpty
+                          ? Text(
+                              controller.aboutError.value,
+                              style: const TextStyle(
+                                  color: Colors.red, fontSize: 12),
+                            )
+                          : const SizedBox()),
                       mylabel2("Clinic Time Slot"),
                       const SizedBox(height: 5),
                       Wrap(
@@ -60,13 +74,37 @@ class AddClinic extends GetView<ProfileController> {
                           selectableBoxField(text: "Night"),
                         ],
                       ),
-                      const SizedBox(height: 5),
+                      Obx(() => controller.selectedOptions.isEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Text(
+                                "Select at least one time slot",
+                                style: const TextStyle(
+                                    color: Colors.red, fontSize: 12),
+                              ),
+                            )
+                          : const SizedBox()),
+                      const SizedBox(height: 4),
                       mylabel2("Contact Number"),
                       mytextfield("Enter Contact Number",
                           controller.contactNumber, true),
+                      Obx(() => controller.contactNumberError.value.isNotEmpty
+                          ? Text(
+                              controller.contactNumberError.value,
+                              style: const TextStyle(
+                                  color: Colors.red, fontSize: 12),
+                            )
+                          : const SizedBox()),
                       mylabel2("Clinic Address"),
                       mytextfield(
                           "Enter Clinic Address", controller.clinicAddress),
+                      Obx(() => controller.clinicAddressError.value.isNotEmpty
+                          ? Text(
+                              controller.clinicAddressError.value,
+                              style: const TextStyle(
+                                  color: Colors.red, fontSize: 12),
+                            )
+                          : const SizedBox()),
                       mylabel2("State"),
                       SearchableDropdown(
                         hint: "Select a state",
@@ -99,6 +137,16 @@ class AddClinic extends GetView<ProfileController> {
                           controller.getallcity(isoCode);
                         },
                       ),
+                      Obx(() => controller.stateError.value.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Text(
+                                controller.stateError.value,
+                                style: const TextStyle(
+                                    color: Colors.red, fontSize: 12),
+                              ),
+                            )
+                          : const SizedBox()),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -120,6 +168,17 @@ class AddClinic extends GetView<ProfileController> {
                                     },
                                   );
                                 }),
+                                Obx(() => controller.cityError.value.isNotEmpty
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 4.0),
+                                        child: Text(
+                                          controller.cityError.value,
+                                          style: const TextStyle(
+                                              color: Colors.red, fontSize: 12),
+                                        ),
+                                      )
+                                    : const SizedBox()),
                               ],
                             ),
                           ),
@@ -131,6 +190,15 @@ class AddClinic extends GetView<ProfileController> {
                                 mylabel2("Pincode"),
                                 mytextfield(
                                     "Enter Pincode", controller.pincode, true),
+                                Obx(() =>
+                                    controller.pincodeError.value.isNotEmpty
+                                        ? Text(
+                                            controller.pincodeError.value,
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 12),
+                                          )
+                                        : const SizedBox()),
                               ],
                             ),
                           ),
@@ -225,6 +293,16 @@ class AddClinic extends GetView<ProfileController> {
                           ),
                         );
                       }),
+                      Obx(() => controller.clinicImageError.value.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Text(
+                                controller.clinicImageError.value,
+                                style: const TextStyle(
+                                    color: Colors.red, fontSize: 12),
+                              ),
+                            )
+                          : const SizedBox()),
                     ],
                   ),
                 ),
@@ -232,24 +310,92 @@ class AddClinic extends GetView<ProfileController> {
 
               /// **Bottom Full-Width Button**
               Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16.0),
-                color: Colors.white, // Ensure it has a background
-                child: ElevatedButton(
-                  onPressed: () {
-                    controller.AddClinic();
-                    // Add button action here
-                  },
-                  child: Text("ADD"),
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    textStyle:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                ),
-              ),
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16.0),
+                  color: Colors.white, // Ensure it has a background
+                  child: ElevatedButton(
+                    onPressed: () {
+                      bool isValid = true;
+                      String errorMessage = "";
+
+                      if (controller.clinicName.text.trim().isEmpty) {
+                        controller.clinicNameError.value =
+                            "Clinic Name is required";
+                        isValid = false;
+                      } else {
+                        controller.clinicNameError.value = "";
+                      }
+
+                      if (controller.about.text.trim().isEmpty) {
+                        controller.aboutError.value =
+                            "About Clinic is required";
+                        isValid = false;
+                      } else {
+                        controller.aboutError.value = "";
+                      }
+
+                      if (controller.contactNumber.text.trim().isEmpty) {
+                        controller.contactNumberError.value =
+                            "Contact Number is required";
+                        isValid = false;
+                      } else {
+                        controller.contactNumberError.value = "";
+                      }
+
+                      if (controller.clinicAddress.text.trim().isEmpty) {
+                        controller.clinicAddressError.value =
+                            "Clinic Address is required";
+                        isValid = false;
+                      } else {
+                        controller.clinicAddressError.value = "";
+                      }
+
+                      if (controller.state.text.trim().isEmpty) {
+                        controller.stateError.value = "State is required";
+                        isValid = false;
+                      } else {
+                        controller.stateError.value = "";
+                      }
+
+                      if (controller.city.text.trim().isEmpty) {
+                        controller.cityError.value = "City is required";
+                        isValid = false;
+                      } else {
+                        controller.cityError.value = "";
+                      }
+
+                      if (controller.pincode.text.trim().isEmpty) {
+                        controller.pincodeError.value = "Pincode is required";
+                        isValid = false;
+                      } else {
+                        controller.pincodeError.value = "";
+                      }
+
+                      if (controller.clinicImage.value.path.isEmpty) {
+                        controller.clinicImageError.value =
+                            "Clinic Image is required";
+                        isValid = false;
+                      } else {
+                        controller.clinicImageError.value = "";
+                      }
+
+                      if (!isValid) {
+                        return;
+                      }
+
+                      // Call API functions only if validation passes
+                      controller.AddClinicImage();
+                      controller.AddClinic();
+                    },
+                    child: Text("ADD"),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      textStyle:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                  )),
             ],
           ),
         ),
