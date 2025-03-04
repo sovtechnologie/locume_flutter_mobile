@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/profile/controller/Profile_Controller.dart';
 import 'package:flutter/material.dart';
@@ -133,6 +136,95 @@ class AddClinic extends GetView<ProfileController> {
                           ),
                         ],
                       ),
+                      mylabel2("Add Clinic Images"),
+                      Obx(() {
+                        return InkWell(
+                          onTap: () {
+                            controller.pickImage(ImageSource.gallery, false);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 5),
+                            width: double.infinity,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                  color: Color.fromARGB(124, 175, 175, 175)),
+                            ),
+                            child: controller.clinicImage.value.path.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        // Image with a fixed size
+                                        SizedBox(
+                                          width: 100, // Fixed size
+                                          height: 100,
+                                          child: Stack(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                child: Image.file(
+                                                  controller.clinicImage.value,
+                                                  width:
+                                                      100, // Ensure it fills the box
+                                                  height: 100,
+                                                  fit: BoxFit
+                                                      .cover, // Ensure full coverage without distortion
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: 5,
+                                                right:
+                                                    5, // Position inside the image
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    controller
+                                                            .clinicImage.value =
+                                                        File(""); // Clear image
+                                                  },
+                                                  child: Container(
+                                                    padding: EdgeInsets.all(5),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      shape: BoxShape.circle,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black26,
+                                                          blurRadius: 4,
+                                                          offset: Offset(0, 2),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      color: Colors.red,
+                                                      size: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.image,
+                                          size: 50, color: Colors.grey),
+                                      SizedBox(height: 8),
+                                      Text("Tap to select images",
+                                          style: TextStyle(color: Colors.grey)),
+                                    ],
+                                  ),
+                          ),
+                        );
+                      }),
                     ],
                   ),
                 ),
@@ -145,6 +237,7 @@ class AddClinic extends GetView<ProfileController> {
                 color: Colors.white, // Ensure it has a background
                 child: ElevatedButton(
                   onPressed: () {
+                    controller.AddClinic();
                     // Add button action here
                   },
                   child: Text("ADD"),

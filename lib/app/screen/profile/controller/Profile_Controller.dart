@@ -18,6 +18,7 @@ import 'package:locume/app/screen/login/signup/model/state_model.dart'
 
 import 'package:locume/app/screen/login/signup/model/city_model.dart'
     as allcity;
+import 'package:locume/app/screen/profile/view/Add_clinic.dart';
 
 class ProfileController extends GetxController {
   Rx<List<allstate.Result?>> statedata = Rx<List<allstate.Result?>>([]);
@@ -95,17 +96,21 @@ class ProfileController extends GetxController {
     });
   }
 
+  var clinicImage = Rx<File>(File(""));
   var profileImage = Rxn<File>(); // Observable profile image
 
-  Future<void> pickImage(ImageSource source) async {
+  Future<void> pickImage(ImageSource source, [bool autoUplod = true]) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
     if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
       profileImage.value = imageFile;
+      clinicImage.value = imageFile;
 
       // Convert image to bytes and upload automatically
       imageBytes.value = await imageFile.readAsBytes();
-      uploadProfilePhoto(); // Auto-upload after selection
+      if (autoUplod == true) {
+        uploadProfilePhoto();
+      } // Auto-upload after selection
     }
   }
 
@@ -300,6 +305,27 @@ class ProfileController extends GetxController {
       selectedSpecialties.remove(id);
     } else {
       selectedSpecialties.add(id);
+    }
+  }
+
+  AddClinic() async {
+    print("object");
+    final response = await ApiProvider.post("/api/clinic/addClinic", head: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${Get.find<AuthProvider>().token}'
+    }, data: {
+      "clinicName": clinicName.text.trim(),
+      "clinicTimeSlot": selectedOptions,
+      "state": state.text.trim(),
+      "city": city.text.trim(),
+      "pincode": pincode.text.trim(),
+      "about": about.text.trim(),
+      "mobileNumber": contactNumber.text.trim(),
+      "address": clinicAddress.text.trim(),
+    });
+    print(response.body);
+    if (response.statusCode == 200) {
+      Get.back();
     }
   }
 

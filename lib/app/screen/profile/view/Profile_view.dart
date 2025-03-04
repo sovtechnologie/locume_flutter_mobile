@@ -710,15 +710,6 @@ class ProfileView extends GetView<ProfileController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  if (hasImage)
-                    _buildImageOption(
-                      icon: Icons.remove_red_eye,
-                      label: "View",
-                      onTap: () {
-                        Get.back();
-                        _viewImage(context);
-                      },
-                    ),
                   _buildImageOption(
                     icon: Icons.camera_alt,
                     label: "Capture",
