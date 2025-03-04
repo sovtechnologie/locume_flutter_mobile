@@ -48,17 +48,24 @@ class Result {
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-        name: json["name"],
-        countryCode: countryCodeValues.map[json["countryCode"]]!,
-        stateCode: stateCodeValues.map[json["stateCode"]]!,
-        latitude: json["latitude"],
-        longitude: json["longitude"],
+        name: json["name"] ?? "Unknown", // ✅ Default to "Unknown" if null
+        countryCode: json["countryCode"] != null
+            ? countryCodeValues.map[json["countryCode"]]
+            : null, // ✅ Null-safe handling
+        stateCode: json["stateCode"] != null
+            ? stateCodeValues.map[json["stateCode"]]
+            : null, // ✅ Null-safe handling
+        latitude: json["latitude"]?.toString() ?? "0.0", // ✅ Convert to string
+        longitude: json["longitude"]?.toString() ?? "0.0",
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "countryCode": countryCodeValues.reverse[countryCode],
-        "stateCode": stateCodeValues.reverse[stateCode],
+        "countryCode": countryCode != null
+            ? countryCodeValues.reverse[countryCode]
+            : null, // ✅ Prevent null errors
+        "stateCode":
+            stateCode != null ? stateCodeValues.reverse[stateCode] : null,
         "latitude": latitude,
         "longitude": longitude,
       };
