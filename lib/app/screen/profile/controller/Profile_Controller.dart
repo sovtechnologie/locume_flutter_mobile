@@ -25,6 +25,15 @@ class ProfileController extends GetxController {
   Rx<List<allcity.Result?>> citydata = Rx<List<allcity.Result?>>([]);
 
   var index = 1.obs;
+  var clinicNameError = "".obs;
+  var aboutError = "".obs;
+  var contactNumberError = "".obs;
+  var clinicAddressError = "".obs;
+  var stateError = "".obs;
+  var cityError = "".obs;
+  var pincodeError = "".obs;
+  var clinicImageError = "".obs;
+
   TextEditingController state = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -306,6 +315,19 @@ class ProfileController extends GetxController {
     } else {
       selectedSpecialties.add(id);
     }
+  }
+
+  AddClinicImage() async {
+    final response = await ApiProvider.postMultipartWithBytes(
+        "/api/clinic/addClinic",
+        fileName: "Locume.jpg",
+        fileBytes: clinicImage.value.readAsBytesSync(),
+        fileKey: "clinicImage",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${Get.find<AuthProvider>().token}'
+        });
+    print(response.statusCode);
   }
 
   AddClinic() async {
