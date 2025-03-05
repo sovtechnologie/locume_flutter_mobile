@@ -27,6 +27,7 @@ class ProfileController extends GetxController {
   var index = 1.obs;
   var clinicNameError = "".obs;
   var aboutError = "".obs;
+  var slotError = "".obs;
   var contactNumberError = "".obs;
   var clinicAddressError = "".obs;
   var stateError = "".obs;
@@ -319,15 +320,29 @@ class ProfileController extends GetxController {
 
   AddClinicImage() async {
     final response = await ApiProvider.postMultipartWithBytes(
-        "/api/clinic/addClinic",
-        fileName: "Locume.jpg",
-        fileBytes: clinicImage.value.readAsBytesSync(),
-        fileKey: "clinicImage",
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${Get.find<AuthProvider>().token}'
-        });
-    print(response.statusCode);
+      "/api/clinic/addClinic",
+      fileName: "Locume.jpg",
+      fileBytes: await clinicImage.value.readAsBytes(),
+      fileKey: "clinicImage",
+      headers: {
+        'Authorization':
+            'Bearer ${Get.find<AuthProvider>().token}' // ✅ Keep only Authorization
+      },
+      data: {
+        "clinicName": clinicName.text.trim(),
+        // "clinicTimeSlot": selectedOptions.join(","),
+        "state": state.text.trim(),
+        "city": city.text.trim(),
+        "pincode": pincode.text.trim(),
+        "about": about.text.trim(),
+        "mobileNumber": contactNumber.text.trim(),
+        "address": clinicAddress.text.trim(),
+      },
+    );
+
+    print("📩 RESPONSE STATUS: ${response.statusCode}");
+    print(
+        "📩 RESPONSE BODY: ${await response.stream.bytesToString()}"); // ✅ Log response details
   }
 
   AddClinic() async {
@@ -338,6 +353,40 @@ class ProfileController extends GetxController {
     }, data: {
       "clinicName": clinicName.text.trim(),
       "clinicTimeSlot": selectedOptions,
+      "state": state.text.trim(),
+      "city": city.text.trim(),
+      "pincode": pincode.text.trim(),
+      "about": about.text.trim(),
+      "mobileNumber": contactNumber.text.trim(),
+      "address": clinicAddress.text.trim(),
+    });
+    print(response.body);
+    if (response.statusCode == 200) {
+      Get.back();
+    }
+  }
+
+  AddHospitalImage() async {
+    final response = await ApiProvider.postMultipartWithBytes(
+        "/api/hospital/addHospital",
+        fileName: "Hospital.jpg",
+        fileBytes: await clinicImage.value.readAsBytes(),
+        fileKey: "hospitalImage",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${Get.find<AuthProvider>().token}'
+        });
+    print(response.statusCode);
+  }
+
+  AddHospital() async {
+    print("object");
+    final response = await ApiProvider.post("/api/hospital/addHospital", head: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${Get.find<AuthProvider>().token}'
+    }, data: {
+      "hospitalName": clinicName.text.trim(),
+      "hospitalTimeSlot": selectedOptions,
       "state": state.text.trim(),
       "city": city.text.trim(),
       "pincode": pincode.text.trim(),

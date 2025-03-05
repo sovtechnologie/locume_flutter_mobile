@@ -123,7 +123,7 @@ class LocumView extends GetView<LocumController> {
               // locationbuttonsandfilter('Mumbai'),
               // space(double.maxFinite, 10.0),
               Obx(
-                () => controller.data.isEmpty
+                () => controller.data.value.isEmpty
                     ? Center(
                         child: SizedBox(
                           width: 50,
@@ -136,25 +136,22 @@ class LocumView extends GetView<LocumController> {
                       )
                     : Expanded(
                         child: ListView.builder(
-                          itemCount: controller.data.length,
+                          itemCount: controller.data.value.length,
                           itemBuilder: (context, index) {
-                            final doctor = controller.data[index];
-                            final imagePath =
-                                doctor['profile_image']?.toString();
+                            final doctor = controller.data.value[index];
+                            final imagePath = doctor.profileImage;
 
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(
                                   8.0, 0.0, 8.0, 16.0),
                               child: doctorcard(
                                 imagePath.toString(),
-                                '${doctor['first_name'] ?? ''} ${doctor['last_name'] ?? ''}',
-                                doctor['medical_id']?.toString() ?? '',
-                                doctor['about_me']?.toString() ??
-                                    'No details provided',
-                                doctor['total_exp']?.toString() ?? '0',
-                                doctor['location']?.toString() ??
-                                    'Not specified',
-                                doctor['custom_id']?.toString() ?? '0',
+                                '${doctor.firstName ?? ''} ${doctor.lastName ?? ''}',
+                                doctor.medicalId ?? '',
+                                doctor.aboutMe ?? 'No details provided',
+                                doctor.totalExp.toString() ?? '0',
+                                doctor.location ?? 'Not specified',
+                                doctor.customId ?? '0',
                               ),
                             );
                           },

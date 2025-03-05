@@ -75,7 +75,7 @@ class HospitalView extends GetView<HospitalController> {
               locationbuttonsandfilter('Mumbai'),
               space(double.maxFinite, 10.0),
               Obx(
-                () => controller.data.isEmpty
+                () => controller.data.value.isEmpty
                     ? Center(
                         child: SizedBox(
                           width: 50,
@@ -88,16 +88,16 @@ class HospitalView extends GetView<HospitalController> {
                       )
                     : Expanded(
                         child: ListView.builder(
-                          itemCount: controller.data.length,
+                          itemCount: controller.data.value.length,
                           itemBuilder: (context, index) {
-                            final hospital = controller.data[index];
+                            final hospital = controller.data.value[index];
                             // final imagePath =
                             //     hospital['profile_image']?.toString();
 
                             return hospitalcard(
-                                hospital['hospital_image']?.toString() ?? '',
-                                hospital['hospital_name']?.toString() ?? '',
-                                hospital['hospital_location']?.toString() ?? '',
+                                hospital.hospitalImage ?? '',
+                                hospital.hospitalName ?? '',
+                                hospital.hospitalLocation ?? '',
                                 "",
                                 "23",
                                 "13",

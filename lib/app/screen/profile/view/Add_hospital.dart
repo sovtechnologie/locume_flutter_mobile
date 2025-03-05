@@ -7,7 +7,7 @@ import 'package:locume/app/screen/profile/controller/Profile_Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:locume/widget/reusedwidget.dart';
 
-class AddClinic extends GetView<ProfileController> {
+class AddHospitial extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -19,7 +19,7 @@ class AddClinic extends GetView<ProfileController> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Add Clinic'),
+          title: Text('Add Hospital'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () async {
@@ -45,8 +45,8 @@ class AddClinic extends GetView<ProfileController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      mylabel2("Clinic Name"),
-                      mytextfield("Enter Clinic Name", controller.clinicName),
+                      mylabel2("Hospital Name"),
+                      mytextfield("Enter Hospital Name", controller.clinicName),
                       Obx(() => controller.clinicNameError.value.isNotEmpty
                           ? Text(
                               controller.clinicNameError.value,
@@ -54,8 +54,9 @@ class AddClinic extends GetView<ProfileController> {
                                   color: Colors.red, fontSize: 12),
                             )
                           : const SizedBox()),
-                      mylabel2("About Clinic"),
-                      mytextfield("Enter About Your Clinic", controller.about),
+                      mylabel2("About Hospital"),
+                      mytextfield(
+                          "Enter About Your Hospital", controller.about),
                       Obx(() => controller.aboutError.value.isNotEmpty
                           ? Text(
                               controller.aboutError.value,
@@ -63,7 +64,7 @@ class AddClinic extends GetView<ProfileController> {
                                   color: Colors.red, fontSize: 12),
                             )
                           : const SizedBox()),
-                      mylabel2("Clinic Time Slot"),
+                      mylabel2("Hospital Time Slot"),
                       const SizedBox(height: 5),
                       Wrap(
                         spacing: 5,
@@ -95,9 +96,9 @@ class AddClinic extends GetView<ProfileController> {
                                   color: Colors.red, fontSize: 12),
                             )
                           : const SizedBox()),
-                      mylabel2("Clinic Address"),
+                      mylabel2("Hospital Address"),
                       mytextfield(
-                          "Enter Clinic Address", controller.clinicAddress),
+                          "Enter Hospital Address", controller.clinicAddress),
                       Obx(() => controller.clinicAddressError.value.isNotEmpty
                           ? Text(
                               controller.clinicAddressError.value,
@@ -204,7 +205,7 @@ class AddClinic extends GetView<ProfileController> {
                           ),
                         ],
                       ),
-                      mylabel2("Add Clinic Images"),
+                      mylabel2("Add Hospital Images"),
                       Obx(() {
                         return InkWell(
                           onTap: () {
@@ -320,7 +321,7 @@ class AddClinic extends GetView<ProfileController> {
 
                       if (controller.clinicName.text.trim().isEmpty) {
                         controller.clinicNameError.value =
-                            "Clinic Name is required";
+                            "Hospital Name is required";
                         isValid = false;
                       } else {
                         controller.clinicNameError.value = "";
@@ -328,7 +329,7 @@ class AddClinic extends GetView<ProfileController> {
 
                       if (controller.about.text.trim().isEmpty) {
                         controller.aboutError.value =
-                            "About Clinic is required";
+                            "About Hospital is required";
                         isValid = false;
                       } else {
                         controller.aboutError.value = "";
@@ -350,7 +351,7 @@ class AddClinic extends GetView<ProfileController> {
 
                       if (controller.clinicAddress.text.trim().isEmpty) {
                         controller.clinicAddressError.value =
-                            "Clinic Address is required";
+                            "Hospital Address is required";
                         isValid = false;
                       } else {
                         controller.clinicAddressError.value = "";
@@ -379,7 +380,7 @@ class AddClinic extends GetView<ProfileController> {
 
                       if (controller.clinicImage.value.path.isEmpty) {
                         controller.clinicImageError.value =
-                            "Clinic Image is required";
+                            "Hospital Image is required";
                         isValid = false;
                       } else {
                         controller.clinicImageError.value = "";
@@ -390,8 +391,8 @@ class AddClinic extends GetView<ProfileController> {
                       }
 
                       // Call API functions only if validation passes
-                      controller.AddClinicImage();
-                      // controller.AddClinic();
+                      controller.AddHospitalImage();
+                      controller.AddHospital();
                     },
                     child: Text("ADD"),
                     style: ElevatedButton.styleFrom(

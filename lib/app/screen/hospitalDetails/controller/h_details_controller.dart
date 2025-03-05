@@ -15,7 +15,8 @@ class HDetailsController extends GetxController {
   ];
   var doctorList = <Map<String, String>>[
     {
-      "image": "https://via.placeholder.com/100",
+      "image":
+          "https://locumedocument.s3.ap-south-1.amazonaws.com/1740660643574profile_image.jpg",
       "name": "Dr. Denies Martine",
       "md": "MBBS, MD",
       "work": "Cardiologist",

@@ -4,12 +4,14 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:locume/api/api_provider.dart';
+import 'package:locume/app/screen/locums/model/locum_model.dart' as locum;
 import '../../../../config.dart';
 
 class HomeControlller extends GetxController {
   var index = 1.obs;
   var currentIndex = 0.obs;
-  RxList<Map<dynamic, dynamic>> data = <Map<dynamic, dynamic>>[].obs;
+  // RxList<locum.Result> data = <locum.Result>[].obs;
+  RxList<locum.Result> data = RxList<locum.Result>([]);
   var config = CONFIG.apiUrl();
 
   void setIndex(int value) {
@@ -43,32 +45,12 @@ class HomeControlller extends GetxController {
     },
   ];
   getalllocums() async {
-    final headers = {
-      'Content-Type': 'application/json',
-    };
-    Uri url = Uri.parse('$config/api/users/getAllDoctors'); // Fix double slash
-    final response = await http.get(url, headers: headers);
-
-    if (response.statusCode == 200) {
-      final decodedResponse = jsonDecode(response.body);
-      if (decodedResponse['result'] != null &&
-          decodedResponse['result'] is List) {
-        // Use `.assignAll()` to update reactive list
-        data.assignAll(
-            List<Map<dynamic, dynamic>>.from(decodedResponse['result']));
-        if (kDebugMode) {
-          // print(data);
-          print('Data fetched: ${data.length} items');
-        }
-      } else {
-        if (kDebugMode) {
-          print('No valid data found.');
-        }
-      }
-    } else {
-      if (kDebugMode) {
-        print('Error: ${response.statusCode}');
-      }
+    final response = await ApiProvider.get('/api/users/getAllDoctors',
+        head: {'content-type': 'application/json'});
+    final map = jsonDecode(response.body);
+    final res = locum.LocumRes.fromJson(map);
+    if (res.status == 200) {
+      data.value = res.result ?? [];
     }
   }
 }
