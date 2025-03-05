@@ -391,8 +391,8 @@ class AddHospitial extends GetView<ProfileController> {
                       }
 
                       // Call API functions only if validation passes
-                      controller.AddHospitalImage();
-                      controller.AddHospital();
+                      // controller.AddHospitalImage();
+                      controller.AddHospital().whenComplete(_clearAllFields);
                     },
                     child: Text("ADD"),
                     style: ElevatedButton.styleFrom(

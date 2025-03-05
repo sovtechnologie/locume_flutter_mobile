@@ -390,8 +390,8 @@ class AddClinic extends GetView<ProfileController> {
                       }
 
                       // Call API functions only if validation passes
-                      controller.AddClinicImage();
-                      // controller.AddClinic();
+                      // controller.AddClinicImage();
+                      controller.AddClinic().whenComplete(_clearAllFields);
                     },
                     child: Text("ADD"),
                     style: ElevatedButton.styleFrom(

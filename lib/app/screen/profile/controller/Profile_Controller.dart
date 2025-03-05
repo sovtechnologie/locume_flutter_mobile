@@ -318,31 +318,31 @@ class ProfileController extends GetxController {
     }
   }
 
-  AddClinicImage() async {
-    final response = await ApiProvider.postMultipartWithBytes(
-      "/api/clinic/addClinic",
+  AddClinicImage(dynamic id) async {
+    if (clinicImage.value == null) {
+      print("❌ No image selected");
+      return;
+    }
+
+    final response = await ApiProvider.putMultipartWithBytes(
+      "/api/clinic/updateClinic",
       fileName: "Locume.jpg",
       fileBytes: await clinicImage.value.readAsBytes(),
       fileKey: "clinicImage",
-      headers: {
-        'Authorization':
-            'Bearer ${Get.find<AuthProvider>().token}' // ✅ Keep only Authorization
-      },
-      data: {
-        "clinicName": clinicName.text.trim(),
-        // "clinicTimeSlot": selectedOptions.join(","),
-        "state": state.text.trim(),
-        "city": city.text.trim(),
-        "pincode": pincode.text.trim(),
-        "about": about.text.trim(),
-        "mobileNumber": contactNumber.text.trim(),
-        "address": clinicAddress.text.trim(),
-      },
+      headers: {'Authorization': 'Bearer ${Get.find<AuthProvider>().token}'},
+      data: {"clinicId": id},
     );
 
-    print("📩 RESPONSE STATUS: ${response.statusCode}");
-    print(
-        "📩 RESPONSE BODY: ${await response.stream.bytesToString()}"); // ✅ Log response details
+    final responseBody = await response.stream.bytesToString();
+    final decodedResponse = jsonDecode(responseBody);
+
+    if (response.statusCode == 200) {
+      print("✅ Clinic updated successfully");
+
+      Get.back();
+    } else {
+      print("❌ Error: ${decodedResponse['message']}");
+    }
   }
 
   AddClinic() async {
@@ -360,23 +360,35 @@ class ProfileController extends GetxController {
       "mobileNumber": contactNumber.text.trim(),
       "address": clinicAddress.text.trim(),
     });
+
     print(response.body);
+    final map = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      Get.back();
+      AddClinicImage(map['result']);
     }
   }
 
-  AddHospitalImage() async {
-    final response = await ApiProvider.postMultipartWithBytes(
-        "/api/hospital/addHospital",
-        fileName: "Hospital.jpg",
-        fileBytes: await clinicImage.value.readAsBytes(),
-        fileKey: "hospitalImage",
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${Get.find<AuthProvider>().token}'
-        });
-    print(response.statusCode);
+  AddHospitalImage(dynamic id) async {
+    final response = await ApiProvider.putMultipartWithBytes(
+      "/api/hospital/updateHospital",
+      fileName: "Hospital.jpg",
+      fileBytes: await clinicImage.value.readAsBytes(),
+      fileKey: "hospitalImage",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${Get.find<AuthProvider>().token}'
+      },
+      data: {"hospitalId": id},
+    );
+    final responseBody = await response.stream.bytesToString();
+    final decodedResponse = jsonDecode(responseBody);
+
+    if (response.statusCode == 200) {
+      print("✅ Clinic updated successfully");
+      Get.back();
+    } else {
+      print("❌ Error: ${decodedResponse['message']}");
+    }
   }
 
   AddHospital() async {
@@ -395,8 +407,9 @@ class ProfileController extends GetxController {
       "address": clinicAddress.text.trim(),
     });
     print(response.body);
+    final map = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      Get.back();
+      AddHospitalImage(map['result']);
     }
   }
 
