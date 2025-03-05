@@ -24,6 +24,10 @@ specialcard(String svg, String title, int id) {
     children: [
       InkWell(
         onTap: () {
+          Get.to(SpecialitieslocumsDR(),
+              binding:
+                  SpecialitieslocumdrBinding(specialtyId: id, name: title));
+
           print(id);
         },
         child: Container(
