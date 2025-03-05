@@ -267,17 +267,18 @@ class ProfileController extends GetxController {
 
   void setProfileDetails(DrProfile.Result data) {
     name.text = data.firstName ?? "";
-    number.text = data.mobileNumber ?? "";
+    number.text = data.idealNumber ?? "";
     location.text = data.location ?? "";
     experience.text = data.totalExp?.toString() ?? "";
     selectedSpecialties.value = data.category ?? [];
+    clinicName.text = data.clinicData?[0].clinicName ?? "";
   }
 
   final custom_id = Get.find<AuthProvider>().customId;
   getDrData() async {
     try {
       final response = await ApiProvider.get(
-          '/api/users/getSingleUserById/$custom_id',
+          '/api/users/getUserCompleteDataV2/$custom_id',
           head: {
             'Content-Type': 'application/json',
           });

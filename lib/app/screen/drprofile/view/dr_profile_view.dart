@@ -118,7 +118,7 @@ class DrProfileView extends GetView<DrProfileController> {
                               "${data.firstName ?? 'N/A'} ${data.lastName ?? 'N/A'}"),
                           profileTextField("Email", data.emailId ?? 'N/A'),
                           profileTextField(
-                              "Phone Number", data.mobileNumber ?? "N/A"),
+                              "Phone Number", data.idealNumber ?? "N/A"),
                           profileTextField("Location", data.location ?? 'N/A'),
                           profileTextField(
                               "Medical ID", data.medicalId ?? 'N/A')
@@ -266,12 +266,12 @@ class DrProfileView extends GetView<DrProfileController> {
                         ),
                         mylabel("Clinic Name"),
 
-                        boxfield(data.clinicName ?? 'N/A'),
+                        boxfield(data.clinicData?[0].clinicName ?? 'N/A'),
                         const SizedBox(
                           height: 15,
                         ),
                         mylabel("Clinic Address"),
-                        boxfield(data.clinicLocation ?? 'N/A'),
+                        boxfield(data.clinicData?[0].clinicLocation ?? 'N/A'),
                         const SizedBox(
                           height: 15,
                         ),

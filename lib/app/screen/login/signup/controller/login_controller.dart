@@ -241,7 +241,7 @@ class LoginController extends GetxController {
     Register res = Register.fromJson(map);
 
     if (res.status == 200) {
-      Get.find<AuthProvider>().setUser(res);
+      await Get.find<AuthProvider>().setUser(res);
       await SessionManager().set('isloggedIn', true);
       await SessionManager().set('ishint_viewd', true);
       await SessionManager().set('token', res.token);

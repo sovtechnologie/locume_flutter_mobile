@@ -148,7 +148,7 @@ class ProfileView extends GetView<ProfileController> {
                                 profileTextField("Your Name",
                                     "${data.firstName ?? 'N/A'} ${data.lastName ?? ''}"),
                                 profileTextField(
-                                    "Phone Number", data.mobileNumber ?? "N/A"),
+                                    "Phone Number", data.idealNumber ?? "N/A"),
                                 profileTextField(
                                     "Location", data.location ?? 'N/A'),
                                 profileTextField("Total Experience",
@@ -327,7 +327,7 @@ class ProfileView extends GetView<ProfileController> {
                           //         child: Text("No availability listed",
                           //             style: TextStyle(fontSize: 16)),
                           //       ),
-                          if (data.clinicName == null)
+                          if (data.clinicData == [])
                             InkWell(
                                 onTap: () async {
                                   await controller.getallstate();
@@ -355,8 +355,8 @@ class ProfileView extends GetView<ProfileController> {
                                             color: primaryColor),
                                       )
                                     ]))),
-                          if (controller.addClinic == true) ClinicDetails(),
-                          if (data.hospitalName == null)
+                          ClinicDetails(),
+                          if (data.hospitalData?.isEmpty ?? true)
                             InkWell(
                                 onTap: () async {
                                   await controller.getallstate();
@@ -482,42 +482,58 @@ class ProfileView extends GetView<ProfileController> {
     required VoidCallback onRemove,
     required VoidCallback onPickFile,
   }) {
-    return Obx(() => GestureDetector(
-          onTap: selectedFile.value == null ? onPickFile : null,
-          child: Container(
-            width: selectedFile.value == null ? 60 : 200,
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              border: Border.all(width: 1, color: primaryColor),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: selectedFile.value == null
-                ? Icon(Icons.add, size: 40, color: primaryColor)
-                : Row(
-                    children: [
-                      Icon(
-                        selectedFile.value!.path.endsWith('.pdf')
-                            ? Icons.picture_as_pdf
-                            : Icons.image,
-                        color: primaryColor,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          fileName.value,
-                          style: TextStyle(color: primaryColor),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.clear, color: Colors.red),
-                        onPressed: onRemove,
-                      ),
-                    ],
-                  ),
+    return Obx(() {
+      String? certificateUrl = controller.dr_data.value?[0].certificate;
+      bool hasCertificate = certificateUrl != null && certificateUrl.isNotEmpty;
+      String displayFileName = fileName.value;
+
+      // Extract file name from URL if certificate exists
+      if (hasCertificate) {
+        displayFileName =
+            certificateUrl.split('/').last; // Get last part of URL
+      }
+
+      // Determine file type
+      bool isPdf = hasCertificate
+          ? displayFileName.toLowerCase().endsWith('.pdf')
+          : (selectedFile.value?.path.toLowerCase().endsWith('.pdf') ?? false);
+
+      return GestureDetector(
+        onTap:
+            (selectedFile.value == null && !hasCertificate) ? onPickFile : null,
+        child: Container(
+          width: (selectedFile.value == null && !hasCertificate) ? 60 : 200,
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            border: Border.all(width: 1, color: primaryColor),
+            borderRadius: BorderRadius.circular(12),
           ),
-        ));
+          child: (selectedFile.value == null && !hasCertificate)
+              ? Icon(Icons.add, size: 40, color: primaryColor)
+              : Row(
+                  children: [
+                    Icon(
+                      isPdf ? Icons.picture_as_pdf : Icons.image,
+                      color: primaryColor,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        displayFileName,
+                        style: TextStyle(color: primaryColor),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.clear, color: Colors.red),
+                      onPressed: onRemove,
+                    ),
+                  ],
+                ),
+        ),
+      );
+    });
   }
 
   Widget ClinicDetails() {
@@ -532,7 +548,7 @@ class ProfileView extends GetView<ProfileController> {
               padding: const EdgeInsets.only(top: 15.0, bottom: 5),
               child: InkWell(
                   onTap: () {
-                    controller.addClinic.value = true;
+                    Get.to(AddClinic());
                   },
                   child: Text("Add More +")),
             )

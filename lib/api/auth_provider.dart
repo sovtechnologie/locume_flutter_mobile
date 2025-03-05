@@ -16,10 +16,11 @@ class AuthProvider extends GetxService {
   }
 
   // Method to set user data
-  void setUser(r.Register userData) {
+  setUser(r.Register userData) {
     user.value = userData;
     customId.value = userData.user?.customId;
-    token.value = userData.token; // Set custom_id
+    token.value = userData.token;
+    // Set custom_id
   }
 
   r.User? get getUser => user.value?.user;
