@@ -115,12 +115,50 @@ class RegisterView extends GetView<LoginController> {
                             return SingleSelectionDropdown(
                               heading: "State",
                               options: controller.statedata.value
-                                  .map((state) => state?.name ?? "")
+                                  .where((state) =>
+                                      state?.name !=
+                                      null) // Ensure non-null states
+                                  .map((state) => state!.name!) // Map safely
                                   .toList(),
-                              selectedValue: controller.state.text,
                               controller: controller.state,
                               onChanged: (value) {
                                 controller.state.text = value ?? "";
+
+                                if (value == null || value.isEmpty) {
+                                  print("No state selected");
+                                  controller.citydata.value =
+                                      []; // ✅ Clear city list
+                                  controller.city
+                                      .clear(); // ✅ Clear selected city name
+                                  return;
+                                }
+
+                                print("Selected State Name: $value");
+
+                                // Find the selected state
+                                final selectedState = controller.statedata.value
+                                    .where((state) => state?.name == value)
+                                    .toList()
+                                    .firstOrNull;
+
+                                if (selectedState == null) {
+                                  print("No matching state found!");
+                                  controller.citydata.value =
+                                      []; // ✅ Clear city list
+                                  controller.city
+                                      .clear(); // ✅ Clear selected city name
+                                  return;
+                                }
+
+                                String isoCode = selectedState.isoCode ?? "";
+                                print("ISO Code: $isoCode");
+
+                                // ✅ Clear city list before fetching new data
+                                controller.citydata.value = [];
+                                controller.city.clear();
+
+                                controller.getallcity(
+                                    isoCode); // Fetch cities for selected state
                               },
                             );
                           }),
@@ -131,14 +169,15 @@ class RegisterView extends GetView<LoginController> {
                               options: controller.citydata.value
                                   .map((city) => city?.name ?? "")
                                   .toList(),
-                              selectedValue: controller.city.text,
                               controller: controller.city,
+                              enabled: controller.citydata.value
+                                  .isNotEmpty, // Disable if no cities
                               onChanged: (value) {
                                 controller.city.text = value ?? "";
                               },
                             );
                           }),
-                          // CustomDropdown(
+// CustomDropdown(
                           //   heading: "Availability",
                           //   options: controller.availability,
                           //   selectedValues: controller.selectedavailability,
@@ -159,7 +198,6 @@ class RegisterView extends GetView<LoginController> {
                           SingleSelectionDropdown(
                             heading: "Gender",
                             options: ["Male", "Female"],
-                            selectedValue: controller.gender.value,
                             controller: genderController,
                             onChanged: (value) {
                               controller.gender.value = value!;

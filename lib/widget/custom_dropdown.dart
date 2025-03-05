@@ -164,17 +164,17 @@ class CustomCheckboxListTile extends StatelessWidget {
 class SingleSelectionDropdown extends StatefulWidget {
   final String heading;
   final List<String> options;
-  final String selectedValue;
   final TextEditingController controller;
   final void Function(String?)? onChanged;
+  final bool enabled;
 
   const SingleSelectionDropdown({
     Key? key,
     required this.heading,
     required this.options,
-    required this.selectedValue,
     required this.controller,
     this.onChanged,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -184,6 +184,29 @@ class SingleSelectionDropdown extends StatefulWidget {
 
 class _SingleSelectionDropdownState extends State<SingleSelectionDropdown> {
   bool _isExpanded = false;
+  List<String> _filteredOptions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredOptions = widget.options;
+  }
+
+  void _filterOptions(String query) {
+    if (!widget.enabled) return;
+    setState(() {
+      if (query.isEmpty) {
+        _filteredOptions = widget.options;
+        _isExpanded = false;
+      } else {
+        _filteredOptions = widget.options
+            .where(
+                (option) => option.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+        _isExpanded = true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -194,87 +217,118 @@ class _SingleSelectionDropdownState extends State<SingleSelectionDropdown> {
           padding: const EdgeInsets.only(top: 10, bottom: 10),
           child: Text(
             widget.heading,
-            style: const TextStyle(
-              color: Color.fromARGB(255, 3, 61, 109),
+            style: TextStyle(
+              color: const Color.fromARGB(255, 3, 61, 109),
               fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _isExpanded = !_isExpanded;
-            });
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color.fromRGBO(248, 247, 247, 1),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: const Color.fromRGBO(220, 215, 215, 1),
-              ),
+        Container(
+          decoration: BoxDecoration(
+            color: widget.enabled
+                ? const Color.fromRGBO(248, 247, 247, 1)
+                : const Color.fromRGBO(230, 230, 230, 1),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: widget.enabled
+                  ? const Color.fromRGBO(220, 215, 215, 1)
+                  : const Color.fromRGBO(200, 200, 200, 1),
             ),
-            child: Column(
-              children: [
-                AbsorbPointer(
-                  child: TextFormField(
-                    controller: widget.controller,
-                    decoration: InputDecoration(
-                      hintText: widget.heading,
-                      fillColor: const Color.fromRGBO(248, 247, 247, 1),
-                      filled: true,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 16,
-                      ),
-                      suffixIcon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Color.fromARGB(255, 3, 61, 109),
-                      ),
+          ),
+          child: Column(
+            children: [
+              Material(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+                child: TextField(
+                  controller: widget.controller,
+                  enabled: widget.enabled,
+                  textAlign: TextAlign.start,
+                  textAlignVertical: TextAlignVertical.center,
+                  onChanged: _filterOptions,
+                  style: TextStyle(
+                    color: widget.enabled ? Colors.black : Colors.grey[600],
+                  ),
+                  decoration: InputDecoration(
+                    hintText: widget.heading,
+                    hintStyle: TextStyle(
+                      color:
+                          widget.enabled ? Colors.grey[600] : Colors.grey[400],
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    filled: true,
+                    fillColor: Colors.transparent,
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 16,
+                    ),
+                    suffixIcon: Icon(
+                      Icons.arrow_drop_down,
+                      color: widget.enabled
+                          ? const Color.fromARGB(255, 3, 61, 109)
+                          : Colors.grey[500],
                     ),
                   ),
                 ),
-                if (_isExpanded)
-                  Container(
-                    height: 90,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: widget.options.map((option) {
-                          return ListTile(
-                            minTileHeight: 18,
-                            title: Text(
-                              option,
-                              style: TextStyle(color: textColor),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                widget.controller.text = option;
-                                widget.onChanged?.call(option);
-                                _isExpanded =
-                                    false; // Collapse dropdown after selection
-                              });
-                            },
-                          );
-                        }).toList(),
+              ),
+              if (_isExpanded && widget.enabled)
+                Column(
+                  children: [
+                    const Divider(
+                      height: 1,
+                      color: Colors.grey,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      constraints: const BoxConstraints(maxHeight: 150),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: _filteredOptions.map((option) {
+                            return ListTile(
+                              title: Text(
+                                option,
+                                style: TextStyle(
+                                  color: widget.enabled
+                                      ? Colors.black
+                                      : Colors.grey,
+                                ),
+                              ),
+                              onTap: widget.enabled
+                                  ? () {
+                                      setState(() {
+                                        widget.controller.text = option;
+                                        widget.onChanged?.call(option);
+                                        _isExpanded = false;
+                                      });
+                                    }
+                                  : null,
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
-                  ),
-              ],
-            ),
+                  ],
+                ),
+            ],
           ),
         ),
-        const SizedBox(
-          height: 10,
-        )
+        const SizedBox(height: 10),
       ],
     );
   }
