@@ -281,7 +281,7 @@ class LoginController extends GetxController {
       "/api/users/addUsersV2",
       head: {"Content-Type": "application/json"},
       data: {
-        "fullName": fullname.text.trim(),
+        "fullName": "Dr. ${fullname.text.trim()}",
         "mobileVerficationId": verifyID.value,
         "gender": gender.value,
         // "registrationId": medicalid.text.trim(),

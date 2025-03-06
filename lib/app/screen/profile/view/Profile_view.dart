@@ -14,6 +14,7 @@ import 'package:locume/app/screen/profile/view/Edit_Profile.dart';
 import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
     as specialtie;
 import 'package:locume/app/screen/profile/view/profileimageview.dart';
+import 'package:locume/widget/reusedwidget.dart';
 
 class ProfileView extends GetView<ProfileController> {
   ProfileView({super.key}) {
@@ -148,7 +149,7 @@ class ProfileView extends GetView<ProfileController> {
                                 profileTextField("Your Name",
                                     "${data.firstName ?? 'N/A'} ${data.lastName ?? ''}"),
                                 profileTextField(
-                                    "Phone Number", data.idealNumber ?? "N/A"),
+                                    "Phone Number", data.mobileNumber ?? "N/A"),
                                 profileTextField(
                                     "Location", data.location ?? 'N/A'),
                                 profileTextField("Total Experience",
@@ -537,41 +538,17 @@ class ProfileView extends GetView<ProfileController> {
   }
 
   Widget ClinicDetails() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            mylabel("Clinic Name"),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 5),
-              child: InkWell(
-                  onTap: () {
-                    Get.to(AddClinic());
-                  },
-                  child: Text("Add More +")),
-            )
-          ],
-        ),
-        mytextfield("Enter Clinic Name", controller.clinicName),
-        mylabel("Clinic Address"),
-        mytextfield("Enter Clininc Address", controller.clinicAddress),
-        mylabel("Clinic Time Slot"),
-        const SizedBox(
-          height: 5,
-        ),
-        Wrap(
-          spacing: 5, // Horizontal space between items
-          runSpacing: 10, // Vertical space between lines
-          children: [
-            selectableBoxField(text: "9:00 am - 1.00 pm"),
-            selectableBoxField(text: "10:00 am - 2.00 pm"),
-            selectableBoxField(text: "1:00 am - 2.00 pm")
-          ],
-        ),
-      ],
-    );
+    final clinicdata = controller.dr_data.value[0].clinicData?[0];
+    return hospitalcard(
+      clinicdata?.clinicImage ?? "",
+      clinicdata?.clinicName ?? "",
+      "${clinicdata?.address}, ${clinicdata?.city}, ${clinicdata?.state}, ${clinicdata?.pincode}" ??
+          "",
+      clinicdata?.mobileNumber.toString() ?? "",
+      "2",
+      "3",
+      clinicdata?.id.toString() ?? "",
+    ); // Add the missing argument here
   }
 
   Widget addHospital() {

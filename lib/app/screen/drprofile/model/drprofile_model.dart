@@ -61,7 +61,8 @@ class Result {
   List<int>? category;
   String? deviceToken;
   String? state;
-  dynamic certificate;
+  String? certificate;
+  String? mobileNumber;
   List<HospitalDatum>? hospitalData;
   List<ClinicDatum>? clinicData;
 
@@ -91,6 +92,7 @@ class Result {
     this.deviceToken,
     this.state,
     this.certificate,
+    this.mobileNumber,
     this.hospitalData,
     this.clinicData,
   });
@@ -127,6 +129,7 @@ class Result {
         deviceToken: json["device_token"],
         state: json["state"],
         certificate: json["certificate"],
+        mobileNumber: json["mobile_number"],
         hospitalData: json["hospital_data"] == null
             ? []
             : List<HospitalDatum>.from(
@@ -164,6 +167,7 @@ class Result {
         "device_token": deviceToken,
         "state": state,
         "certificate": certificate,
+        "mobile_number": mobileNumber,
         "hospital_data": hospitalData == null
             ? []
             : List<dynamic>.from(hospitalData!.map((x) => x.toJson())),

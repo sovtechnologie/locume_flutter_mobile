@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -557,21 +558,27 @@ hospitalcard(String image, String name, String location, String distance,
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            child: Icon(
-                              Icons.location_on_sharp,
-                              size: 10,
-                              color: Colors.grey[600],
+                          Padding(
+                            padding: const EdgeInsets.only(top: 2.0),
+                            child: SizedBox(
+                              child: Icon(
+                                Icons.location_on_sharp,
+                                size: 10,
+                                color: Colors.grey[600],
+                              ),
                             ),
                           ),
                           space(5.0, 0.0),
                           SizedBox(
-                            width: 180,
+                            width:
+                                MediaQuery.of(Get.context!).size.width * 0.48,
                             child: Text(
+                              textAlign: TextAlign.start,
                               location,
                               overflow: TextOverflow.visible,
                               softWrap: true,
                               style: TextStyle(
+                                textBaseline: TextBaseline.ideographic,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 10,
                                 color: HexColor('#333333'),
