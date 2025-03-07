@@ -52,23 +52,23 @@ class DrProfileController extends GetxController {
   getDrData() async {
     try {
       final response =
-          await ApiProvider.get('/api/users/getSingleUserById/$id', head: {
+          await ApiProvider.get('/api/users/getUserCompleteDataV2/$id', head: {
         'Content-Type': 'application/json',
       });
 
       final map = jsonDecode(response.body);
       print(map);
       DrProfile.Drprofile res = DrProfile.Drprofile.fromJson(map);
-
+      print(res);
       if (res.status == 200) {
         dr_data.value = res.result ?? [];
         // Call category and specialty APIs
         await getCatgory();
         await getSpecialites();
-        selectedSpecialties.value = dr_data.value[0].category ?? [];
-        // Map the IDs to their names
-        mapCategoryNames(res.result?.first.category ?? []);
-        mapSpecialtiesNames(res.result?.first.preferredSpecialities ?? []);
+        // selectedSpecialties.value = dr_data.value[0].category ?? [];
+        // // Map the IDs to their names
+        // mapCategoryNames(res.result?.first.category ?? []);
+        // mapSpecialtiesNames(res.result?.first.preferredSpecialities ?? []);
       }
     } catch (e) {
       print('Error: $e');
