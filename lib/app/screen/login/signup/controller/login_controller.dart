@@ -198,6 +198,15 @@ class LoginController extends GetxController {
     isLoading.value = false; // Hide loading indicator
     print(response.body);
     if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      // Extract the OTP value
+      final otp = responseData['otp'];
+      Get.snackbar(
+        "OTP", // Title of the snackbar
+        "Your OTP is: $otp", // Message to display in snackbar
+        snackPosition: SnackPosition.TOP,
+      );
       startOtpTimer();
       errorMessage.value = "";
     } else if (response.statusCode == 409) {

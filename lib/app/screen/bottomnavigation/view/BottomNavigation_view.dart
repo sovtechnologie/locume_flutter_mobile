@@ -50,7 +50,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                 ),
               ),
               title: Text(
-                'Hi, ${controller.firstName}',
+                'Hello, ${controller.firstName}',
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
@@ -108,12 +108,22 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        controller
-                            .profileimage, // Replace with dynamic image URL
-                      ),
                       radius: 40, // Size of the avatar
+                      backgroundColor: Colors.grey[200], // Default background
+                      backgroundImage: (controller.profileimage != null &&
+                              controller.profileimage.isNotEmpty)
+                          ? NetworkImage(controller.profileimage)
+                          : null, // If no image, set backgroundImage to null
+                      child: (controller.profileimage == null ||
+                              controller.profileimage.isEmpty)
+                          ? Icon(
+                              Icons.person,
+                              size: 30, // Icon size
+                              color: Colors.grey[600], // Icon color
+                            )
+                          : null, // If image is available, no child needed
                     ),
+
                     // Spacing between avatar and text
                     Expanded(
                       child: Column(
@@ -124,7 +134,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                             height: 5,
                           ),
                           Text(
-                            'Dr. ${controller.firstName}', // Replace with dynamic name
+                            '${controller.firstName}', // Replace with dynamic name
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

@@ -328,7 +328,7 @@ class ProfileView extends GetView<ProfileController> {
                           //         child: Text("No availability listed",
                           //             style: TextStyle(fontSize: 16)),
                           //       ),
-                          if (data.clinicData == [])
+                          if (data.clinicData?.isEmpty ?? true)
                             InkWell(
                                 onTap: () async {
                                   await controller.getallstate();
@@ -356,8 +356,11 @@ class ProfileView extends GetView<ProfileController> {
                                             color: primaryColor),
                                       )
                                     ]))),
-                          ClinicDetails(),
-                          if (data.hospitalData?.isEmpty ?? true)
+                          if (data.clinicData?.isNotEmpty ?? false)
+                            mylabel("Clinic Details"),
+                          if (data.clinicData?.isNotEmpty ?? false)
+                            ClinicDetails(),
+                          if (data.hospitalData!.isEmpty)
                             InkWell(
                                 onTap: () async {
                                   await controller.getallstate();
@@ -385,7 +388,9 @@ class ProfileView extends GetView<ProfileController> {
                                             color: primaryColor),
                                       )
                                     ]))),
-                          if (controller.addHosiptial == true) addHospital(),
+                          if (data.hospitalData!.isNotEmpty)
+                            mylabel("Hospita Details"),
+                          if (data.hospitalData!.isNotEmpty) HospitalDetails(),
                         ],
                       ),
                     ],
@@ -551,6 +556,20 @@ class ProfileView extends GetView<ProfileController> {
     ); // Add the missing argument here
   }
 
+  Widget HospitalDetails() {
+    final clinicdata = controller.dr_data.value[0].hospitalData?[0];
+    return hospitalcard(
+      clinicdata?.hospitalImage ?? "",
+      clinicdata?.hospitalName ?? "",
+      "${clinicdata?.address}, ${clinicdata?.city}, ${clinicdata?.state}, ${clinicdata?.pincode}" ??
+          "",
+      clinicdata?.mobileNumber.toString() ?? "",
+      "2",
+      "3",
+      clinicdata?.id.toString() ?? "",
+    ); // Add the missing argument here
+  }
+
   Widget addHospital() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -566,31 +585,6 @@ class ProfileView extends GetView<ProfileController> {
                     controller.addHosiptial.value = false;
                   },
                   child: Text("Cancel")),
-            )
-          ],
-        ),
-        mytextfield("Enter Hospital Name", controller.hospitalName),
-        mylabel("Hospital Address"),
-        mytextfield("Enter Hospital Address", controller.hospitalAddress),
-      ],
-    );
-  }
-
-  Widget HospitalDetails() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            mylabel("Hospital Name"),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 5),
-              child: InkWell(
-                  onTap: () {
-                    controller.addHosiptial.value = true;
-                  },
-                  child: Text("Add More +")),
             )
           ],
         ),

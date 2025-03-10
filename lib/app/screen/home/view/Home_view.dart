@@ -330,20 +330,30 @@ class HomeView extends GetView<HomeControlller> {
                 ),
                 space(double.maxFinite, 10.0),
                 Obx(() => controller.data.value.isEmpty
-                    ? Text('hello ${controller.data.value.length}')
-                    : LimitedBox(
-                        maxHeight: 680,
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: (controller.data.value.length > 4
+                                  ? 4
+                                  : controller.data.value.length) *
+                              160, // Dynamic height
+                        ),
                         child: ListView.builder(
+                          shrinkWrap: true, // Prevents infinite expansion
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 4,
+                          itemCount: controller.data.value.length > 4
+                              ? 4
+                              : controller.data.value.length,
                           itemBuilder: (context, index) {
                             final doctor = controller.data.value[index];
-                            final imagePath = doctor.profileImage;
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(
                                   8.0, 0.0, 8.0, 16.0),
                               child: doctorcard(
-                                "https://locumedocument.s3.ap-south-1.amazonaws.com/Screenshot%202024-06-05%20144331.png",
+                                doctor.profileImage ??
+                                    "https://locumedocument.s3.ap-south-1.amazonaws.com/Screenshot%202024-06-05%20144331.png",
                                 '${doctor.firstName ?? ''} ${doctor.lastName ?? ''}',
                                 doctor.medicalId?.toString() ?? '',
                                 doctor.aboutMe?.toString() ??
@@ -356,6 +366,9 @@ class HomeView extends GetView<HomeControlller> {
                           },
                         ),
                       )),
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
