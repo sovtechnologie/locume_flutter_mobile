@@ -40,9 +40,10 @@ class HDetailsView extends GetView<HDetailsController> {
 
   @override
   Widget build(BuildContext context) {
+    final data = controller.hospital_data.value[0];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hospital Name'),
+        title: Text(data.hospitalName ?? "Locum"),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
@@ -54,13 +55,14 @@ class HDetailsView extends GetView<HDetailsController> {
                   decoration: BoxDecoration(),
                   height: 200,
                   width: double.maxFinite,
-                  child: Image.asset(
-                    'assets/hospital.png',
+                  child: Image.network(
+                    data.hospitalImage ?? "",
                     fit: BoxFit.fill,
                   )),
               SizedBox(height: 15),
               Text(
-                "Apollo international hospital",
+                data.hospitalName ?? "Locum",
+                // "Apollo international hospital",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 15,
@@ -84,7 +86,8 @@ class HDetailsView extends GetView<HDetailsController> {
                   SizedBox(width: 5),
                   Expanded(
                     child: Text(
-                      "Parsik Hill Road, Cbd Belapur, Navi Mumbai 5km away from your location",
+                      data.address ?? "",
+                      // "Parsik Hill Road, Cbd Belapur, Navi Mumbai 5km away from your location",
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -171,8 +174,8 @@ class HDetailsView extends GetView<HDetailsController> {
                 ),
               ),
               SizedBox(height: 5),
-              Text(
-                  "A career as a doctor is a clinical professional that involves providing services in healthcare facilities. Individuals in the doctor's career path are responsible for diagnosing, examining, and identifying diseases, disorders, and illnesses of patients.",
+              Text(data.about ?? "",
+                  // "A career as a doctor is a clinical professional that involves providing services in healthcare facilities. Individuals in the doctor's career path are responsible for diagnosing, examining, and identifying diseases, disorders, and illnesses of patients.",
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,

@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:locume/api/api_provider.dart';
+import 'package:locume/api/auth_provider.dart';
+import 'package:locume/app/screen/hospitalDetails/model/Hosptial_details_res.dart';
 
 class HDetailsController extends GetxController {
+  Rx<List<Result>> hospital_data = Rx<List<Result>>([]);
   RxInt rating = 4.obs;
   List<String> Speciality = [
     "Emergency Med",
@@ -43,4 +49,19 @@ class HDetailsController extends GetxController {
       "id": "3",
     },
   ].obs;
+
+  getHospitalDetails(int id) async {
+    final response =
+        await ApiProvider.post("/api/hospital/getSingleHospital", head: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${Get.find<AuthProvider>().token}'
+    }, data: {
+      "hospitalId": 80
+    });
+    final map = jsonDecode(response.body);
+    HospitalDetailsRes res = HospitalDetailsRes.fromJson(map);
+    if (res.status == 200) {
+      hospital_data.value = res.result ?? [];
+    }
+  }
 }
