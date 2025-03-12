@@ -332,6 +332,7 @@ class ProfileView extends GetView<ProfileController> {
                             InkWell(
                                 onTap: () async {
                                   await controller.getallstate();
+                                  await controller.getClinicList();
                                   Get.to(AddClinic());
                                 },
                                 child: Container(
@@ -357,7 +358,19 @@ class ProfileView extends GetView<ProfileController> {
                                       )
                                     ]))),
                           if (data.clinicData?.isNotEmpty ?? false)
-                            mylabel("Clinic Details"),
+                            Row(
+                              children: [
+                                mylabel("Clinic Details"),
+                                Spacer(),
+                                InkWell(
+                                    onTap: () async {
+                                      await controller.getallstate();
+                                      await controller.getClinicList();
+                                      Get.to(AddClinic());
+                                    },
+                                    child: Text("+ Add More"))
+                              ],
+                            ),
                           if (data.clinicData?.isNotEmpty ?? false)
                             ClinicDetails(),
                           if (data.hospitalData!.isEmpty)

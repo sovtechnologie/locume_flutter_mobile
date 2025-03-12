@@ -40,291 +40,304 @@ class HDetailsView extends GetView<HDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    final data = controller.hospital_data.value[0];
     return Scaffold(
       appBar: AppBar(
-        title: Text(data.hospitalName ?? "Locum"),
+        title: Obx(() {
+          if (controller.hospital_data.value.isEmpty) {
+            return const Text("");
+          }
+
+          return Text(
+              controller.hospital_data.value[0].hospitalName ?? "Locum");
+        }),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  decoration: BoxDecoration(),
-                  height: 200,
-                  width: double.maxFinite,
-                  child: Image.network(
-                    data.hospitalImage ?? "",
-                    fit: BoxFit.fill,
-                  )),
-              SizedBox(height: 15),
-              Text(
-                data.hospitalName ?? "Locum",
-                // "Apollo international hospital",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                ),
-              ),
-              Text(
-                "Multi super specialty hospital",
-                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.place,
-                    color: Colors.grey[600],
-                    size: 15,
+      body: Obx(() {
+        if (controller.hospital_data.value.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        final data = controller.hospital_data.value[0];
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    decoration: BoxDecoration(),
+                    height: 200,
+                    width: double.maxFinite,
+                    child: Image.network(
+                      data.hospitalImage ?? "",
+                      fit: BoxFit.fill,
+                    )),
+                SizedBox(height: 15),
+                Text(
+                  data.hospitalName ?? "Locum",
+                  // "Apollo international hospital",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
                   ),
-                  SizedBox(width: 5),
-                  Expanded(
-                    child: Text(
-                      data.address ?? "",
-                      // "Parsik Hill Road, Cbd Belapur, Navi Mumbai 5km away from your location",
+                ),
+                Text(
+                  "Multi super specialty hospital",
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.place,
+                      color: Colors.grey[600],
+                      size: 15,
+                    ),
+                    SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        data.address ?? "",
+                        // "Parsik Hill Road, Cbd Belapur, Navi Mumbai 5km away from your location",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: HexColor('#333333')),
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/distancesvg.svg',
+                      height: 10,
+                      width: 10,
+                      color: HexColor('#333333'),
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      "5km away from your location",
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           color: HexColor('#333333')),
                       softWrap: true,
                       overflow: TextOverflow.visible,
-                    ),
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.place,
+                                color: white,
+                                size: 15,
+                              ),
+                              Text(' View Diretion')
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // Replace with the phone number you want to dial
+                            _makeCall();
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.call,
+                                color: white,
+                                size: 15,
+                              ),
+                              Text(' Call')
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/distancesvg.svg',
-                    height: 10,
-                    width: 10,
-                    color: HexColor('#333333'),
+                ),
+                Text(
+                  "About Hospital",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
                   ),
-                  SizedBox(width: 8),
-                  Text(
-                    "5km away from your location",
+                ),
+                SizedBox(height: 5),
+                Text(data.about ?? "",
+                    // "A career as a doctor is a clinical professional that involves providing services in healthcare facilities. Individuals in the doctor's career path are responsible for diagnosing, examining, and identifying diseases, disorders, and illnesses of patients.",
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: HexColor('#333333')),
                     softWrap: true,
-                    overflow: TextOverflow.visible,
-                  )
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    overflow: TextOverflow.visible),
+                SizedBox(height: 25),
+                Text(
+                  "All Specialties",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                  ),
+                ),
+                SizedBox(height: 10),
+                SizedBox(
+                  width: double.infinity,
+                  child: GridView.builder(
+                    shrinkWrap:
+                        true, // Important to wrap content inside a column
+                    physics:
+                        NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 4,
+                    ),
+                    itemCount: controller.Speciality.length,
+                    itemBuilder: (context, index) {
+                      return Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          controller.Speciality[index],
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          // Center align text inside the grid
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Row(
                   children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.place,
-                              color: white,
-                              size: 15,
-                            ),
-                            Text(' View Diretion')
-                          ],
+                    Text(
+                      "All Doctors",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
+                    ),
+                    Spacer(),
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            color: primaryColor, width: 1), // Circle Border
+                      ),
+                      child: GestureDetector(
+                        onTap: scrollBackward,
+                        child: Icon(
+                          Icons.arrow_back_rounded,
+                          color: primaryColor,
+                          size: 18,
                         ),
                       ),
                     ),
                     SizedBox(width: 10),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          // Replace with the phone number you want to dial
-                          _makeCall();
-                        },
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            color: primaryColor, width: 1), // Circle Border
+                      ),
+                      child: GestureDetector(
+                        onTap: scrollForward,
+                        child: Icon(
+                          Icons.arrow_forward_rounded,
+                          color: primaryColor,
+                          size: 18,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
+                SizedBox(
+                  height: 140,
+                  child: Obx(() => SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        controller: scrollController,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.call,
-                              color: white,
-                              size: 15,
-                            ),
-                            Text(' Call')
-                          ],
+                          children: controller.doctorList.map((doctor) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: smalldoctorcard(
+                                doctor["image"]!,
+                                doctor["name"]!,
+                                doctor["md"]!,
+                                doctor["work"]!,
+                                doctor["experience"]!,
+                                doctor["location"]!,
+                                doctor["id"]!,
+                              ),
+                            );
+                          }).toList(),
                         ),
-                      ),
-                    )
-                  ],
+                      )),
                 ),
-              ),
-              Text(
-                "About Hospital",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                ),
-              ),
-              SizedBox(height: 5),
-              Text(data.about ?? "",
-                  // "A career as a doctor is a clinical professional that involves providing services in healthcare facilities. Individuals in the doctor's career path are responsible for diagnosing, examining, and identifying diseases, disorders, and illnesses of patients.",
+                SizedBox(height: 15),
+                Text(
+                  "Reviews",
                   style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: HexColor('#333333')),
-                  softWrap: true,
-                  overflow: TextOverflow.visible),
-              SizedBox(height: 25),
-              Text(
-                "All Specialties",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                ),
-              ),
-              SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity,
-                child: GridView.builder(
-                  shrinkWrap: true, // Important to wrap content inside a column
-                  physics:
-                      NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    childAspectRatio: 4,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
                   ),
-                  itemCount: controller.Speciality.length,
-                  itemBuilder: (context, index) {
-                    return Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        controller.Speciality[index],
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        // Center align text inside the grid
-                      ),
-                    );
-                  },
                 ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    "All Doctors",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                    ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      reviewscard(
+                          "Sam Curren",
+                          3,
+                          "Responsible for diagnosing, examining, diseases, disorders, and illnesses of patients.",
+                          "12/12/2025"),
+                      reviewscard(
+                          "Sam Curren",
+                          3,
+                          "Responsible for diagnosing, examining, diseases, disorders, and illnesses of patients.",
+                          "12/12/2025"),
+                      reviewscard(
+                          "Sam Curren",
+                          3,
+                          "Responsible for diagnosing, examining, diseases, disorders, and illnesses of patients.",
+                          "12/12/2025"),
+                      reviewscard(
+                          "Sam Curren",
+                          3,
+                          "Responsible for diagnosing, examining, diseases, disorders, and illnesses of patients.",
+                          "12/12/2025")
+                    ],
                   ),
-                  Spacer(),
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                          color: primaryColor, width: 1), // Circle Border
-                    ),
-                    child: GestureDetector(
-                      onTap: scrollBackward,
-                      child: Icon(
-                        Icons.arrow_back_rounded,
-                        color: primaryColor,
-                        size: 18,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                          color: primaryColor, width: 1), // Circle Border
-                    ),
-                    child: GestureDetector(
-                      onTap: scrollForward,
-                      child: Icon(
-                        Icons.arrow_forward_rounded,
-                        color: primaryColor,
-                        size: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 15),
-              SizedBox(
-                height: 140,
-                child: Obx(() => SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      controller: scrollController,
-                      child: Row(
-                        children: controller.doctorList.map((doctor) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: smalldoctorcard(
-                              doctor["image"]!,
-                              doctor["name"]!,
-                              doctor["md"]!,
-                              doctor["work"]!,
-                              doctor["experience"]!,
-                              doctor["location"]!,
-                              doctor["id"]!,
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    )),
-              ),
-              SizedBox(height: 15),
-              Text(
-                "Reviews",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                ),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    reviewscard(
-                        "Sam Curren",
-                        3,
-                        "Responsible for diagnosing, examining, diseases, disorders, and illnesses of patients.",
-                        "12/12/2025"),
-                    reviewscard(
-                        "Sam Curren",
-                        3,
-                        "Responsible for diagnosing, examining, diseases, disorders, and illnesses of patients.",
-                        "12/12/2025"),
-                    reviewscard(
-                        "Sam Curren",
-                        3,
-                        "Responsible for diagnosing, examining, diseases, disorders, and illnesses of patients.",
-                        "12/12/2025"),
-                    reviewscard(
-                        "Sam Curren",
-                        3,
-                        "Responsible for diagnosing, examining, diseases, disorders, and illnesses of patients.",
-                        "12/12/2025")
-                  ],
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

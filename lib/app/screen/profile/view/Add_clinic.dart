@@ -46,7 +46,16 @@ class AddClinic extends GetView<ProfileController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       mylabel2("Clinic Name"),
-                      mytextfield("Enter Clinic Name", controller.clinicName),
+                      SearchableDropdown(
+                        hint: "Enter Clinic Name",
+                        options: controller.clinicList.value
+                            .map((clinic) => clinic?.clinicName ?? "")
+                            .toList(),
+                        controller: controller.clinicName,
+                        onChanged: (value) {
+                          controller.clinicName.text = value ?? "";
+                        },
+                      ),
                       Obx(() => controller.clinicNameError.value.isNotEmpty
                           ? Text(
                               controller.clinicNameError.value,

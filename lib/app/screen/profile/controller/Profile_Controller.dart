@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:locume/api/api_provider.dart';
 import 'package:locume/api/auth_provider.dart';
+import 'package:locume/app/screen/clinics/modek/clinic_model.dart' as clinic;
 import 'package:locume/app/screen/drprofile/model/drprofile_model.dart'
     as DrProfile;
 import 'package:locume/app/screen/drprofile/model/drprofile_model.dart';
@@ -15,6 +16,8 @@ import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
 import 'package:http/http.dart' as http;
 import 'package:locume/app/screen/login/signup/model/state_model.dart'
     as allstate;
+import 'package:locume/app/screen/hospitals/model/Hospital_model.dart'
+    as hospital;
 
 import 'package:locume/app/screen/login/signup/model/city_model.dart'
     as allcity;
@@ -67,7 +70,7 @@ class ProfileController extends GetxController {
   var IndentityName = ''.obs;
   var imageBytes = Rx<Uint8List?>(null);
   var isUploading = false.obs;
-
+  RxList<clinic.Result> clinicList = <clinic.Result>[].obs;
   final RxList<specialtie.Result> specialtiesList = <specialtie.Result>[].obs;
 
   @override
@@ -271,7 +274,7 @@ class ProfileController extends GetxController {
     location.text = data.location ?? "";
     experience.text = data.totalExp?.toString() ?? "";
     selectedSpecialties.value = data.category ?? [];
-    clinicName.text = data.clinicData?[0].clinicName ?? "";
+    // clinicName.text = data. ?? "";
   }
 
   final custom_id = Get.find<AuthProvider>().customId;
@@ -343,6 +346,16 @@ class ProfileController extends GetxController {
       Get.back();
     } else {
       print("❌ Error: ${decodedResponse['message']}");
+    }
+  }
+
+  getClinicList() async {
+    final response = await ApiProvider.get('/api/list/getClinic',
+        head: {'content-type': 'application/json'});
+    final map = jsonDecode(response.body);
+    final res = clinic.ClinicData.fromJson(map);
+    if (res.status == 200) {
+      clinicList.value = res.result ?? [];
     }
   }
 

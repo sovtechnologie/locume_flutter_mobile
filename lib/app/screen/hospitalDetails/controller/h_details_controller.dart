@@ -6,6 +6,12 @@ import 'package:locume/api/auth_provider.dart';
 import 'package:locume/app/screen/hospitalDetails/model/Hosptial_details_res.dart';
 
 class HDetailsController extends GetxController {
+  @override
+  void onInit() {
+    super.onInit();
+    getHospitalDetails(80);
+  }
+
   Rx<List<Result>> hospital_data = Rx<List<Result>>([]);
   RxInt rating = 4.obs;
   List<String> Speciality = [
