@@ -6,10 +6,15 @@ import 'package:locume/api/auth_provider.dart';
 import 'package:locume/app/screen/hospitalDetails/model/Hosptial_details_res.dart';
 
 class HDetailsController extends GetxController {
+  final int? hospitalId;
+  HDetailsController(this.hospitalId);
+
   @override
   void onInit() {
     super.onInit();
-    getHospitalDetails(80);
+    if (hospitalId != null) {
+      getHospitalDetails(hospitalId ?? 0);
+    }
   }
 
   Rx<List<Result>> hospital_data = Rx<List<Result>>([]);
@@ -56,13 +61,13 @@ class HDetailsController extends GetxController {
     },
   ].obs;
 
-  getHospitalDetails(int id) async {
+  getHospitalDetails(int hospitalId) async {
     final response =
         await ApiProvider.post("/api/hospital/getSingleHospital", head: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${Get.find<AuthProvider>().token}'
     }, data: {
-      "hospitalId": 80
+      "hospitalId": hospitalId
     });
     final map = jsonDecode(response.body);
     HospitalDetailsRes res = HospitalDetailsRes.fromJson(map);
