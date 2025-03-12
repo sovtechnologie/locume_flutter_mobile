@@ -1086,7 +1086,8 @@ class SearchableDropdown extends StatefulWidget {
 }
 
 class _SearchableDropdownState extends State<SearchableDropdown> {
-  bool _isExpanded = false;
+  final LayerLink _layerLink = LayerLink();
+  OverlayEntry? _overlayEntry;
   List<String> _filteredOptions = [];
 
   @override
@@ -1099,80 +1100,125 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
     setState(() {
       if (query.isEmpty) {
         _filteredOptions = widget.options;
-        _isExpanded = false;
       } else {
         _filteredOptions = widget.options
             .where(
                 (option) => option.toLowerCase().contains(query.toLowerCase()))
             .toList();
-        _isExpanded = true;
       }
     });
+    _showDropdown();
+  }
+
+  void _showDropdown() {
+    _hideDropdown(); // Remove previous overlay before showing new one
+
+    // Prevent showing dropdown if no options are available
+    if (_filteredOptions.isEmpty) return;
+
+    final overlay = Overlay.of(context);
+    final renderBox = context.findRenderObject() as RenderBox;
+    final size = renderBox.size;
+    final position = renderBox.localToGlobal(Offset.zero);
+
+    _overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        width: size.width,
+        left: position.dx,
+        top: position.dy + size.height + 5, // Adjust below the TextField
+        child: CompositedTransformFollower(
+          link: _layerLink,
+          showWhenUnlinked: false,
+          offset: Offset(0, size.height + 5),
+          child: Material(
+            elevation: 4,
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            child: Container(
+              constraints: const BoxConstraints(maxHeight: 150),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey[300]!),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: _filteredOptions.map((option) {
+                    return ListTile(
+                      title: Text(option, style: const TextStyle(fontSize: 14)),
+                      onTap: () => _selectOption(option),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(_overlayEntry!);
+  }
+
+  void _hideDropdown() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
   }
 
   void _selectOption(String value) {
     widget.controller.text = value;
     widget.onChanged?.call(value);
-    setState(() {
-      _isExpanded = false;
-    });
+    _hideDropdown();
+  }
+
+  void _toggleDropdown() {
+    if (_overlayEntry == null) {
+      _showDropdown();
+    } else {
+      _hideDropdown();
+    }
+  }
+
+  @override
+  void dispose() {
+    _hideDropdown();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextField(
-          controller: widget.controller,
-          onChanged: _filterOptions,
-          decoration: InputDecoration(
-            hintText: widget.hint,
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: const BorderSide(
-                color: Color.fromARGB(124, 175, 175, 175),
-                width: 1,
+    return CompositedTransformTarget(
+      link: _layerLink,
+      child: GestureDetector(
+        onTap: _toggleDropdown,
+        child: AbsorbPointer(
+          absorbing: false,
+          child: TextField(
+            controller: widget.controller,
+            onChanged: _filterOptions,
+            decoration: InputDecoration(
+              hintText: widget.hint,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: const BorderSide(
+                  color: Color.fromARGB(124, 175, 175, 175),
+                  width: 1,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(color: primaryColor, width: 1),
+              ),
+              suffixIcon: InkWell(
+                onTap: _toggleDropdown,
+                child: Icon(Icons.arrow_drop_down, color: primaryColor),
               ),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: primaryColor, width: 1),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: const BorderSide(
-                color: Color.fromARGB(124, 175, 175, 175),
-                width: 1,
-              ),
-            ),
-            // suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.blue),
+            style: const TextStyle(fontSize: 14),
           ),
-          style: const TextStyle(fontSize: 14),
         ),
-        if (_isExpanded)
-          Container(
-            margin: const EdgeInsets.only(top: 5),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.grey[300]!),
-            ),
-            constraints: const BoxConstraints(maxHeight: 150),
-            child: SingleChildScrollView(
-              child: Column(
-                children: _filteredOptions.map((option) {
-                  return ListTile(
-                    title: Text(option, style: const TextStyle(fontSize: 14)),
-                    onTap: () => _selectOption(option),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-      ],
+      ),
     );
   }
 }

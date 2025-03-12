@@ -113,7 +113,7 @@ class ApiProvider {
   static Future<http.Response> post(String url,
       {Map<String, dynamic>? data, Map<String, String>? head}) async {
     log("POST url: ${CONFIG.apiUrl()}$url");
-    log("POST payload: ${jsonEncode(data)}");
+    print("POST payload: ${jsonEncode(data)}");
     log("POST head: $head");
     return await http
         .post(Uri.parse("${CONFIG.apiUrl()}$url"),
