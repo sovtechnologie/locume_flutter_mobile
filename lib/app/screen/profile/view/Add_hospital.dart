@@ -46,14 +46,16 @@ class AddHospitial extends GetView<ProfileController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       mylabel2("Hospital Name"),
-                      mytextfield("Enter Hospital Name", controller.clinicName),
-                      Obx(() => controller.clinicNameError.value.isNotEmpty
-                          ? Text(
-                              controller.clinicNameError.value,
-                              style: const TextStyle(
-                                  color: Colors.red, fontSize: 12),
-                            )
-                          : const SizedBox()),
+                      SearchableDropdown(
+                        hint: "Enter Hospital Name",
+                        options: controller.hospitalList.value
+                            .map((e) => e?.hospitalName ?? "")
+                            .toList(),
+                        controller: controller.hospitalName,
+                        onChanged: (value) {
+                          controller.hospitalName.text = value ?? "";
+                        },
+                      ),
                       mylabel2("About Hospital"),
                       mytextfield(
                           "Enter About Your Hospital", controller.about),
@@ -315,7 +317,7 @@ class AddHospitial extends GetView<ProfileController> {
                   padding: const EdgeInsets.all(16.0),
                   color: Colors.white, // Ensure it has a background
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       bool isValid = true;
                       String errorMessage = "";
 
@@ -392,7 +394,9 @@ class AddHospitial extends GetView<ProfileController> {
 
                       // Call API functions only if validation passes
                       // controller.AddHospitalImage();
-                      controller.AddHospital().whenComplete(_clearAllFields);
+                      await controller.AddHospital()
+                          .whenComplete(_clearAllFields);
+                      controller.getDrData();
                     },
                     child: Text("ADD"),
                     style: ElevatedButton.styleFrom(

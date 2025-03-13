@@ -323,7 +323,7 @@ class AddClinic extends GetView<ProfileController> {
                   padding: const EdgeInsets.all(16.0),
                   color: Colors.white, // Ensure it has a background
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       bool isValid = true;
                       String errorMessage = "";
 
@@ -400,7 +400,9 @@ class AddClinic extends GetView<ProfileController> {
 
                       // Call API functions only if validation passes
                       // controller.AddClinicImage();
-                      controller.AddClinic().whenComplete(_clearAllFields);
+                      await controller.AddClinic()
+                          .whenComplete(_clearAllFields);
+                      controller.getDrData();
                     },
                     child: Text("ADD"),
                     style: ElevatedButton.styleFrom(

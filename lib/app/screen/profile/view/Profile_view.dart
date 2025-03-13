@@ -402,7 +402,19 @@ class ProfileView extends GetView<ProfileController> {
                                       )
                                     ]))),
                           if (data.hospitalData!.isNotEmpty)
-                            mylabel("Hospita Details"),
+                            Row(
+                              children: [
+                                mylabel("Hospital Details"),
+                                Spacer(),
+                                InkWell(
+                                    onTap: () async {
+                                      await controller.getallstate();
+                                      await controller.getHospitalList();
+                                      Get.to(AddHospitial());
+                                    },
+                                    child: Text("+ Add More"))
+                              ],
+                            ),
                           if (data.hospitalData!.isNotEmpty) HospitalDetails(),
                         ],
                       ),
@@ -556,31 +568,48 @@ class ProfileView extends GetView<ProfileController> {
   }
 
   Widget ClinicDetails() {
-    final clinicdata = controller.dr_data.value[0].clinicData?[0];
-    return hospitalcard(
-      clinicdata?.clinicImage ?? "",
-      clinicdata?.clinicName ?? "",
-      "${clinicdata?.address}, ${clinicdata?.city}, ${clinicdata?.state}, ${clinicdata?.pincode}" ??
-          "",
-      clinicdata?.mobileNumber.toString() ?? "",
-      "2",
-      "3",
-      clinicdata?.id.toString() ?? "",
-    ); // Add the missing argument here
+    final clinicDataList = controller.dr_data.value[0].clinicData ?? [];
+
+    if (clinicDataList.isEmpty) {
+      return Center(child: Text("No clinic data available"));
+    }
+
+    return Column(
+      children: clinicDataList.map<Widget>((clinic) {
+        // Explicit type <Widget>
+        return hospitalcard(
+          clinic.clinicImage ?? "",
+          clinic.clinicName ?? "",
+          "${clinic.address}, ${clinic.city}, ${clinic.state}, ${clinic.pincode}",
+          clinic.mobileNumber.toString(),
+          "2",
+          "3",
+          clinic.id.toString(),
+        );
+      }).toList(), // ✅ Convert Iterable to List<Widget>
+    );
   }
 
   Widget HospitalDetails() {
-    final clinicdata = controller.dr_data.value[0].hospitalData?[0];
-    return hospitalcard(
-      clinicdata?.hospitalImage ?? "",
-      clinicdata?.hospitalName ?? "",
-      "${clinicdata?.address}, ${clinicdata?.city}, ${clinicdata?.state}, ${clinicdata?.pincode}" ??
-          "",
-      clinicdata?.mobileNumber.toString() ?? "",
-      "2",
-      "3",
-      clinicdata?.id.toString() ?? "",
-    ); // Add the missing argument here
+    final hospitalDataList = controller.dr_data.value[0].hospitalData ?? [];
+
+    if (hospitalDataList.isEmpty) {
+      return Center(child: Text("No hospital data available"));
+    }
+
+    return Column(
+      children: hospitalDataList.map<Widget>((hospital) {
+        return hospitalcard(
+          hospital.hospitalImage ?? "",
+          hospital.hospitalName ?? "",
+          "${hospital.address}, ${hospital.city}, ${hospital.state}, ${hospital.pincode}",
+          hospital.mobileNumber?.toString() ?? "",
+          "2",
+          "3",
+          hospital.id?.toString() ?? "",
+        );
+      }).toList(), // ✅ Convert to List<Widget>
+    );
   }
 
   Widget addHospital() {
