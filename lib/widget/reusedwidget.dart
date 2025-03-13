@@ -7,6 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:locume/app/screen/SpecialitiesLocum(DR)/binding/SpecialitiesLocum(DR)_binding.dart';
 import 'package:locume/app/screen/SpecialitiesLocum(DR)/view/SpecialitiesLocums(DR).dart';
+import 'package:locume/app/screen/hospitalDetails/binding/h_details_binding.dart';
+import 'package:locume/app/screen/hospitalDetails/view/h_details_view.dart';
 
 import '../Theme/textTheme.dart';
 import '../Theme/theme.dart';
@@ -478,12 +480,14 @@ Widget smalldoctorcard(String image, String name, String md, String work,
 }
 
 hospitalcard(String image, String name, String location, String distance,
-    String numDoctor, String numSpeciality, String Rating) {
+    String numDoctor, String numSpeciality, String Rating, int id) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: InkWell(
       onTap: () {
-        Get.toNamed('/hospital-details');
+        Get.to(HDetailsView(), binding: HDetailsBinding(hospitalId: id));
+
+        print(id);
       },
       child: Container(
         decoration: BoxDecoration(
