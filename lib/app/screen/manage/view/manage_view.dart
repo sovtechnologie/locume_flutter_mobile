@@ -6,6 +6,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/manage/controller/manage_Controller.dart';
+import 'package:locume/app/screen/requestLocumDetails/binding/request_details_binding.dart';
+import 'package:locume/app/screen/requestLocumDetails/view/request_raisedbyMe_details.dart';
 
 class ManageView extends GetView<ManageController> {
   ManageView({super.key}) {
@@ -91,7 +93,6 @@ class ManageView extends GetView<ManageController> {
         }
 
         return Expanded(
-          // Ensures ListView takes available space
           child: ListView.builder(
             itemCount: controller.raisedrequest.length,
             itemBuilder: (context, index) {
@@ -107,6 +108,7 @@ class ManageView extends GetView<ManageController> {
                 "OPD Nurse",
                 request.acceptUser ?? "",
                 request.bookingType!,
+                request.id ?? 0,
                 true,
               );
             },
@@ -151,7 +153,8 @@ class ManageView extends GetView<ManageController> {
                 "100",
                 "OPD Nurse",
                 "Dr denies Martine",
-                1),
+                1,
+                55),
             manage_card(
                 "Apollo international hospital",
                 "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
@@ -160,7 +163,8 @@ class ManageView extends GetView<ManageController> {
                 "100",
                 "OPD Nurse",
                 "Dr denies Martine",
-                2),
+                2,
+                55),
             manage_card(
                 "Apollo international hospital",
                 "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
@@ -169,7 +173,8 @@ class ManageView extends GetView<ManageController> {
                 "100",
                 "OPD Nurse",
                 "Dr denies Martine",
-                2),
+                2,
+                55),
             manage_card(
                 "Apollo international hospital",
                 "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
@@ -178,7 +183,8 @@ class ManageView extends GetView<ManageController> {
                 "100",
                 "OPD Nurse",
                 "Dr denies Martine",
-                1)
+                1,
+                55)
           ],
         ),
       ),
@@ -186,7 +192,7 @@ class ManageView extends GetView<ManageController> {
   }
 
   Widget manage_card(String title, String address, String date, String time,
-      String price, String role, String accpetedby, int bookingType,
+      String price, String role, String accpetedby, int bookingType, int id,
       [bool isRequestRaised = false]) {
     return Padding(
       padding: const EdgeInsets.only(top: 18.0, left: 5.0, right: 5.0),
@@ -328,7 +334,8 @@ class ManageView extends GetView<ManageController> {
                   ),
                   onPressed: () {
                     if (isRequestRaised == true) {
-                      Get.toNamed('/request-details-raisedbyMe');
+                      Get.to(RequestRaisedbymeDetails(),
+                          binding: RequestDetailsBinding(id: id));
                     } else {
                       Get.toNamed('/request-details');
                     }

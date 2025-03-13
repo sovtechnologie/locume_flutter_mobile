@@ -2,6 +2,17 @@ import 'package:get/get.dart';
 
 class RequestDetailsController extends GetxController {
   RxBool reqStatus = true.obs;
+  final int? id;
+  RequestDetailsController(this.id);
+  @override
+  void onInit() {
+    super.onInit();
+    // if (id != null) {
+    //   getspecialdoctors(id ?? 0);
+    // }
+    print(id);
+  }
+
   var doctorList = <Map<String, String>>[
     {
       "image": "https://via.placeholder.com/100",
