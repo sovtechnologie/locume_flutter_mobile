@@ -8,9 +8,9 @@ import 'package:locume/app/screen/hospitalDetails/controller/h_details_controlle
 import 'package:locume/widget/reusedwidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Future<void> _makeCall() async {
+Future<void> _makeCall(dynamic number) async {
   final Uri phoneUri =
-      Uri(scheme: 'tel', path: '+8487029455'); // Replace with your number
+      Uri(scheme: 'tel', path: '$number'); // Replace with your number
   if (await canLaunchUrl(phoneUri)) {
     await launchUrl(phoneUri);
   } else {
@@ -43,19 +43,35 @@ class HDetailsView extends GetView<HDetailsController> {
     return Scaffold(
       appBar: AppBar(
         title: Obx(() {
-          if (controller.hospital_data.value.isEmpty) {
-            return const Text("");
+          if (controller.isClinic == false) {
+            if (controller.hospital_data.value.isEmpty) {
+              return const Text("");
+            }
+            return Text(
+                controller.hospital_data.value[0].hospitalName ?? "Locum");
+          } else {
+            if (controller.clinic_data.value.isEmpty) {
+              return const Text("");
+            }
+            return Text(controller.clinic_data.value[0].clinicName ?? "Locum");
           }
-
-          return Text(
-              controller.hospital_data.value[0].hospitalName ?? "Locum");
         }),
       ),
       body: Obx(() {
-        if (controller.hospital_data.value.isEmpty) {
+        if (controller.hospital_data.value.isEmpty &&
+                controller.isClinic == false ||
+            controller.clinic_data.value.isEmpty &&
+                controller.isClinic == true) {
           return const Center(child: CircularProgressIndicator());
         }
-        final data = controller.hospital_data.value[0];
+        final hdata = controller.hospital_data.value.isNotEmpty
+            ? controller.hospital_data.value[0]
+            : null;
+
+        final cdata = controller.clinic_data.value.isNotEmpty
+            ? controller.clinic_data.value[0]
+            : null;
+
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
           child: SingleChildScrollView(
@@ -67,12 +83,17 @@ class HDetailsView extends GetView<HDetailsController> {
                     height: 200,
                     width: double.maxFinite,
                     child: Image.network(
-                      data.hospitalImage ?? "",
+                      controller.isClinic == false
+                          ? hdata?.hospitalImage ?? ""
+                          : cdata?.clinicImage ?? "",
                       fit: BoxFit.fill,
                     )),
                 SizedBox(height: 15),
                 Text(
-                  data.hospitalName ?? "Locum",
+                  controller.isClinic == false
+                      ? hdata?.hospitalName ?? "Locum"
+                      : cdata?.clinicName ?? "Locum",
+
                   // "Apollo international hospital",
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
@@ -97,7 +118,10 @@ class HDetailsView extends GetView<HDetailsController> {
                     SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        data.address ?? "",
+                        controller.isClinic == false
+                            ? hdata?.address ?? ""
+                            : cdata?.address ?? "",
+
                         // "Parsik Hill Road, Cbd Belapur, Navi Mumbai 5km away from your location",
                         style: TextStyle(
                             fontSize: 12,
@@ -159,7 +183,9 @@ class HDetailsView extends GetView<HDetailsController> {
                         child: ElevatedButton(
                           onPressed: () async {
                             // Replace with the phone number you want to dial
-                            _makeCall();
+                            _makeCall(controller.isClinic == false
+                                ? hdata?.mobileNumber
+                                : cdata?.mobileNumber);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -185,7 +211,11 @@ class HDetailsView extends GetView<HDetailsController> {
                   ),
                 ),
                 SizedBox(height: 5),
-                Text(data.about ?? "",
+                Text(
+                    controller.isClinic == false
+                        ? hdata?.about ?? ""
+                        : cdata?.about ?? "",
+
                     // "A career as a doctor is a clinical professional that involves providing services in healthcare facilities. Individuals in the doctor's career path are responsible for diagnosing, examining, and identifying diseases, disorders, and illnesses of patients.",
                     style: TextStyle(
                         fontSize: 12,

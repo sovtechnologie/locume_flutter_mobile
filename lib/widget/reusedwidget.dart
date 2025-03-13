@@ -480,12 +480,14 @@ Widget smalldoctorcard(String image, String name, String md, String work,
 }
 
 hospitalcard(String image, String name, String location, String distance,
-    String numDoctor, String numSpeciality, String Rating, int id) {
+    String numDoctor, String numSpeciality, String Rating, int id,
+    [bool isClinic = false]) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: InkWell(
       onTap: () {
-        Get.to(HDetailsView(), binding: HDetailsBinding(hospitalId: id));
+        Get.to(HDetailsView(),
+            binding: HDetailsBinding(hospitalId: id, isClinic: isClinic));
 
         print(id);
       },

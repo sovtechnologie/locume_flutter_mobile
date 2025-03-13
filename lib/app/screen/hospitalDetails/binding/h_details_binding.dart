@@ -3,12 +3,13 @@ import 'package:locume/app/screen/hospitalDetails/controller/h_details_controlle
 
 class HDetailsBinding extends Bindings {
   final int? hospitalId;
-  HDetailsBinding({this.hospitalId});
+  final bool? isClinic;
+  HDetailsBinding({this.hospitalId, this.isClinic});
 
   @override
   void dependencies() {
     Get.lazyPut<HDetailsController>(
-      () => HDetailsController(hospitalId),
+      () => HDetailsController(hospitalId, isClinic),
     );
   }
 }

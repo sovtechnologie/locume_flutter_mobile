@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/manage/controller/manage_Controller.dart';
-import 'package:locume/app/screen/requestLocumDetails/view/request_raisedbyMe_details.dart';
 
 class ManageView extends GetView<ManageController> {
-  ManageView({super.key});
+  ManageView({super.key}) {
+    Get.put(ManageController());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,51 +80,61 @@ class ManageView extends GetView<ManageController> {
   }
 
   Widget _requestRaised(String status) {
-    return Container(
+    final controller = Get.find<ManageController>(); // Find the controller
+
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            manage_card(
-                "Apollo international hospital",
-                "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                "22-24 Jan 2025 (Sat-Mon)",
-                "2:00 P.M - 10:00 P.M (Evening Shift)",
-                "100",
+      child: Obx(() {
+        if (controller.raisedrequest.isEmpty) {
+          return Center(
+              child: Text("No requests found")); // Show message if no data
+        }
+
+        return Expanded(
+          // Ensures ListView takes available space
+          child: ListView.builder(
+            itemCount: controller.raisedrequest.length,
+            itemBuilder: (context, index) {
+              final request = controller.raisedrequest[index];
+
+              return manage_card(
+                request.hospitalName ?? "Unknown Hospital",
+                "${request.address}, ${request.city}, ${request.state}, ${request.pincode}",
+                formatDateRange(request.startDate?.toIso8601String(),
+                    request.endDate?.toIso8601String()),
+                request.shift ?? "N/A",
+                "${request.firstRange} - ${request.secondRange}",
                 "OPD Nurse",
-                "Dr denies Martine",
-                true),
-            manage_card(
-                "Apollo international hospital",
-                "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                "22-24 Jan 2025 (Sat-Mon)",
-                "2:00 P.M - 10:00 P.M (Evening Shift)",
-                "100",
-                "OPD Nurse",
-                "Dr denies Martine",
-                true),
-            manage_card(
-                "Apollo international hospital",
-                "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                "22-24 Jan 2025 (Sat-Mon)",
-                "2:00 P.M - 10:00 P.M (Evening Shift)",
-                "100",
-                "OPD Nurse",
-                "Dr denies Martine",
-                true),
-            manage_card(
-                "Apollo international hospital",
-                "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                "22-24 Jan 2025 (Sat-Mon)",
-                "2:00 P.M - 10:00 P.M (Evening Shift)",
-                "100",
-                "OPD Nurse",
-                "Dr denies Martine",
-                true)
-          ],
-        ),
-      ),
+                request.acceptUser ?? "",
+                request.bookingType!,
+                true,
+              );
+            },
+          ),
+        );
+      }),
     );
+  }
+
+  String formatDateRange(dynamic start, dynamic end) {
+    DateTime startDate = DateTime.parse(start);
+    DateTime endDate = DateTime.parse(end);
+
+    String startDay = DateFormat('d').format(startDate); // Day only
+    String startMonth = DateFormat('MMM').format(startDate); // Month
+    String startWeekday = DateFormat('EEE').format(startDate); // Weekday
+
+    String endDay = DateFormat('d').format(endDate); // Day only
+    String endMonth = DateFormat('MMM').format(endDate); // Month
+    String endWeekday = DateFormat('EEE').format(endDate); // Weekday
+
+    String year = DateFormat('yyyy').format(startDate); // Year
+
+    if (startMonth == endMonth) {
+      return "$startDay-$endDay $startMonth $year ($startWeekday-$endWeekday)";
+    } else {
+      return "$startDay $startMonth - $endDay $endMonth $year ($startWeekday-$endWeekday)";
+    }
   }
 
   Widget _applidedbyMe(String status) {
@@ -138,7 +150,8 @@ class ManageView extends GetView<ManageController> {
                 "2:00 P.M - 10:00 P.M (Evening Shift)",
                 "100",
                 "OPD Nurse",
-                "Dr denies Martine"),
+                "Dr denies Martine",
+                1),
             manage_card(
                 "Apollo international hospital",
                 "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
@@ -146,7 +159,8 @@ class ManageView extends GetView<ManageController> {
                 "2:00 P.M - 10:00 P.M (Evening Shift)",
                 "100",
                 "OPD Nurse",
-                "Dr denies Martine"),
+                "Dr denies Martine",
+                2),
             manage_card(
                 "Apollo international hospital",
                 "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
@@ -154,7 +168,8 @@ class ManageView extends GetView<ManageController> {
                 "2:00 P.M - 10:00 P.M (Evening Shift)",
                 "100",
                 "OPD Nurse",
-                "Dr denies Martine"),
+                "Dr denies Martine",
+                2),
             manage_card(
                 "Apollo international hospital",
                 "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
@@ -162,7 +177,8 @@ class ManageView extends GetView<ManageController> {
                 "2:00 P.M - 10:00 P.M (Evening Shift)",
                 "100",
                 "OPD Nurse",
-                "Dr denies Martine")
+                "Dr denies Martine",
+                1)
           ],
         ),
       ),
@@ -170,7 +186,7 @@ class ManageView extends GetView<ManageController> {
   }
 
   Widget manage_card(String title, String address, String date, String time,
-      String price, String role, String accpetedby,
+      String price, String role, String accpetedby, int bookingType,
       [bool isRequestRaised = false]) {
     return Padding(
       padding: const EdgeInsets.only(top: 18.0, left: 5.0, right: 5.0),
@@ -210,7 +226,9 @@ class ManageView extends GetView<ManageController> {
                   ),
                   Icon(
                     Icons.radio_button_checked,
-                    color: HexColor("#C60808"),
+                    color: bookingType == 1
+                        ? HexColor("#C60808")
+                        : HexColor("#007C02"),
                     size: 12,
                   ),
                 ],
@@ -280,20 +298,22 @@ class ManageView extends GetView<ManageController> {
                           color: HexColor('#333333'))),
                 ],
               ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  SvgPicture.asset('assets/opd.svg',
-                      width: 12, height: 12, color: HexColor('#333333')),
-                  Text("  Accepted By $accpetedby",
-                      style: TextStyle(
-                          fontSize: 10.50,
-                          fontWeight: FontWeight.w400,
-                          color: HexColor('#333333'))),
-                ],
-              ),
+              if (accpetedby.isNotEmpty)
+                SizedBox(
+                  height: 8,
+                ),
+              if (accpetedby.isNotEmpty)
+                Row(
+                  children: [
+                    SvgPicture.asset('assets/opd.svg',
+                        width: 12, height: 12, color: HexColor('#333333')),
+                    Text("  Accepted By $accpetedby",
+                        style: TextStyle(
+                            fontSize: 10.50,
+                            fontWeight: FontWeight.w400,
+                            color: HexColor('#333333'))),
+                  ],
+                ),
               SizedBox(
                 height: 12,
               ),
