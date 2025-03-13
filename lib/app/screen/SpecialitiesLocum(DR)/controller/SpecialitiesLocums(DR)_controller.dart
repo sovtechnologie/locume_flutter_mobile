@@ -20,7 +20,6 @@ class SpecialitieslocumsdrController extends GetxController {
   }
 
   Future<void> getspecialdoctors(int specialtyId) async {
-    print("response");
     try {
       final response = await ApiProvider.post(
         "/api/filter/specialtiesFilters",

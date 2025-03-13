@@ -101,7 +101,8 @@ class HospitalView extends GetView<HospitalController> {
                                 "",
                                 "23",
                                 "13",
-                                "4.5");
+                                "4.5",
+                                hospital.id ?? 0);
                           },
                         ),
                       ),

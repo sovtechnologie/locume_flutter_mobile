@@ -397,15 +397,15 @@ class DrProfileView extends GetView<DrProfileController> {
   Widget ClinicDetails() {
     final clinicdata = controller.dr_data.value[0].clinicData?[0];
     return hospitalcard(
-      clinicdata?.clinicImage ?? "",
-      clinicdata?.clinicName ?? "",
-      "${clinicdata?.address}, ${clinicdata?.city}, ${clinicdata?.state}, ${clinicdata?.pincode}" ??
-          "",
-      clinicdata?.mobileNumber.toString() ?? "",
-      "2",
-      "3",
-      clinicdata?.id.toString() ?? "",
-    ); // Add the missing argument here
+        clinicdata?.clinicImage ?? "",
+        clinicdata?.clinicName ?? "",
+        "${clinicdata?.address}, ${clinicdata?.city}, ${clinicdata?.state}, ${clinicdata?.pincode}" ??
+            "",
+        clinicdata?.mobileNumber.toString() ?? "",
+        "2",
+        "3",
+        clinicdata?.id.toString() ?? "",
+        clinicdata?.id ?? 0); // Add the missing argument here
   }
 }
 

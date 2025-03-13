@@ -566,6 +566,7 @@ class ProfileView extends GetView<ProfileController> {
       "2",
       "3",
       clinicdata?.id.toString() ?? "",
+      clinicdata?.id ?? 0,
     ); // Add the missing argument here
   }
 
@@ -580,6 +581,7 @@ class ProfileView extends GetView<ProfileController> {
       "2",
       "3",
       clinicdata?.id.toString() ?? "",
+      clinicdata?.id ?? 0,
     ); // Add the missing argument here
   }
 

@@ -70,6 +70,7 @@ class HDetailsController extends GetxController {
       "hospitalId": hospitalId
     });
     final map = jsonDecode(response.body);
+    print(map);
     HospitalDetailsRes res = HospitalDetailsRes.fromJson(map);
     if (res.status == 200) {
       hospital_data.value = res.result ?? [];
