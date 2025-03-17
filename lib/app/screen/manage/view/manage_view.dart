@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/manage/controller/manage_Controller.dart';
 import 'package:locume/app/screen/requestLocumDetails/binding/request_details_binding.dart';
+import 'package:locume/app/screen/requestLocumDetails/view/request_details_view.dart';
 import 'package:locume/app/screen/requestLocumDetails/view/request_raisedbyMe_details.dart';
 
 class ManageView extends GetView<ManageController> {
@@ -82,7 +83,7 @@ class ManageView extends GetView<ManageController> {
   }
 
   Widget _requestRaised(String status) {
-    final controller = Get.find<ManageController>(); // Find the controller
+    // final controller = Get.find<ManageController>(); // Find the controller
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5),
@@ -106,7 +107,7 @@ class ManageView extends GetView<ManageController> {
                 request.shift ?? "N/A",
                 "${request.firstRange} - ${request.secondRange}",
                 "OPD Nurse",
-                request.acceptUser ?? "",
+                "",
                 request.bookingType!,
                 request.id ?? 0,
                 true,
@@ -140,54 +141,36 @@ class ManageView extends GetView<ManageController> {
   }
 
   Widget _applidedbyMe(String status) {
-    return Container(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            manage_card(
-                "Apollo international hospital",
-                "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                "22-24 Jan 2025 (Sat-Mon)",
-                "2:00 P.M - 10:00 P.M (Evening Shift)",
-                "100",
+      child: Obx(() {
+        if (controller.respondedrequest.isEmpty) {
+          return Center(
+              child: Text("No requests found")); // Show message if no data
+        }
+
+        return Expanded(
+          child: ListView.builder(
+            itemCount: controller.respondedrequest.length,
+            itemBuilder: (context, index) {
+              final request = controller.respondedrequest[index];
+
+              return manage_card(
+                request.hospitalName ?? "Unknown Hospital",
+                "${request.address}, ${request.city}, ${request.state}, ${request.pincode}",
+                formatDateRange(request.startDate?.toIso8601String(),
+                    request.endDate?.toIso8601String()),
+                request.shift ?? "N/A",
+                "${request.firstRange} - ${request.secondRange}",
                 "OPD Nurse",
-                "Dr denies Martine",
-                1,
-                55),
-            manage_card(
-                "Apollo international hospital",
-                "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                "22-24 Jan 2025 (Sat-Mon)",
-                "2:00 P.M - 10:00 P.M (Evening Shift)",
-                "100",
-                "OPD Nurse",
-                "Dr denies Martine",
-                2,
-                55),
-            manage_card(
-                "Apollo international hospital",
-                "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                "22-24 Jan 2025 (Sat-Mon)",
-                "2:00 P.M - 10:00 P.M (Evening Shift)",
-                "100",
-                "OPD Nurse",
-                "Dr denies Martine",
-                2,
-                55),
-            manage_card(
-                "Apollo international hospital",
-                "Parsik Hill Road, Cbd Belapur, Navi Mumbai Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                "22-24 Jan 2025 (Sat-Mon)",
-                "2:00 P.M - 10:00 P.M (Evening Shift)",
-                "100",
-                "OPD Nurse",
-                "Dr denies Martine",
-                1,
-                55)
-          ],
-        ),
-      ),
+                "Required data from Api",
+                request.bookingType!,
+                request.id ?? 0,
+              );
+            },
+          ),
+        );
+      }),
     );
   }
 
@@ -337,7 +320,8 @@ class ManageView extends GetView<ManageController> {
                       Get.to(RequestRaisedbymeDetails(),
                           binding: RequestDetailsBinding(id: id));
                     } else {
-                      Get.toNamed('/request-details');
+                      Get.to(RequestDetailsView(),
+                          binding: RequestDetailsBinding(id: id));
                     }
                   },
                   child: Text(

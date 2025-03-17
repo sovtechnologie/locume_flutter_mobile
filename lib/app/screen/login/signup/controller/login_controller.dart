@@ -165,6 +165,7 @@ class LoginController extends GetxController {
 
       // Extract the OTP value
       final otp = responseData['otp'];
+      otpcontroller.text = otp.toString();
       Get.snackbar(
         "OTP", // Title of the snackbar
         "Your OTP is: $otp", // Message to display in snackbar
@@ -202,6 +203,7 @@ class LoginController extends GetxController {
 
       // Extract the OTP value
       final otp = responseData['otp'];
+
       Get.snackbar(
         "OTP", // Title of the snackbar
         "Your OTP is: $otp", // Message to display in snackbar
@@ -302,6 +304,10 @@ class LoginController extends GetxController {
     final map = jsonDecode(response.body);
     Register res = Register.fromJson(map);
     if (res.status == 200) {
+      await Get.find<AuthProvider>().setUser(res);
+      await SessionManager().set('isloggedIn', true);
+      await SessionManager().set('ishint_viewd', true);
+      await SessionManager().set('token', res.token);
       Get.offAllNamed('/bottomnavigation');
     }
   }

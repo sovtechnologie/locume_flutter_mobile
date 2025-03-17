@@ -1,26 +1,28 @@
 // To parse this JSON data, do
 //
-//     final requestRaised = requestRaisedFromJson(jsonString);
+//     final requestRaisedDetails = requestRaisedDetailsFromJson(jsonString);
 
 import 'dart:convert';
 
-RequestRaised requestRaisedFromJson(String str) =>
-    RequestRaised.fromJson(json.decode(str));
+RequestRaisedDetails requestRaisedDetailsFromJson(String str) =>
+    RequestRaisedDetails.fromJson(json.decode(str));
 
-String requestRaisedToJson(RequestRaised data) => json.encode(data.toJson());
+String requestRaisedDetailsToJson(RequestRaisedDetails data) =>
+    json.encode(data.toJson());
 
-class RequestRaised {
+class RequestRaisedDetails {
   int? status;
   bool? message;
   List<Result>? result;
 
-  RequestRaised({
+  RequestRaisedDetails({
     this.status,
     this.message,
     this.result,
   });
 
-  factory RequestRaised.fromJson(Map<String, dynamic> json) => RequestRaised(
+  factory RequestRaisedDetails.fromJson(Map<String, dynamic> json) =>
+      RequestRaisedDetails(
         status: json["status"],
         message: json["message"],
         result: json["result"] == null
@@ -63,7 +65,7 @@ class Result {
   int? bookingStatus;
   int? hospitalClinicId;
   int? isHospitalOrClinic;
-  List<UserDatum>? userData;
+  List<dynamic>? userData;
 
   Result({
     this.clinicHospitalId,
@@ -131,8 +133,7 @@ class Result {
         isHospitalOrClinic: json["is_hospital_or_clinic"],
         userData: json["user_data"] == null
             ? []
-            : List<UserDatum>.from(
-                json["user_data"]!.map((x) => UserDatum.fromJson(x))),
+            : List<dynamic>.from(json["user_data"]!.map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -163,124 +164,7 @@ class Result {
         "booking_status": bookingStatus,
         "hospital_clinic_id": hospitalClinicId,
         "is_hospital_or_clinic": isHospitalOrClinic,
-        "user_data": userData == null
-            ? []
-            : List<dynamic>.from(userData!.map((x) => x.toJson())),
-      };
-}
-
-class UserDatum {
-  int? id;
-  String? firstName;
-  dynamic lastName;
-  String? gender;
-  dynamic availability;
-  dynamic medicalId;
-  String? location;
-  dynamic specialization;
-  dynamic hourlyRate;
-  int? otpVerificationId;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  dynamic totalExp;
-  dynamic idealNumber;
-  dynamic preferredSpecialities;
-  dynamic profileImage;
-  dynamic hospitalId;
-  dynamic clinicId;
-  dynamic emailId;
-  dynamic aboutMe;
-  String? customId;
-  dynamic category;
-  dynamic deviceToken;
-  String? state;
-  dynamic certificate;
-
-  UserDatum({
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.gender,
-    this.availability,
-    this.medicalId,
-    this.location,
-    this.specialization,
-    this.hourlyRate,
-    this.otpVerificationId,
-    this.createdAt,
-    this.updatedAt,
-    this.totalExp,
-    this.idealNumber,
-    this.preferredSpecialities,
-    this.profileImage,
-    this.hospitalId,
-    this.clinicId,
-    this.emailId,
-    this.aboutMe,
-    this.customId,
-    this.category,
-    this.deviceToken,
-    this.state,
-    this.certificate,
-  });
-
-  factory UserDatum.fromJson(Map<String, dynamic> json) => UserDatum(
-        id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        gender: json["gender"],
-        availability: json["availability"],
-        medicalId: json["medical_id"],
-        location: json["location"],
-        specialization: json["specialization"],
-        hourlyRate: json["hourly_rate"],
-        otpVerificationId: json["otp_verification_id"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
-        totalExp: json["total_exp"],
-        idealNumber: json["ideal_number"],
-        preferredSpecialities: json["preferred_specialities"],
-        profileImage: json["profile_image"],
-        hospitalId: json["hospital_id"],
-        clinicId: json["clinic_id"],
-        emailId: json["email_id"],
-        aboutMe: json["about_me"],
-        customId: json["custom_id"],
-        category: json["category"],
-        deviceToken: json["device_token"],
-        state: json["state"],
-        certificate: json["certificate"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "first_name": firstName,
-        "last_name": lastName,
-        "gender": gender,
-        "availability": availability,
-        "medical_id": medicalId,
-        "location": location,
-        "specialization": specialization,
-        "hourly_rate": hourlyRate,
-        "otp_verification_id": otpVerificationId,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-        "total_exp": totalExp,
-        "ideal_number": idealNumber,
-        "preferred_specialities": preferredSpecialities,
-        "profile_image": profileImage,
-        "hospital_id": hospitalId,
-        "clinic_id": clinicId,
-        "email_id": emailId,
-        "about_me": aboutMe,
-        "custom_id": customId,
-        "category": category,
-        "device_token": deviceToken,
-        "state": state,
-        "certificate": certificate,
+        "user_data":
+            userData == null ? [] : List<dynamic>.from(userData!.map((x) => x)),
       };
 }

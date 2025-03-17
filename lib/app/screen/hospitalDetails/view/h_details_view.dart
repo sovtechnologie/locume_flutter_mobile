@@ -315,14 +315,14 @@ class HDetailsView extends GetView<HDetailsController> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: smalldoctorcard(
-                                doctor["image"]!,
-                                doctor["name"]!,
-                                doctor["md"]!,
-                                doctor["work"]!,
-                                doctor["experience"]!,
-                                doctor["location"]!,
-                                doctor["id"]!,
-                              ),
+                                  doctor["image"]!,
+                                  doctor["name"]!,
+                                  doctor["md"]!,
+                                  doctor["work"]!,
+                                  doctor["experience"]!,
+                                  doctor["location"]!,
+                                  2,
+                                  0),
                             );
                           }).toList(),
                         ),

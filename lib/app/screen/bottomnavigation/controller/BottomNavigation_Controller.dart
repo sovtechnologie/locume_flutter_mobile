@@ -95,7 +95,7 @@ class BottomnavigationController extends GetxController {
       "shift": shift.value,
       "hospital_clinic_id": selectedid.value,
       "is_hospital_or_clinic": isHospitalorClinic.value,
-      "type": (selectedType.value == "Schedule") ? 1 : 0,
+      "type": (selectedType.value == "Schedule") ? 0 : 1,
       "startDate": startDate.value.text,
       "endDate": endDate.value.text
     });

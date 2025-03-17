@@ -5,10 +5,12 @@ import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:locume/app/screen/SpecialitiesLocum(DR)/binding/SpecialitiesLocum(DR)_binding.dart';
 import 'package:locume/app/screen/SpecialitiesLocum(DR)/view/SpecialitiesLocums(DR).dart';
 import 'package:locume/app/screen/hospitalDetails/binding/h_details_binding.dart';
 import 'package:locume/app/screen/hospitalDetails/view/h_details_view.dart';
+import 'package:locume/app/screen/requestLocumDetails/controller/request_details_controller.dart';
 
 import '../Theme/textTheme.dart';
 import '../Theme/theme.dart';
@@ -305,7 +307,7 @@ Widget reviewscard(String name, int Rating, String review, String date) {
 }
 
 Widget smalldoctorcard(String image, String name, String md, String work,
-    String experience, String location, String id,
+    String experience, String location, int id, int userId,
     [bool forRequest = false]) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -434,7 +436,10 @@ Widget smalldoctorcard(String image, String name, String md, String work,
                       // Accept Button (Green Border & Text)
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.find<RequestDetailsController>()
+                                .changeLocumStatus(id, userId, 1);
+                          },
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.green, // Text color
                             side: BorderSide(
@@ -453,7 +458,10 @@ Widget smalldoctorcard(String image, String name, String md, String work,
                       // Reject Button (Red Border & Text)
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.find<RequestDetailsController>()
+                                .changeLocumStatus(id, userId, 2);
+                          },
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.red, // Text color
                             side: BorderSide(
@@ -477,6 +485,27 @@ Widget smalldoctorcard(String image, String name, String md, String work,
       ),
     ),
   );
+}
+
+String formatDateRange(dynamic start, dynamic end) {
+  DateTime startDate = DateTime.parse(start);
+  DateTime endDate = DateTime.parse(end);
+
+  String startDay = DateFormat('d').format(startDate); // Day only
+  String startMonth = DateFormat('MMM').format(startDate); // Month
+  String startWeekday = DateFormat('EEE').format(startDate); // Weekday
+
+  String endDay = DateFormat('d').format(endDate); // Day only
+  String endMonth = DateFormat('MMM').format(endDate); // Month
+  String endWeekday = DateFormat('EEE').format(endDate); // Weekday
+
+  String year = DateFormat('yyyy').format(startDate); // Year
+
+  if (startMonth == endMonth) {
+    return "$startDay-$endDay $startMonth $year ($startWeekday-$endWeekday)";
+  } else {
+    return "$startDay $startMonth - $endDay $endMonth $year ($startWeekday-$endWeekday)";
+  }
 }
 
 hospitalcard(String image, String name, String location, String distance,

@@ -7,6 +7,8 @@ import 'package:hexcolor/hexcolor.dart';
 
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/requestLocum/view/req-locum-view.dart';
+import 'package:locume/app/screen/requestLocumDetails/binding/request_details_binding.dart';
+import 'package:locume/app/screen/requestLocumDetails/view/request_details_view.dart';
 
 import 'package:locume/widget/reusedwidget.dart';
 
@@ -53,134 +55,144 @@ class HomeView extends GetView<HomeControlller> {
                 const SizedBox(
                   height: 5,
                 ),
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 90, // Adjust height
-                    enlargeCenterPage: true,
-                    autoPlay: false,
-                    viewportFraction: 1,
-                    autoPlayInterval: const Duration(seconds: 10),
-                    onPageChanged: (index, reason) {
-                      controller.currentIndex.value = index;
-                      print(
-                          'Current index: ${controller.currentIndex.value}'); // Debug line
-                    },
-                  ),
-                  items: controller.carouselItems.map((item) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 4),
-                        decoration: BoxDecoration(
-                          // color: item["color"],
-                          color: HexColor('#FFFFFF'),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(15.0)),
-                          boxShadow: [
-                            BoxShadow(
-                                offset: const Offset(0, 0),
-                                color: HexColor('#1B4584').withOpacity(0.05),
-                                blurRadius: 4.0,
-                                spreadRadius: 4.0,
-                                blurStyle: BlurStyle.normal)
-                          ],
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return Center(
+                        child: CircularProgressIndicator()); // Show loader
+                  }
+
+                  if (controller.request_data.isEmpty) {
+                    return Center(
+                        child: Text(
+                            "No data available")); // Show message when empty
+                  }
+
+                  return Column(
+                    children: [
+                      CarouselSlider(
+                        options: CarouselOptions(
+                          height: 90,
+                          enlargeCenterPage: true,
+                          autoPlay: false,
+                          viewportFraction: 1,
+                          autoPlayInterval: Duration(seconds: 10),
+                          onPageChanged: (index, reason) {
+                            controller.currentIndex.value = index;
+                          },
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 9.0,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    item["text"],
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
+                        items: List.generate(
+                          controller.request_data.length,
+                          (index) {
+                            final item = controller.request_data[index];
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: 4.0),
+                              child: Container(
+                                width: double.infinity,
+                                margin: EdgeInsets.symmetric(horizontal: 4),
+                                decoration: BoxDecoration(
+                                  color: HexColor('#FFFFFF'),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.0)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(0, 0),
+                                      color:
+                                          HexColor('#1B4584').withOpacity(0.05),
+                                      blurRadius: 4.0,
+                                      spreadRadius: 4.0,
+                                      blurStyle: BlurStyle.normal,
                                     ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 9.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              item.hospitalName ?? 'No Name',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              Get.to(RequestDetailsView(),
+                                                  binding:
+                                                      RequestDetailsBinding(
+                                                          id: item.id));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'View Details ',
+                                                  style: TextStyle(
+                                                    fontSize: 8,
+                                                    color: secondaryColor,
+                                                  ),
+                                                ),
+                                                Icon(Icons.arrow_forward,
+                                                    size: 8,
+                                                    color: secondaryColor),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.calendar_month,
+                                              size: 12, color: textColor),
+                                          SizedBox(width: 4),
+                                          Expanded(
+                                            child: Text(
+                                              "${formatDateRange(item.startDate?.toIso8601String(), item.endDate?.toIso8601String())}  |  ${item.id}",
+                                              style: TextStyle(fontSize: 10.50),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          Icon(Icons.radio_button_checked,
+                                              color: HexColor("#C60808"),
+                                              size: 12),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  Spacer(),
-                                  InkWell(
-                                    onTap: () {
-                                      Get.toNamed('/request-details');
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'View Details ',
-                                          style: TextStyle(
-                                              fontSize: 8,
-                                              color: secondaryColor),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward,
-                                          size: 8,
-                                          color: secondaryColor,
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                ),
                               ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.calendar_month,
-                                      size: 12, color: textColor),
-                                  Text("  ${item["date"]}  |  ${item["price"]}",
-                                      style: TextStyle(fontSize: 10.50)),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.radio_button_checked,
-                                    color: HexColor("#C60808"),
-                                    size: 12,
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
+                            );
+                          },
                         ),
                       ),
-                    );
-                  }).toList(),
-                ),
 
-                // Dots Indicator
-                // Dots Indicator
-                SizedBox(height: 10),
-                Obx(() => Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(controller.carouselItems.length,
-                          (index) {
-                        return Container(
-                          width: 5,
-                          height: 5,
-                          margin: EdgeInsets.symmetric(horizontal: 2),
-                          child: controller.currentIndex.value == index
-                              ? SvgPicture.asset("assets/currentindex.svg")
-                              : SvgPicture.asset("assets/otherindex.svg"),
-                        );
-                        // Container(
-                        //   width:
-                        //       controller.currentIndex.value == index ? 12 : 8,
-                        //   height:
-                        //       controller.currentIndex.value == index ? 12 : 8,
-                        //   margin: EdgeInsets.symmetric(horizontal: 4),
-                        //   decoration: BoxDecoration(
-                        //     shape: BoxShape.circle,
-                        //     color: controller.currentIndex.value == index
-                        //         ? Colors.blue
-                        //         : Colors.grey,
-                        //   ),
-                        // );
-                      }),
-                    )),
+                      // Dots Indicator
+                      SizedBox(height: 10),
+                      Obx(() => Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                                controller.request_data.length, (index) {
+                              return Container(
+                                width: 5,
+                                height: 5,
+                                margin: EdgeInsets.symmetric(horizontal: 2),
+                                child: controller.currentIndex.value == index
+                                    ? SvgPicture.asset(
+                                        "assets/currentindex.svg")
+                                    : SvgPicture.asset("assets/otherindex.svg"),
+                              );
+                            }),
+                          )),
+                    ],
+                  );
+                }),
 
                 // space(double.maxFinite, 20.0),
                 // Container(
