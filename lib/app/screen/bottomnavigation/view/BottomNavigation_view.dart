@@ -10,6 +10,7 @@ import 'package:locume/app/screen/home/view/Home_view.dart';
 import 'package:locume/app/screen/hospitals/view/Hospital_view.dart';
 import 'package:locume/app/screen/locums/view/Locum_view.dart';
 import 'package:locume/app/screen/login/signup/model/category_model.dart' as c;
+import 'package:locume/app/screen/notification/view/notification_view.dart';
 import 'package:locume/app/screen/privacypolicy/view/Privacy_view.dart';
 import 'package:locume/app/screen/profile/view/Profile_view.dart';
 import 'package:locume/widget/custom_button.dart';
@@ -40,41 +41,42 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
               surfaceTintColor: Colors.white,
               elevation: 0,
               centerTitle: false,
-              leading: Builder(
-                builder: (context) => IconButton(
-                  icon: Icon(
-                    Icons.menu_rounded,
-                    color: HexColor('#0866C6'),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${controller.firstName}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: HexColor('#174666')),
                   ),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                ),
-              ),
-              title: Text(
-                'Hello, ${controller.firstName}',
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: HexColor('#174666')),
-              ),
-              actions: [
-                InkWell(
-                  onTap: () {
-                    Get.toNamed('/notification');
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Transform.translate(
-                      offset: const Offset(-15, 0),
-                      child: Icon(
-                        Icons.notifications_active_rounded,
-                        color: HexColor('#0866C6'),
-                      ),
-                    ),
+                  Text(
+                    'Good Moraning',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w200,
+                        fontSize: 12,
+                        color: HexColor('#174666')),
                   ),
-                ),
-              ],
+                ],
+              ),
+              // actions: [
+              //   InkWell(
+              //     onTap: () {
+              //       Get.toNamed('/notification');
+              //     },
+              //     child: Container(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Transform.translate(
+              //         offset: const Offset(-15, 0),
+              //         child: Icon(
+              //           Icons.notifications_active_rounded,
+              //           color: HexColor('#0866C6'),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ],
             ),
             // Conditionally show the Positioned widget if showBottom is true
             Obx(() {
@@ -94,130 +96,130 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
           ],
         ),
       ),
-      drawer: Drawer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Drawer Header with dynamic profile picture, name, and description
-            GestureDetector(
-              onTap: () {
-                controller.currentStep.value = 4;
-                print(controller.currentStep);
-                Navigator.pop(context);
-              },
-              child: DrawerHeader(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 40, // Size of the avatar
-                      backgroundColor: Colors.grey[200], // Default background
-                      backgroundImage: (controller.profileimage != null &&
-                              controller.profileimage.isNotEmpty)
-                          ? NetworkImage(controller.profileimage)
-                          : null, // If no image, set backgroundImage to null
-                      child: (controller.profileimage == null ||
-                              controller.profileimage.isEmpty)
-                          ? Icon(
-                              Icons.person,
-                              size: 30, // Icon size
-                              color: Colors.grey[600], // Icon color
-                            )
-                          : null, // If image is available, no child needed
-                    ),
+      // drawer: Drawer(
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.start,
+      //     children: [
+      //       // Drawer Header with dynamic profile picture, name, and description
+      //       GestureDetector(
+      //         onTap: () {
+      //           controller.currentStep.value = 4;
+      //           print(controller.currentStep);
+      //           Navigator.pop(context);
+      //         },
+      //         child: DrawerHeader(
+      //           child: Column(
+      //             crossAxisAlignment: CrossAxisAlignment.start,
+      //             children: [
+      //               CircleAvatar(
+      //                 radius: 40, // Size of the avatar
+      //                 backgroundColor: Colors.grey[200], // Default background
+      //                 backgroundImage: (controller.profileimage != null &&
+      //                         controller.profileimage.isNotEmpty)
+      //                     ? NetworkImage(controller.profileimage)
+      //                     : null, // If no image, set backgroundImage to null
+      //                 child: (controller.profileimage == null ||
+      //                         controller.profileimage.isEmpty)
+      //                     ? Icon(
+      //                         Icons.person,
+      //                         size: 30, // Icon size
+      //                         color: Colors.grey[600], // Icon color
+      //                       )
+      //                     : null, // If image is available, no child needed
+      //               ),
 
-                    // Spacing between avatar and text
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            '${controller.firstName}', // Replace with dynamic name
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                              height: 3), // Space between name and description
-                          Text(
-                            'MBBS, MD Medicine', // Replace with dynamic description
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color:
-                                  Colors.grey, // Optional color for description
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Divider(
-              color: Colors.grey[300],
-            ),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  ListTile(
-                    title: const Text('Manage'),
-                    onTap: () {
-                      Get.toNamed('/manage');
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('About us'),
-                    onTap: () {
-                      Get.to(const AboutUs());
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Contact us'),
-                    onTap: () {
-                      Get.to(const ContactUs());
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Privacy policy'),
-                    onTap: () {
-                      Get.toNamed('/privacy');
-                    },
-                  ),
-                  Divider(
-                    color: Colors.grey[300],
-                  ),
-                ],
-              ),
-            ),
-            // Logout button at the bottom of the drawer
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 45.0),
-              child: ListTile(
-                leading: const Icon(Icons.logout, color: Colors.redAccent),
-                title: const Text(
-                  'Logout',
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onTap: () async {
-                  await SessionManager().set('isloggedIn', false);
-                  Get.offAllNamed('/login');
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+      //               // Spacing between avatar and text
+      //               Expanded(
+      //                 child: Column(
+      //                   crossAxisAlignment: CrossAxisAlignment.start,
+      //                   mainAxisAlignment: MainAxisAlignment.center,
+      //                   children: [
+      //                     SizedBox(
+      //                       height: 5,
+      //                     ),
+      //                     Text(
+      //                       '${controller.firstName}', // Replace with dynamic name
+      //                       style: TextStyle(
+      //                         fontSize: 18,
+      //                         fontWeight: FontWeight.bold,
+      //                       ),
+      //                     ),
+      //                     SizedBox(
+      //                         height: 3), // Space between name and description
+      //                     Text(
+      //                       'MBBS, MD Medicine', // Replace with dynamic description
+      //                       style: TextStyle(
+      //                         fontSize: 14,
+      //                         fontWeight: FontWeight.w400,
+      //                         color:
+      //                             Colors.grey, // Optional color for description
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       ),
+      //       Divider(
+      //         color: Colors.grey[300],
+      //       ),
+      //       Expanded(
+      //         child: ListView(
+      //           padding: EdgeInsets.zero,
+      //           children: <Widget>[
+      //             ListTile(
+      //               title: const Text('Manage'),
+      //               onTap: () {
+      //                 Get.toNamed('/manage');
+      //               },
+      //             ),
+      //             ListTile(
+      //               title: const Text('About us'),
+      //               onTap: () {
+      //                 Get.to(const AboutUs());
+      //               },
+      //             ),
+      //             ListTile(
+      //               title: const Text('Contact us'),
+      //               onTap: () {
+      //                 Get.to(const ContactUs());
+      //               },
+      //             ),
+      //             ListTile(
+      //               title: const Text('Privacy policy'),
+      //               onTap: () {
+      //                 Get.toNamed('/privacy');
+      //               },
+      //             ),
+      //             Divider(
+      //               color: Colors.grey[300],
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //       // Logout button at the bottom of the drawer
+      //       Padding(
+      //         padding: const EdgeInsets.symmetric(vertical: 45.0),
+      //         child: ListTile(
+      //           leading: const Icon(Icons.logout, color: Colors.redAccent),
+      //           title: const Text(
+      //             'Logout',
+      //             style: TextStyle(
+      //               color: Colors.redAccent,
+      //               fontWeight: FontWeight.bold,
+      //             ),
+      //           ),
+      //           onTap: () async {
+      //             await SessionManager().set('isloggedIn', false);
+      //             Get.offAllNamed('/login');
+      //           },
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
       backgroundColor: Colors.white,
       body: Stack(
         children: [
@@ -232,7 +234,7 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                       HomeView(),
                       LocumView(),
                       ProfileView(),
-                      HospitalView(),
+                      NotificationView(),
                       ProfileView(),
                     ],
                   ),
@@ -841,11 +843,11 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                 ),
               ),
               TabItem(
-                icon: SvgPicture.asset('assets/doctor.svg', color: Colors.grey),
-                title: 'Locum',
+                icon: SvgPicture.asset('assets/manage.svg', color: Colors.grey),
+                title: 'Manage',
                 activeIcon: Transform.translate(
                   offset: Offset(0, -5),
-                  child: SvgPicture.asset('assets/doctor.svg',
+                  child: SvgPicture.asset('assets/manage.svg',
                       color: primaryColor),
                 ),
               ),
@@ -873,12 +875,12 @@ class BottomnavigationView extends GetView<BottomnavigationController> {
                 title: 'Add',
               ),
               TabItem(
-                icon:
-                    SvgPicture.asset('assets/hospital.svg', color: Colors.grey),
-                title: 'Clinic',
+                icon: Icon(Icons.notifications_active_rounded,
+                    color: Colors.grey),
+                title: 'Notification',
                 activeIcon: Transform.translate(
                   offset: Offset(0, -5),
-                  child: SvgPicture.asset('assets/hospital.svg',
+                  child: Icon(Icons.notifications_active_rounded,
                       color: primaryColor),
                 ),
               ),

@@ -1009,6 +1009,37 @@ messagenotifications(problem, solution) {
       overlayBlur: 20.0, overlayColor: Colors.white.withOpacity(0.7));
 }
 
+Widget cricleCard(String path, String value, String title, double size) {
+  return Column(
+    children: [
+      Container(
+        height: 60,
+        width: 60,
+        padding: EdgeInsets.all(size),
+        decoration:
+            BoxDecoration(shape: BoxShape.circle, color: HexColor("#EDF3FF")),
+        child: SvgPicture.asset(
+          path,
+          color: primaryColor,
+        ),
+      ),
+      const SizedBox(
+        height: 5,
+      ),
+      Text(
+        value,
+        style: TextStyle(
+            fontSize: 14, color: primaryColor, fontWeight: FontWeight.w600),
+      ),
+      Text(
+        title,
+        style: TextStyle(
+            fontSize: 13, color: secondaryColor, fontWeight: FontWeight.w400),
+      ),
+    ],
+  );
+}
+
 Widget buildSpecialityCard({
   required int id,
   required String imagePath,
@@ -1256,4 +1287,71 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
       ),
     );
   }
+}
+
+hospitalcard_v2(String image, String name, String location, String distance,
+    String numDoctor, String numSpeciality, String Rating, int id,
+    [bool isClinic = false]) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: InkWell(
+      onTap: () {
+        Get.to(HDetailsView(),
+            binding: HDetailsBinding(hospitalId: id, isClinic: isClinic));
+
+        print(id);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            color: primaryColor,
+            width: double.maxFinite,
+            padding: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(name,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: white)),
+                Text(
+                  "Multispeciality",
+                  style: TextStyle(color: white, fontSize: 12),
+                )
+              ],
+            ),
+          ),
+          Container(
+            width: double.maxFinite,
+            decoration: BoxDecoration(border: Border.all(color: borderColor)),
+            padding: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Hospital address:",
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: secondaryColor,
+                        fontWeight: FontWeight.w500)),
+                Text(
+                  location,
+                  style: TextStyle(fontSize: 13),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Monday - Friday 11:00 A.M - 7:00 P.M ",
+                  style: TextStyle(fontSize: 13),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

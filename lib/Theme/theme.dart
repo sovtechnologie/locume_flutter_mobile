@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 Color primaryColor = HexColor('#0866C6');
+Color borderColor = HexColor('#F2F2F2');
 Color white = HexColor('#FFFFFF');
 Color secondaryColor = HexColor('#1E5A84');
 Color hintTextColor = HexColor('#9A9A9A');
