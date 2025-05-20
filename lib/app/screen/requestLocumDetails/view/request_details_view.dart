@@ -1,3 +1,5 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -29,7 +31,7 @@ class RequestDetailsView extends GetView<RequestDetailsController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('OPD Nurse'),
+          title: Text('View Details'),
         ),
         body: Obx(() {
           if (controller.isLoding.value ||
@@ -43,61 +45,103 @@ class RequestDetailsView extends GetView<RequestDetailsController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Obx(() => CarouselSlider(
+                        items: controller.imageUrls.map((url) {
+                          return Container(
+                            width: double.infinity,
+                            child: Image.network(
+                              url.toString(),
+                              fit: BoxFit.fill,
+                            ),
+                          );
+                        }).toList(),
+                        options: CarouselOptions(
+                          height: 200,
+                          viewportFraction: 1.0,
+                          enableInfiniteScroll: false,
+                          onPageChanged: (index, reason) {
+                            controller.currentIndex.value = index;
+                          },
+                        ),
+                      )),
+                  const SizedBox(height: 10),
+                  Obx(() => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:
+                            List.generate(controller.imageUrls.length, (index) {
+                          final isActive =
+                              controller.currentIndex.value == index;
+                          return Container(
+                            width: 5,
+                            height: 5,
+                            margin: const EdgeInsets.symmetric(horizontal: 2),
+                            child: SvgPicture.asset(
+                              isActive
+                                  ? "assets/currentindex.svg"
+                                  : "assets/otherindex.svg",
+                              width: 5,
+                              height: 5,
+                            ),
+                          );
+                        }),
+                      )),
+                  SizedBox(height: 15),
+                  header("About Hospital"),
+                  Text(
+                      "A career as a doctor is a clinical professional that involves providing services in healthcare facilities. Individuals in the doctor's career path are responsible for diagnosing, examining, and identifying diseases, disorders, and illnesses of patients.",
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: HexColor('#333333')),
+                      softWrap: true,
+                      overflow: TextOverflow.visible),
+                  header("Hospital Address"),
+                  Text(
+                    "${data.address ?? "N/A"}, ${data.city ?? "N/A"}, ${data.state ?? "N/A"}, ${data.pincode ?? "N/A"}",
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: HexColor('#333333')),
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                  ),
+                  header("All Specialties"),
                   Container(
-                    decoration: BoxDecoration(),
-                    height: 200,
-                    width: double.maxFinite,
-                    child: Image.network(
-                      data.clinicHospitalImage ?? '',
-                      fit: BoxFit.fill,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          'assets/hospital.png', // Fallback asset image
-                          fit: BoxFit.fill,
+                    constraints: BoxConstraints(
+                        maxHeight:
+                            (controller.Speciality.length / 3).ceil() * 25),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: 5,
+                      ),
+                      itemCount: controller.Speciality.length,
+                      itemBuilder: (context, index) {
+                        return Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            controller.Speciality[index],
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: HexColor('#333333'),
+                            ),
+                          ),
                         );
                       },
                     ),
                   ),
-                  SizedBox(height: 15),
                   Text(
-                    data.clinicHospitalName ?? "N/A",
+                    "Date & Fees/hr",
                     style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                    ),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: primaryColor),
                   ),
-                  Text(
-                    "Multi super specialty hospital",
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.place,
-                        color: Colors.grey[600],
-                        size: 15,
-                      ),
-                      SizedBox(width: 5),
-                      Expanded(
-                        child: Text(
-                          "${data.address ?? "N/A"}, ${data.city ?? "N/A"}, ${data.state ?? "N/A"}, ${data.pincode ?? "N/A"}",
-                          style: TextStyle(
-                              fontSize: 10.50,
-                              fontWeight: FontWeight.w400,
-                              color: HexColor('#333333')),
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
+                  SizedBox(height: 5),
                   Row(
                     children: [
                       Icon(Icons.calendar_month,
@@ -105,115 +149,38 @@ class RequestDetailsView extends GetView<RequestDetailsController> {
                       Text(
                           "  ${formatDateRange(data.startDate?.toIso8601String(), data.endDate?.toIso8601String())}  |  ₹${data.firstRange} - ${data.secondRange}/hour",
                           style: TextStyle(
-                              fontSize: 10.50,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: HexColor('#333333'))),
                     ],
                   ),
-                  SizedBox(
-                    height: 8,
-                  ),
+                  header("Raised By"),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.schedule, size: 12, color: Colors.grey[600]),
-                      Text("  ${data.shift}",
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Dr. Akhil kumar",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: HexColor('#333333'))),
+                            Text("MBBS, MD, Cardiologist",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: HexColor('#333333'))),
+                          ],
+                        ),
+                      ),
+                      Text("View Details",
                           style: TextStyle(
-                              fontSize: 10.50,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: HexColor('#333333'))),
+                              color: primaryColor)),
                     ],
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset('assets/opd.svg',
-                          width: 12, height: 12, color: HexColor('#333333')),
-                      // Image.asset(
-                      //   'assets/opd.png',
-                      //   width: 10,
-                      //   height: 10,
-                      //   color: HexColor('#333333'),
-                      // ),
-
-                      Text("  OPD Nurse",
-                          style: TextStyle(
-                              fontSize: 10.50,
-                              fontWeight: FontWeight.w400,
-                              color: HexColor('#333333'))),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Doctors Applied For Role",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15,
-                        ),
-                      ),
-                      Spacer(),
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: primaryColor, width: 1), // Circle Border
-                        ),
-                        child: GestureDetector(
-                          onTap: scrollBackward,
-                          child: Icon(
-                            Icons.arrow_back_rounded,
-                            color: primaryColor,
-                            size: 18,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: primaryColor, width: 1), // Circle Border
-                        ),
-                        child: GestureDetector(
-                          onTap: scrollForward,
-                          child: Icon(
-                            Icons.arrow_forward_rounded,
-                            color: primaryColor,
-                            size: 18,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 15),
-                  SizedBox(
-                    height: 140,
-                    child: Obx(() => SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          controller: scrollController,
-                          child: Row(
-                            children: controller.doctorList.map((doctor) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: smalldoctorcard(
-                                    doctor["image"]!,
-                                    doctor["name"]!,
-                                    doctor["md"]!,
-                                    doctor["work"]!,
-                                    doctor["experience"]!,
-                                    doctor["location"]!,
-                                    2,
-                                    0),
-                              );
-                            }).toList(),
-                          ),
-                        )),
                   ),
                   SizedBox(
                     height: 25,

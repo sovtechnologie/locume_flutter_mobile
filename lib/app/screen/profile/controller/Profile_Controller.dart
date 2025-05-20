@@ -27,6 +27,7 @@ import 'package:locume/app/screen/profile/view/Add_clinic.dart';
 class ProfileController extends GetxController {
   Rx<List<allstate.Result?>> statedata = Rx<List<allstate.Result?>>([]);
   Rx<List<allcity.Result?>> citydata = Rx<List<allcity.Result?>>([]);
+  final RxSet<String> selectedOptions = <String>{}.obs;
 
   var index = 1.obs;
   var clinicNameError = "".obs;
@@ -60,7 +61,7 @@ class ProfileController extends GetxController {
   RxBool addHosiptial = false.obs;
   RxBool addClinic = false.obs;
   RxList selectedSpecialties = [].obs;
-  var selectedOptions = <String>[].obs;
+  // var selectedOptions = <String>[].obs;
   var searchQuery = ''.obs;
   // Stores multiple selected values
 
@@ -482,5 +483,36 @@ class ProfileController extends GetxController {
               .contains(query.toLowerCase()) ??
           false;
     }).toList();
+  }
+
+  final List<String> weekdays = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+
+  final List<String> timeSlots = ['M', 'A', 'E'];
+
+  bool isSlotSelectedForAllDays(String slot) {
+    // Check if all weekdays with this slot are selected
+    return weekdays.every((day) => selectedOptions.contains("${day}_$slot"));
+  }
+
+  void toggleSlotForAllDays(String slot) {
+    if (isSlotSelectedForAllDays(slot)) {
+      // Remove all for this slot
+      weekdays.forEach((day) {
+        selectedOptions.remove("${day}_$slot");
+      });
+    } else {
+      // Add all for this slot
+      weekdays.forEach((day) {
+        selectedOptions.add("${day}_$slot");
+      });
+    }
   }
 }

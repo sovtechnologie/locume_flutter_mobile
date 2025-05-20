@@ -68,7 +68,7 @@ class Addspecialities extends GetView<ProfileController> {
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
               child: CustomisableButton(
-                text: "Print Selected",
+                text: "Add",
                 onTap: () {
                   controller.editSpecialties(controller.selectedSpecialties);
                   print(

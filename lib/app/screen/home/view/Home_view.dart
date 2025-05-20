@@ -6,9 +6,11 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import 'package:locume/Theme/theme.dart';
+import 'package:locume/app/screen/manage/model/RequestRaised_model.dart';
 import 'package:locume/app/screen/requestLocum/view/req-locum-view.dart';
 import 'package:locume/app/screen/requestLocumDetails/binding/request_details_binding.dart';
 import 'package:locume/app/screen/requestLocumDetails/view/request_details_view.dart';
+import 'package:locume/app/screen/requestLocumDetails/view/request_raisedbyMe_details.dart';
 
 import 'package:locume/widget/reusedwidget.dart';
 
@@ -32,11 +34,106 @@ class HomeView extends GetView<HomeControlller> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
             child: Column(
               children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: borderColor),
+                    borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 70,
+                        height: 70,
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: primaryColor, width: 1.3),
+                        ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            SizedBox(
+                              width: 65,
+                              height: 65,
+                              child: CircularProgressIndicator(
+                                value: 0.6, // 60% progress
+                                strokeWidth: 5,
+                                backgroundColor: Colors.white,
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(primaryColor),
+                              ),
+                            ),
+                            ClipOval(
+                              child: Image.network(
+                                'https://locumedocument.s3.ap-south-1.amazonaws.com/1741586110601profile_image.jpg',
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      // Text
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "Dr. Christopher",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: HexColor("#5E5C65"),
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                Spacer(),
+                                Text("View Profile",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: primaryColor,
+                                        fontWeight: FontWeight.w500)),
+                              ],
+                            ),
+                            const SizedBox(height: 3),
+                            Row(
+                              children: [
+                                Text(
+                                  "12 pending actions",
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text("  (Updated 12 Days Ago)",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: HexColor("#ABAEBB"),
+                                        fontWeight: FontWeight.w400)),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 Row(
                   children: [
+                    Text("Request Raised",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor)),
                     Spacer(),
                     InkWell(
                       onTap: () {
@@ -47,7 +144,7 @@ class HomeView extends GetView<HomeControlller> {
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: HexColor('#1E5A84')),
+                            color: primaryColor),
                       ),
                     ),
                   ],
@@ -71,7 +168,7 @@ class HomeView extends GetView<HomeControlller> {
                     children: [
                       CarouselSlider(
                         options: CarouselOptions(
-                          height: 90,
+                          height: 100,
                           enlargeCenterPage: true,
                           autoPlay: false,
                           viewportFraction: 1,
@@ -93,16 +190,8 @@ class HomeView extends GetView<HomeControlller> {
                                   color: HexColor('#FFFFFF'),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15.0)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(0, 0),
-                                      color:
-                                          HexColor('#1B4584').withOpacity(0.05),
-                                      blurRadius: 4.0,
-                                      spreadRadius: 4.0,
-                                      blurStyle: BlurStyle.normal,
-                                    ),
-                                  ],
+                                  border:
+                                      Border.all(width: 1, color: borderColor),
                                 ),
                                 child: Padding(
                                   padding:
@@ -111,57 +200,90 @@ class HomeView extends GetView<HomeControlller> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Expanded(
-                                            child: Text(
-                                              item.hospitalName ?? 'No Name',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  item.hospitalName ??
+                                                      'No Name',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: primaryColor),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                Text(
+                                                  'Multispeciality',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: HexColor("#ABAEBB"),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                           InkWell(
                                             onTap: () {
-                                              Get.to(RequestDetailsView(),
+                                              Get.to(RequestRaisedbymeDetails(),
                                                   binding:
                                                       RequestDetailsBinding(
                                                           id: item.id));
                                             },
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  'View Details ',
-                                                  style: TextStyle(
-                                                    fontSize: 8,
-                                                    color: secondaryColor,
-                                                  ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 5.0),
+                                              child: Text(
+                                                'View Details',
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: primaryColor,
                                                 ),
-                                                Icon(Icons.arrow_forward,
-                                                    size: 8,
-                                                    color: secondaryColor),
-                                              ],
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 10),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: [
                                           Icon(Icons.calendar_month,
-                                              size: 12, color: textColor),
+                                              size: 14, color: textColor),
                                           SizedBox(width: 4),
                                           Expanded(
                                             child: Text(
-                                              "${formatDateRange(item.startDate?.toIso8601String(), item.endDate?.toIso8601String())}  |  ${item.id}",
-                                              style: TextStyle(fontSize: 10.50),
+                                              "${formatDateRange(item.startDate?.toIso8601String(), item.endDate?.toIso8601String())}  |  ₹${item.id}Per Hour",
+                                              style: TextStyle(fontSize: 12),
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
-                                          Icon(Icons.radio_button_checked,
-                                              color: HexColor("#C60808"),
-                                              size: 12),
+                                        ],
+                                      ),
+                                      SizedBox(height: 2),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Hot Requirement     (Raised By Dr.Christopher)',
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: HexColor("#ABAEBB"),
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          Text(
+                                            '2 Days Ago',
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: HexColor("#ABAEBB"),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -172,9 +294,6 @@ class HomeView extends GetView<HomeControlller> {
                           },
                         ),
                       ),
-
-                      // Dots Indicator
-                      SizedBox(height: 10),
                       Obx(() => Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: List.generate(
@@ -193,6 +312,42 @@ class HomeView extends GetView<HomeControlller> {
                     ],
                   );
                 }),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Text("Request Received",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor)),
+                    Spacer(),
+                    InkWell(
+                      onTap: () {
+                        Get.to(RequestLocumView());
+                      },
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: primaryColor),
+                      ),
+                    ),
+                  ],
+                ),
+
+                manage_card("Apollo international hospital",
+                    "22-24 Jan 2025 (Sat-Mon)", "100", 20),
+                manage_card("Apollo international hospital",
+                    "22-24 Jan 2025 (Sat-Mon)", "100", 1),
+                manage_card("Apollo international hospital",
+                    "22-24 Jan 2025 (Sat-Mon)", "100", 1),
+                manage_card("Apollo international hospital",
+                    "22-24 Jan 2025 (Sat-Mon)", "100", 1),
+                manage_card("Apollo international hospital",
+                    "22-24 Jan 2025 (Sat-Mon)", "100", 1)
 
                 // space(double.maxFinite, 20.0),
                 // Container(
@@ -249,277 +404,278 @@ class HomeView extends GetView<HomeControlller> {
                 //     ),
                 //   ),
                 // ),
-                space(double.maxFinite, 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Top Specialties',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: HexColor('#0866C6')),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.toNamed('/specialities');
-                      },
-                      child: Text(
-                        'View All',
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: HexColor('#1E5A84')),
-                      ),
-                    ),
-                  ],
-                ),
-                space(double.maxFinite, 10.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: specialcard(
-                            'assets/type1.svg', 'Anesthesiology', 1)),
-                    space(20.0, 0.0),
-                    Expanded(
-                        child:
-                            specialcard('assets/type2.svg', 'Cardiology', 2)),
-                    space(20.0, 0.0),
-                    Expanded(
-                        child:
-                            specialcard('assets/type3.svg', 'Dermatology', 4)),
-                    space(20.0, 0.0),
-                    Expanded(
-                        child: specialcard(
-                            'assets/type4.svg', 'Emergency medicine', 5)),
-                  ],
-                ),
-                space(double.maxFinite, 30.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: specialcard(
-                            'assets/type4.svg', 'Endocrinology', 6)),
-                    space(20.0, 0.0),
-                    Expanded(
-                        child: specialcard(
-                            'assets/type6.svg', 'Gastroenterology', 7)),
-                    space(20.0, 0.0),
-                    Expanded(
-                        child: specialcard(
-                            'assets/type7.svg', 'Hospital Medicine', 8)),
-                    space(20.0, 0.0),
-                    Expanded(
-                        child: specialcard(
-                            'assets/type8.svg', 'Medical Oncology', 9)),
-                  ],
-                ),
-                space(double.maxFinite, 30.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Top Locum',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: HexColor('#0866C6')),
-                    ),
-                    Text(
-                      'View All',
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: HexColor('#1E5A84')),
-                    ),
-                  ],
-                ),
-                space(double.maxFinite, 10.0),
-                Obx(() => controller.data.value.isEmpty
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: (controller.data.value.length > 4
-                                  ? 4
-                                  : controller.data.value.length) *
-                              160, // Dynamic height
-                        ),
-                        child: ListView.builder(
-                          shrinkWrap: true, // Prevents infinite expansion
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: controller.data.value.length > 4
-                              ? 4
-                              : controller.data.value.length,
-                          itemBuilder: (context, index) {
-                            final doctor = controller.data.value[index];
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  8.0, 0.0, 8.0, 16.0),
-                              child: doctorcard(
-                                doctor.profileImage ??
-                                    "https://locumedocument.s3.ap-south-1.amazonaws.com/Screenshot%202024-06-05%20144331.png",
-                                '${doctor.firstName ?? ''} ${doctor.lastName ?? ''}',
-                                doctor.medicalId?.toString() ?? '',
-                                doctor.aboutMe?.toString() ??
-                                    'No details provided',
-                                doctor.totalExp?.toString() ?? '0',
-                                doctor.location ?? 'Not specified',
-                                doctor.customId ?? '0',
-                              ),
-                            );
-                          },
-                        ),
-                      )),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Top Hospital',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: HexColor('#0866C6')),
-                    ),
-                    Text(
-                      'View All',
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: HexColor('#1E5A84')),
-                    ),
-                  ],
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      hospitalcard(
-                          'assets/hospital1.png',
-                          'Apollo international hospital',
-                          'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
-                          '5km away from your location',
-                          '23',
-                          '13',
-                          '4.5',
-                          80),
-                      space(15.0, 0.0),
-                      hospitalcard(
-                          'assets/hospital1.png',
-                          'Apollo international hospital',
-                          'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
-                          '5km away from your location',
-                          '23',
-                          '13',
-                          '4.5',
-                          80),
-                      space(15.0, 0.0),
-                      hospitalcard(
-                          'assets/hospital1.png',
-                          'Apollo international hospital',
-                          'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
-                          '5km away from your location',
-                          '23',
-                          '13',
-                          '4.5',
-                          80),
-                      space(15.0, 0.0),
-                      hospitalcard(
-                          'assets/hospital1.png',
-                          'Apollo international hospital',
-                          'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
-                          '5km away from your location',
-                          '23',
-                          '13',
-                          '4.5',
-                          80),
-                    ],
-                  ),
-                ),
-                space(double.maxFinite, 35.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Top Clinic',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: HexColor('#0866C6')),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.toNamed('/clinics');
-                      },
-                      child: Text(
-                        'View All',
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: HexColor('#1E5A84')),
-                      ),
-                    ),
-                  ],
-                ),
-                space(double.maxFinite, 10.0),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      hospitalcard(
-                          'assets/hospital1.png',
-                          'Apollo international hospital',
-                          'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
-                          '5km away from your location',
-                          '23',
-                          '13',
-                          '4.5',
-                          80),
-                      space(15.0, 0.0),
-                      hospitalcard(
-                          'assets/hospital1.png',
-                          'Apollo international hospital',
-                          'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
-                          '5km away from your location',
-                          '23',
-                          '13',
-                          '4.5',
-                          80),
-                      space(15.0, 0.0),
-                      hospitalcard(
-                          'assets/hospital1.png',
-                          'Apollo international hospital',
-                          'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
-                          '5km away from your location',
-                          '23',
-                          '13',
-                          '4.5',
-                          80),
-                      space(15.0, 0.0),
-                      hospitalcard(
-                          'assets/hospital1.png',
-                          'Apollo international hospital',
-                          'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
-                          '5km away from your location',
-                          '23',
-                          '13',
-                          '4.5',
-                          80),
-                    ],
-                  ),
-                )
+                // space(double.maxFinite, 20.0),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Top Specialties',
+                //       style: TextStyle(
+                //           fontSize: 15,
+                //           fontWeight: FontWeight.w600,
+                //           color: HexColor('#0866C6')),
+                //     ),
+                //     InkWell(
+                //       onTap: () {
+                //         Get.toNamed('/specialities');
+                //       },
+                //       child: Text(
+                //         'View All',
+                //         style: TextStyle(
+                //             fontSize: 12,
+                //             fontWeight: FontWeight.w500,
+                //             color: HexColor('#1E5A84')),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // space(double.maxFinite, 10.0),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     Expanded(
+                //         child: specialcard(
+                //             'assets/type1.svg', 'Anesthesiology', 1)),
+                //     space(20.0, 0.0),
+                //     Expanded(
+                //         child:
+                //             specialcard('assets/type2.svg', 'Cardiology', 2)),
+                //     space(20.0, 0.0),
+                //     Expanded(
+                //         child:
+                //             specialcard('assets/type3.svg', 'Dermatology', 4)),
+                //     space(20.0, 0.0),
+                //     Expanded(
+                //         child: specialcard(
+                //             'assets/type4.svg', 'Emergency medicine', 5)),
+                //   ],
+                // ),
+                // space(double.maxFinite, 30.0),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     Expanded(
+                //         child: specialcard(
+                //             'assets/type4.svg', 'Endocrinology', 6)),
+                //     space(20.0, 0.0),
+                //     Expanded(
+                //         child: specialcard(
+                //             'assets/type6.svg', 'Gastroenterology', 7)),
+                //     space(20.0, 0.0),
+                //     Expanded(
+                //         child: specialcard(
+                //             'assets/type7.svg', 'Hospital Medicine', 8)),
+                //     space(20.0, 0.0),
+                //     Expanded(
+                //         child: specialcard(
+                //             'assets/type8.svg', 'Medical Oncology', 9)),
+                //   ],
+                // ),
+                // space(double.maxFinite, 30.0),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Top Locum',
+                //       style: TextStyle(
+                //           fontSize: 15,
+                //           fontWeight: FontWeight.w600,
+                //           color: HexColor('#0866C6')),
+                //     ),
+                //     Text(
+                //       'View All',
+                //       style: TextStyle(
+                //           fontSize: 12,
+                //           fontWeight: FontWeight.w500,
+                //           color: HexColor('#1E5A84')),
+                //     ),
+                //   ],
+                // ),
+                // space(double.maxFinite, 10.0),
+                // Obx(() => controller.data.value.isEmpty
+                //     ? const Center(
+                //         child: CircularProgressIndicator(),
+                //       )
+                //     : ConstrainedBox(
+                //         constraints: BoxConstraints(
+                //           maxHeight: (controller.data.value.length > 4
+                //                   ? 4
+                //                   : controller.data.value.length) *
+                //               160, // Dynamic height
+                //         ),
+                //         child: ListView.builder(
+                //           shrinkWrap: true, // Prevents infinite expansion
+                //           physics: const NeverScrollableScrollPhysics(),
+                //           itemCount: controller.data.value.length > 4
+                //               ? 4
+                //               : controller.data.value.length,
+                //           itemBuilder: (context, index) {
+                //             final doctor = controller.data.value[index];
+                //             return Padding(
+                //               padding: const EdgeInsets.fromLTRB(
+                //                   8.0, 0.0, 8.0, 16.0),
+                //               child: doctorcard(
+                //                 context,
+                //                 doctor.profileImage ??
+                //                     "https://locumedocument.s3.ap-south-1.amazonaws.com/Screenshot%202024-06-05%20144331.png",
+                //                 '${doctor.firstName ?? ''} ${doctor.lastName ?? ''}',
+                //                 doctor.medicalId?.toString() ?? '',
+                //                 doctor.aboutMe?.toString() ??
+                //                     'No details provided',
+                //                 doctor.totalExp?.toString() ?? '0',
+                //                 doctor.location ?? 'Not specified',
+                //                 doctor.customId ?? '0',
+                //               ),
+                //             );
+                //           },
+                //         ),
+                //       )),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Top Hospital',
+                //       style: TextStyle(
+                //           fontSize: 15,
+                //           fontWeight: FontWeight.w600,
+                //           color: HexColor('#0866C6')),
+                //     ),
+                //     Text(
+                //       'View All',
+                //       style: TextStyle(
+                //           fontSize: 12,
+                //           fontWeight: FontWeight.w500,
+                //           color: HexColor('#1E5A84')),
+                //     ),
+                //   ],
+                // ),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(
+                //     children: [
+                //       hospitalcard(
+                //           'assets/hospital1.png',
+                //           'Apollo international hospital',
+                //           'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
+                //           '5km away from your location',
+                //           '23',
+                //           '13',
+                //           '4.5',
+                //           80),
+                //       space(15.0, 0.0),
+                //       hospitalcard(
+                //           'assets/hospital1.png',
+                //           'Apollo international hospital',
+                //           'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
+                //           '5km away from your location',
+                //           '23',
+                //           '13',
+                //           '4.5',
+                //           80),
+                //       space(15.0, 0.0),
+                //       hospitalcard(
+                //           'assets/hospital1.png',
+                //           'Apollo international hospital',
+                //           'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
+                //           '5km away from your location',
+                //           '23',
+                //           '13',
+                //           '4.5',
+                //           80),
+                //       space(15.0, 0.0),
+                //       hospitalcard(
+                //           'assets/hospital1.png',
+                //           'Apollo international hospital',
+                //           'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
+                //           '5km away from your location',
+                //           '23',
+                //           '13',
+                //           '4.5',
+                //           80),
+                //     ],
+                //   ),
+                // ),
+                // space(double.maxFinite, 35.0),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Top Clinic',
+                //       style: TextStyle(
+                //           fontSize: 15,
+                //           fontWeight: FontWeight.w600,
+                //           color: HexColor('#0866C6')),
+                //     ),
+                //     InkWell(
+                //       onTap: () {
+                //         Get.toNamed('/clinics');
+                //       },
+                //       child: Text(
+                //         'View All',
+                //         style: TextStyle(
+                //             fontSize: 12,
+                //             fontWeight: FontWeight.w500,
+                //             color: HexColor('#1E5A84')),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // space(double.maxFinite, 10.0),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(
+                //     children: [
+                //       hospitalcard(
+                //           'assets/hospital1.png',
+                //           'Apollo international hospital',
+                //           'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
+                //           '5km away from your location',
+                //           '23',
+                //           '13',
+                //           '4.5',
+                //           80),
+                //       space(15.0, 0.0),
+                //       hospitalcard(
+                //           'assets/hospital1.png',
+                //           'Apollo international hospital',
+                //           'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
+                //           '5km away from your location',
+                //           '23',
+                //           '13',
+                //           '4.5',
+                //           80),
+                //       space(15.0, 0.0),
+                //       hospitalcard(
+                //           'assets/hospital1.png',
+                //           'Apollo international hospital',
+                //           'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
+                //           '5km away from your location',
+                //           '23',
+                //           '13',
+                //           '4.5',
+                //           80),
+                //       space(15.0, 0.0),
+                //       hospitalcard(
+                //           'assets/hospital1.png',
+                //           'Apollo international hospital',
+                //           'Parsik Hill Road, Cbd Belapur, Navi Mumbai',
+                //           '5km away from your location',
+                //           '23',
+                //           '13',
+                //           '4.5',
+                //           80),
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ),

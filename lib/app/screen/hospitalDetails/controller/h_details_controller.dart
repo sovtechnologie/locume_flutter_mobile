@@ -23,6 +23,13 @@ class HDetailsController extends GetxController {
     }
   }
 
+  RxInt currentIndex = 0.obs;
+
+  RxList<String> imageUrls = <String>[
+    'https://locumedocument.s3.ap-south-1.amazonaws.com/1741586110601Hospital.jpg',
+    'https://locumedocument.s3.ap-south-1.amazonaws.com/1741586110601Hospital.jpg',
+    'https://locumedocument.s3.ap-south-1.amazonaws.com/1741586110601Hospital.jpg',
+  ].obs;
   var doctorList = <Map<String, String>>[
     {
       "image":

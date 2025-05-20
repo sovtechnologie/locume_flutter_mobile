@@ -10,7 +10,11 @@ import 'package:locume/app/screen/SpecialitiesLocum(DR)/binding/SpecialitiesLocu
 import 'package:locume/app/screen/SpecialitiesLocum(DR)/view/SpecialitiesLocums(DR).dart';
 import 'package:locume/app/screen/hospitalDetails/binding/h_details_binding.dart';
 import 'package:locume/app/screen/hospitalDetails/view/h_details_view.dart';
+import 'package:locume/app/screen/requestLocumDetails/binding/request_details_binding.dart';
 import 'package:locume/app/screen/requestLocumDetails/controller/request_details_controller.dart';
+import 'package:locume/app/screen/requestLocumDetails/view/request_details_view.dart';
+import 'package:locume/app/screen/requestLocumDetails/view/request_raisedbyMe_details.dart';
+import 'package:locume/widget/a&c_button.dart';
 
 import '../Theme/textTheme.dart';
 import '../Theme/theme.dart';
@@ -77,8 +81,8 @@ specialcard(String svg, String title, int id) {
   );
 }
 
-doctorcard(String image, String name, String md, String work, String exprience,
-    String location, String id) {
+doctorcard(BuildContext context, String image, String name, String md,
+    String work, String exprience, String location, String id) {
   return InkWell(
     onTap: () {
       Get.toNamed('/dr-profile', arguments: id);
@@ -86,27 +90,21 @@ doctorcard(String image, String name, String md, String work, String exprience,
     },
     child: Container(
       width: double.maxFinite,
+      height: 125,
       // width: double.maxFinite,
       decoration: BoxDecoration(
         color: HexColor('#FFFFFF'),
-        boxShadow: [
-          BoxShadow(
-              offset: const Offset(0, 2),
-              color: HexColor('#326295').withOpacity(0.15),
-              blurRadius: 8.0,
-              spreadRadius: 1,
-              blurStyle: BlurStyle.normal)
-        ],
+        border: Border.all(color: borderColor, width: 1),
         borderRadius: const BorderRadius.all(Radius.circular(15.0)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(12.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 120,
+              height: 110,
               width: 100,
               child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
@@ -117,7 +115,7 @@ doctorcard(String image, String name, String md, String work, String exprience,
                     errorBuilder: (context, error, stackTrace) {
                       return Image.asset(
                         'assets/doctor-icon.jpg',
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ); // Fallback widget
                     },
                     loadingBuilder: (context, child, loadingProgress) {
@@ -140,78 +138,54 @@ doctorcard(String image, String name, String md, String work, String exprience,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                space(10.0, 0.0),
+                space(0.0, 3.0),
                 Text(
                   name,
                   overflow: TextOverflow.visible,
                   softWrap: true,
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: HexColor('#326295')),
+                    fontSize: 18,
+                    color: primaryColor,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                space(0.0, 5.0),
+                Container(
+                  height: 1,
+                  width: MediaQuery.of(context).size.width * 0.49,
+                  color: borderColor,
+                ),
+                Spacer(),
                 Text(
                   md,
                   overflow: TextOverflow.visible,
                   softWrap: true,
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                      color: HexColor('#326295')),
+                    fontSize: 12,
+                    color: secondaryColor,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-                space(0.0, 5.0),
+                const SizedBox(
+                  height: 3,
+                ),
                 Text(
-                  work,
-                  overflow: TextOverflow.visible,
-                  softWrap: true,
+                  "Apollo hospital, thane west",
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 10,
-                      color: HexColor("#333333")),
+                    fontSize: 12,
+                    color: secondaryColor,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-                space(0.0, 5.0),
+                const SizedBox(
+                  height: 3,
+                ),
                 Text(
-                  '$exprience year experience',
-                  overflow: TextOverflow.visible,
-                  softWrap: true,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 10,
-                      color: HexColor("#333333")),
-                ),
-                space(0.0, 5.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      child: Icon(
-                        Icons.location_on_sharp,
-                        size: 10,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    space(5.0, 0.0),
-                    Text(
-                      location,
-                      overflow: TextOverflow.visible,
-                      softWrap: true,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 10,
-                          color: HexColor('#333333')),
-                    ),
-                  ],
-                ),
-                space(0.0, 5.0),
-                Text(
-                  'View Details',
+                  'View Profile',
                   overflow: TextOverflow.visible,
                   softWrap: true,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 12,
+                      fontSize: 10,
                       color: HexColor('#0866C6')),
                 ),
               ],
@@ -316,7 +290,6 @@ Widget smalldoctorcard(String image, String name, String md, String work,
         Get.toNamed('/dr-profile', arguments: id);
       },
       child: Container(
-        width: 300,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
@@ -506,6 +479,248 @@ String formatDateRange(dynamic start, dynamic end) {
   } else {
     return "$startDay $startMonth - $endDay $endMonth $year ($startWeekday-$endWeekday)";
   }
+}
+
+Widget manage_card(String title, String date, String price, int id,
+    [bool isRequestRaised = false]) {
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: 4.0),
+    child: Container(
+      width: double.infinity,
+      // height: 200,
+      margin: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+      decoration: BoxDecoration(
+        color: HexColor('#FFFFFF'),
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        border: Border.all(width: 1, color: borderColor),
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 9, right: 9, top: 9),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            overflow:
+                                TextOverflow.visible, // Ensure full visibility
+                            softWrap: false, // Keep it in one line
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                                color: primaryColor),
+                          ),
+                          Text(
+                            'Multispeciality',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: HexColor("#ABAEBB"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (isRequestRaised == true) {
+                          Get.to(RequestRaisedbymeDetails(),
+                              binding: RequestDetailsBinding(id: id));
+                        } else {
+                          Get.to(RequestDetailsView(),
+                              binding: RequestDetailsBinding(id: id));
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        child: Text(
+                          'View Details',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: primaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.calendar_month, size: 14, color: textColor),
+                    SizedBox(width: 4),
+                    Expanded(
+                      child: Text("$date  |  ₹$price Per hour",
+                          style: TextStyle(
+                            fontSize: 12,
+                          )),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 2),
+                Row(
+                  children: [
+                    Text(
+                      'Hot Requirement     (Raised By Dr.Christopher)',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: HexColor("#ABAEBB"),
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      '2 Days Ago',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: HexColor("#ABAEBB"),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+
+                // SizedBox(
+                //   height: 8,
+                // ),
+                // Row(
+                //   children: [
+                //     Icon(Icons.schedule, size: 12, color: Colors.grey[600]),
+                //     Text("  $time",
+                //         style: TextStyle(
+                //             fontSize: 10.50,
+                //             fontWeight: FontWeight.w400,
+                //             color: HexColor('#333333'))),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: 8,
+                // ),
+                // Row(
+                //   children: [
+                //     SvgPicture.asset('assets/opd.svg',
+                //         width: 12, height: 12, color: HexColor('#333333')),
+                //     Text("  $role",
+                //         style: TextStyle(
+                //             fontSize: 10.50,
+                //             fontWeight: FontWeight.w400,
+                //             color: HexColor('#333333'))),
+                //   ],
+                // ),
+                // if (accpetedby.isNotEmpty)
+                //   SizedBox(
+                //     height: 8,
+                //   ),
+                // if (accpetedby.isNotEmpty)
+                //   Row(
+                //     children: [
+                //       SvgPicture.asset('assets/opd.svg',
+                //           width: 12, height: 12, color: HexColor('#333333')),
+                //       Text("  Accepted By $accpetedby",
+                //           style: TextStyle(
+                //               fontSize: 10.50,
+                //               fontWeight: FontWeight.w400,
+                //               color: HexColor('#333333'))),
+                //     ],
+                //   ),
+                // SizedBox(
+                //   height: 12,
+                // ),
+                // SizedBox(
+                //   height: 22,
+                //   child: ElevatedButton(
+                //     style: ElevatedButton.styleFrom(
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(4),
+                //       ),
+                //       padding: EdgeInsets.symmetric(horizontal: 8),
+                //     ),
+                //     onPressed: () {
+                //       if (isRequestRaised == true) {
+                //         Get.to(RequestRaisedbymeDetails(),
+                //             binding: RequestDetailsBinding(id: id));
+                //       } else {
+                //         Get.to(RequestDetailsView(),
+                //             binding: RequestDetailsBinding(id: id));
+                //       }
+                //     },
+                //     child: Text(
+                //       "View Details",
+                //       style: TextStyle(
+                //         fontSize: 10,
+                //         fontWeight: FontWeight.w500,
+                //       ),
+                //     ),
+                //   ),
+                // )
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Material(
+                  color: primaryColor,
+                  borderRadius:
+                      const BorderRadius.only(bottomLeft: Radius.circular(15)),
+                  child: InkWell(
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(15)),
+                    onTap: () {
+                      // your logic
+                    },
+                    child: Container(
+                      height: 40,
+                      child: const Center(
+                        child: Text(
+                          "Accept ",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 1, height: 40),
+              Expanded(
+                child: Material(
+                  color: primaryColor,
+                  borderRadius:
+                      const BorderRadius.only(bottomRight: Radius.circular(15)),
+                  child: InkWell(
+                    borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(15)),
+                    onTap: () {
+                      // your logic
+                    },
+                    child: Container(
+                      height: 40,
+                      child: const Center(
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    ),
+  );
 }
 
 hospitalcard(String image, String name, String location, String distance,
@@ -937,6 +1152,17 @@ Widget hospitalfullcard(String image, String name, String hospitalspecialty,
   );
 }
 
+Widget header(String text) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 5.0, top: 15),
+    child: Text(
+      text,
+      style: TextStyle(
+          fontWeight: FontWeight.w500, fontSize: 16, color: primaryColor),
+    ),
+  );
+}
+
 policy(String title, String body) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
@@ -978,28 +1204,64 @@ Widget mytextfield(String hint, TextEditingController controller,
       controller: controller,
       keyboardType: isNum ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: HexColor("#F8F7F7"),
         hintText: hint,
         contentPadding:
             EdgeInsets.symmetric(vertical: 5, horizontal: 12), // Adjust padding
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20), // Rounded corners
+          borderRadius: BorderRadius.circular(10), // Rounded corners
           borderSide: BorderSide(
-              color: const Color.fromARGB(124, 175, 175, 175),
-              width: 1), // Gray when disabled
+              color: HexColor("#DCD7D7"), width: 1), // Gray when disabled
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20), // Rounded corners
+          borderRadius: BorderRadius.circular(10), // Rounded corners
           borderSide:
               BorderSide(color: primaryColor, width: 1), // Blue when enabled
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20), // Rounded corners
+          borderRadius: BorderRadius.circular(10), // Rounded corners
           borderSide: BorderSide(
               color: Color.fromARGB(124, 175, 175, 175),
               width: 1), // Default border
         ),
       ),
       style: TextStyle(fontSize: 14), // Adjust text size if needed
+    ),
+  );
+}
+
+Widget mybigtextfield(String hint, TextEditingController controller,
+    [isNum = false]) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5.0),
+    child: TextField(
+      controller: controller,
+      keyboardType: isNum ? TextInputType.number : TextInputType.text,
+      maxLines: 4, // Allows multiline input (adjust as needed)
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: HexColor("#F8F7F7"),
+        hintText: hint,
+        alignLabelWithHint: true, // Ensures hint aligns to the top
+        contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12), // Adjust padding
+        floatingLabelBehavior:
+            FloatingLabelBehavior.always, // Keeps hint visible
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: HexColor("#DCD7D7"), width: 1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: primaryColor, width: 1),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide:
+              BorderSide(color: Color.fromARGB(124, 175, 175, 175), width: 1),
+        ),
+      ),
+      style: TextStyle(fontSize: 14),
     ),
   );
 }
@@ -1262,18 +1524,20 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
             controller: widget.controller,
             onChanged: _filterOptions,
             decoration: InputDecoration(
+              filled: true,
+              fillColor: HexColor("#F8F7F7"),
               hintText: widget.hint,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(124, 175, 175, 175),
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: HexColor("#DCD7D7"),
                   width: 1,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: primaryColor, width: 1),
               ),
               suffixIcon: InkWell(
@@ -1287,6 +1551,145 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
       ),
     );
   }
+}
+
+ReqRaisedCard() {
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: 4.0),
+    child: Container(
+      width: double.infinity,
+      // height: 200,
+      margin: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+      decoration: BoxDecoration(
+        color: HexColor('#FFFFFF'),
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        border: Border.all(width: 1, color: borderColor),
+      ),
+      child: Column(
+        children: [
+          Padding(
+              padding:
+                  const EdgeInsets.only(left: 9, right: 9, top: 9, bottom: 9),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 90,
+                    width: 80,
+                    child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                        child: Image.network(
+                          "https://locumedocument.s3.ap-south-1.amazonaws.com/1741586110601Hospital.jpg",
+                          fit: BoxFit
+                              .fill, // Image.asset('assets/logo.png',width: 120,),
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/doctor-icon.jpg',
+                              fit: BoxFit.fill,
+                            ); // Fallback widget
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child; // When loading is complete
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null, // Show progress indicator
+                              ),
+                            );
+                          },
+                        )),
+                  ),
+                  space(10.0, 0.0),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        space(0.0, 3.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Dr. Akhil Kumar",
+                              overflow: TextOverflow.visible,
+                              softWrap: true,
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: primaryColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              'View Profile',
+                              overflow: TextOverflow.visible,
+                              softWrap: true,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 10,
+                                  color: HexColor('#0866C6')),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          color: borderColor,
+                          thickness: 1,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "MBBS, MD, Cardiologist",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: secondaryColor,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                space(0.0, 3.0),
+                                Text(
+                                  "Apollo hospital, thane west",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: secondaryColor,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 1.0),
+                              child: Text(
+                                "3 Days ago",
+                                style: TextStyle(
+                                    fontSize: 9,
+                                    color: HexColor("#4D4D4D"),
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              )),
+          AcceptCancelAnimatedCard()
+        ],
+      ),
+    ),
+  );
 }
 
 hospitalcard_v2(String image, String name, String location, String distance,
@@ -1354,4 +1757,120 @@ hospitalcard_v2(String image, String name, String location, String distance,
       ),
     ),
   );
+}
+
+class NewCustomizableField extends StatefulWidget {
+  final String heading;
+  final String hintText;
+  final Widget? suffixText;
+  final VoidCallback? onSuffixTap;
+  final TextEditingController controller;
+  final TextInputType keyboardType;
+  final int? numbnerlenght;
+
+  const NewCustomizableField({
+    Key? key,
+    required this.heading,
+    required this.hintText,
+    required this.controller,
+    required this.keyboardType,
+    this.suffixText,
+    this.onSuffixTap,
+    this.numbnerlenght,
+  }) : super(key: key);
+
+  @override
+  State<NewCustomizableField> createState() => _NewCustomizableFieldState();
+}
+
+class _NewCustomizableFieldState extends State<NewCustomizableField> {
+  late int maxLength;
+  bool isSuffixEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    maxLength = widget.numbnerlenght ?? 10;
+    widget.controller.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    if (mounted) {
+      setState(() {
+        isSuffixEnabled = widget.controller.text.length == maxLength;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onTextChanged);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Text(
+            widget.heading,
+            style: const TextStyle(
+              color: Color(0xFF0866C6),
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: TextFormField(
+            maxLength: maxLength,
+            buildCounter: (_,
+                    {required currentLength,
+                    required isFocused,
+                    required maxLength}) =>
+                null,
+            controller: widget.controller,
+            keyboardType: widget.keyboardType,
+            decoration: InputDecoration(
+              hintText: widget.hintText,
+              fillColor: const Color.fromRGBO(248, 247, 247, 1),
+              filled: true,
+              enabledBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: Color.fromRGBO(220, 215, 215, 1)),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                    color: Color.fromRGBO(0, 116, 217, 1), width: 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+              suffixIcon: widget.suffixText != null
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 13),
+                      child: InkWell(
+                        onTap: isSuffixEnabled ? widget.onSuffixTap : null,
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            isSuffixEnabled ? Colors.transparent : Colors.grey,
+                            BlendMode.srcATop,
+                          ),
+                          child: widget.suffixText!,
+                        ),
+                      ),
+                    )
+                  : null,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }

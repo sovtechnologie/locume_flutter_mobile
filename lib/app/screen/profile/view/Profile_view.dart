@@ -395,122 +395,141 @@ class ProfileView extends GetView<ProfileController> {
                           ],
                         ),
                       if (data.clinicData?.isNotEmpty ?? false) ClinicDetails(),
-                      Container(
+                      mylabel("Qualification proofs*"),
+                      Text(
+                          "Non allied practitioners should submit council registration proof with metioned degree name. Allied practitioners should submit mark sheets or passing certificated from UGC approved university.",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: secondaryColor)),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Image.asset(
+                        "assets/cer.png",
                         width: double.maxFinite,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                profileTextField("Your Name",
-                                    "${data.firstName ?? 'N/A'} ${data.lastName ?? ''}"),
-                                profileTextField(
-                                    "Phone Number", data.mobileNumber ?? "N/A"),
-                                profileTextField(
-                                    "Location", data.location ?? 'N/A'),
-                                profileTextField("Total Experience",
-                                    data.totalExp.toString() ?? 'N/A'),
-                              ],
-                            ),
-                            const Spacer(),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: InkWell(
-                                  onTap: () {
-                                    Get.to(EditProfilePage(
-                                      nameController: controller.name,
-                                      numberController: controller.number,
-                                      locationController: controller.location,
-                                      experienceController:
-                                          controller.experience,
-                                    ));
-                                  },
-                                  child: const Text("Edit Profile")),
-                            ),
-                          ],
-                        ),
                       ),
-                      Divider(
-                        thickness: 0.5,
-                        color: const Color.fromARGB(182, 158, 158, 158),
+                      mylabel("Identity Proof"),
+                      Image.asset(
+                        "assets/adr.png",
+                        width: double.maxFinite,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          mylabel("Education Qualifications & Proof"),
-                          mytextfield("Add Education", controller.addeducation),
-                          mylabel2(
-                              "Upload image or PDF of qualification proofs*"),
-                          Text(
-                              "Non allied practitioners should submit council registration proof with metioned degree name. Allied practitioners should submit mark sheets or passing certificated from UGC approved university."),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          buildFilePickerCard(
-                            selectedFile: controller.selectedQualificationfile,
-                            fileName: controller.fileName,
-                            onRemove: () =>
-                                controller.removeFile('qualification'),
-                            onPickFile: () =>
-                                controller.pickFile('qualification'),
-                          ),
+                      // Container(
+                      //   width: double.maxFinite,
+                      //   child: Row(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Column(
+                      //         crossAxisAlignment: CrossAxisAlignment.start,
+                      //         children: [
+                      //           profileTextField("Your Name",
+                      //               "${data.firstName ?? 'N/A'} ${data.lastName ?? ''}"),
+                      //           profileTextField(
+                      //               "Phone Number", data.mobileNumber ?? "N/A"),
+                      //           profileTextField(
+                      //               "Location", data.location ?? 'N/A'),
+                      //           profileTextField("Total Experience",
+                      //               data.totalExp.toString() ?? 'N/A'),
+                      //         ],
+                      //       ),
+                      //       const Spacer(),
+                      //       Padding(
+                      //         padding:
+                      //             const EdgeInsets.symmetric(vertical: 8.0),
+                      //         child: InkWell(
+                      //             onTap: () {
+                      //               Get.to(EditProfilePage(
+                      //                 nameController: controller.name,
+                      //                 numberController: controller.number,
+                      //                 locationController: controller.location,
+                      //                 experienceController:
+                      //                     controller.experience,
+                      //               ));
+                      //             },
+                      //             child: const Text("Edit Profile")),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Divider(
+                      //   thickness: 0.5,
+                      //   color: const Color.fromARGB(182, 158, 158, 158),
+                      // ),
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     mylabel("Education Qualifications & Proof"),
+                      //     mytextfield("Add Education", controller.addeducation),
+                      //     mylabel2(
+                      //         "Upload image or PDF of qualification proofs*"),
+                      //     Text(
+                      //         "Non allied practitioners should submit council registration proof with metioned degree name. Allied practitioners should submit mark sheets or passing certificated from UGC approved university."),
+                      //     SizedBox(
+                      //       height: 15,
+                      //     ),
+                      //     buildFilePickerCard(
+                      //       selectedFile: controller.selectedQualificationfile,
+                      //       fileName: controller.fileName,
+                      //       onRemove: () =>
+                      //           controller.removeFile('qualification'),
+                      //       onPickFile: () =>
+                      //           controller.pickFile('qualification'),
+                      //     ),
 
-                          SizedBox(height: 10),
-                          // mylabel("Identity Proof"),
-                          // mytextfield("Documents to be uploaded",
-                          //     controller.addeducation),
-                          // Text("Upload image or PDF of identity proofs*"),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
-                          // buildFilePickerCard(
-                          //   selectedFile: controller.selectIdentityfile,
-                          //   fileName: controller.IndentityName,
-                          //   onRemove: () => controller.removeFile('identity'),
-                          //   onPickFile: () => controller.pickFile('identity'),
-                          // ),
-                          // SizedBox(
-                          //   height: 20,
-                          // ), // data.category != null && data.category!.isNotEmpty
-                          //     ? SizedBox(
-                          //         width: double.infinity,
-                          //         child: GridView.builder(
-                          //           shrinkWrap:
-                          //               true, // Important to wrap content inside a column
-                          //           physics:
-                          //               const NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
-                          //           gridDelegate:
-                          //               const SliverGridDelegateWithFixedCrossAxisCount(
-                          //             crossAxisCount: 3,
-                          //             crossAxisSpacing: 10,
-                          //             childAspectRatio: 4,
-                          //           ),
-                          //           itemCount: data.category!.length,
-                          //           itemBuilder: (context, index) {
-                          //             return Align(
-                          //               alignment: Alignment.topLeft,
-                          //               child: Text(
-                          //                 data.category![index].toString() ??
-                          //                     'N/A',
-                          //                 style: TextStyle(
-                          //                   fontSize: 12,
-                          //                   fontWeight: FontWeight.w400,
-                          //                 ),
-                          //                 // Center align text inside the grid
-                          //               ),
-                          //             );
-                          //           },
-                          //         ),
-                          //       )
-                          //     : Container(
-                          //         padding: EdgeInsets.only(top: 10),
-                          //         child: Text("No availability listed",
-                          //             style: TextStyle(fontSize: 16)),
-                          //       ),
-                        ],
-                      ),
+                      //     SizedBox(height: 10),
+                      // mylabel("Identity Proof"),
+                      // mytextfield("Documents to be uploaded",
+                      //     controller.addeducation),
+                      // Text("Upload image or PDF of identity proofs*"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // buildFilePickerCard(
+                      //   selectedFile: controller.selectIdentityfile,
+                      //   fileName: controller.IndentityName,
+                      //   onRemove: () => controller.removeFile('identity'),
+                      //   onPickFile: () => controller.pickFile('identity'),
+                      // ),
+                      // SizedBox(
+                      //   height: 20,
+                      // ), // data.category != null && data.category!.isNotEmpty
+                      //     ? SizedBox(
+                      //         width: double.infinity,
+                      //         child: GridView.builder(
+                      //           shrinkWrap:
+                      //               true, // Important to wrap content inside a column
+                      //           physics:
+                      //               const NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
+                      //           gridDelegate:
+                      //               const SliverGridDelegateWithFixedCrossAxisCount(
+                      //             crossAxisCount: 3,
+                      //             crossAxisSpacing: 10,
+                      //             childAspectRatio: 4,
+                      //           ),
+                      //           itemCount: data.category!.length,
+                      //           itemBuilder: (context, index) {
+                      //             return Align(
+                      //               alignment: Alignment.topLeft,
+                      //               child: Text(
+                      //                 data.category![index].toString() ??
+                      //                     'N/A',
+                      //                 style: TextStyle(
+                      //                   fontSize: 12,
+                      //                   fontWeight: FontWeight.w400,
+                      //                 ),
+                      //                 // Center align text inside the grid
+                      //               ),
+                      //             );
+                      //           },
+                      //         ),
+                      //       )
+                      //     : Container(
+                      //         padding: EdgeInsets.only(top: 10),
+                      //         child: Text("No availability listed",
+                      //             style: TextStyle(fontSize: 16)),
+                      //       ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),

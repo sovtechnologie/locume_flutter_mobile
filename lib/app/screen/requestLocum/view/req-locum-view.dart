@@ -5,48 +5,37 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/requestLocum/controller/req-locum-controller.dart';
+import 'package:locume/widget/reusedwidget.dart';
 
 class RequestLocumView extends GetView<RequestLocumController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("View all"),
+      ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+        padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 5.0),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              request_card(
-                  "Apollo International Hospital",
-                  "Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                  "22-24 Jan 2025 (Sat-Mon)",
-                  "100",
-                  "OPD Nurse"),
-              request_card(
-                  "Apollo International Hospital",
-                  "Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                  "22-24 Jan 2025 (Sat-Mon)",
-                  "100",
-                  "OPD Nurse"),
-              request_card(
-                  "Apollo International Hospital",
-                  "Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                  "22-24 Jan 2025 (Sat-Mon)",
-                  "100",
-                  "OPD Nurse"),
-              request_card(
-                  "Apollo International Hospital",
-                  "Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                  "22-24 Jan 2025 (Sat-Mon)",
-                  "100",
-                  "OPD Nurse"),
-              request_card(
-                  "Apollo International Hospital",
-                  "Parsik Hill Road, Cbd Belapur, Navi Mumbai",
-                  "22-24 Jan 2025 (Sat-Mon)",
-                  "100",
-                  "OPD Nurse"),
+              manage_card("Apollo International Hospital",
+                  "22-24 Jan 2025 (Sat-Mon)", "100", 1),
+              manage_card("Apollo International Hospital",
+                  "22-24 Jan 2025 (Sat-Mon)", "100", 1),
+              manage_card("Apollo International Hospital",
+                  "22-24 Jan 2025 (Sat-Mon)", "100", 1),
+              manage_card("Apollo International Hospital",
+                  "22-24 Jan 2025 (Sat-Mon)", "100", 1),
+              manage_card("Apollo International Hospital",
+                  "22-24 Jan 2025 (Sat-Mon)", "100", 1),
+              manage_card("Apollo International Hospital",
+                  "22-24 Jan 2025 (Sat-Mon)", "100", 1),
+              manage_card("Apollo International Hospital",
+                  "22-24 Jan 2025 (Sat-Mon)", "100", 1),
+              manage_card("Apollo International Hospital",
+                  "22-24 Jan 2025 (Sat-Mon)", "100", 1),
             ],
           ),
         ),

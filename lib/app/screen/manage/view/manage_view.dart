@@ -9,6 +9,7 @@ import 'package:locume/app/screen/manage/controller/manage_Controller.dart';
 import 'package:locume/app/screen/requestLocumDetails/binding/request_details_binding.dart';
 import 'package:locume/app/screen/requestLocumDetails/view/request_details_view.dart';
 import 'package:locume/app/screen/requestLocumDetails/view/request_raisedbyMe_details.dart';
+import 'package:locume/widget/reusedwidget.dart';
 
 class ManageView extends GetView<ManageController> {
   ManageView({super.key}) {
@@ -101,14 +102,14 @@ class ManageView extends GetView<ManageController> {
 
               return manage_card(
                 request.hospitalName ?? "Unknown Hospital",
-                "${request.address}, ${request.city}, ${request.state}, ${request.pincode}",
+                // "${request.address}, ${request.city}, ${request.state}, ${request.pincode}",
                 formatDateRange(request.startDate?.toIso8601String(),
                     request.endDate?.toIso8601String()),
                 request.shift ?? "N/A",
-                "${request.firstRange} - ${request.secondRange}",
-                "OPD Nurse",
-                "",
-                request.bookingType!,
+                // "${request.firstRange} - ${request.secondRange}",
+                // "OPD Nurse",
+                // "",
+                // request.bookingType!,
                 request.id ?? 0,
                 true,
               );
@@ -157,186 +158,20 @@ class ManageView extends GetView<ManageController> {
 
               return manage_card(
                 request.hospitalName ?? "Unknown Hospital",
-                "${request.address}, ${request.city}, ${request.state}, ${request.pincode}",
+                // "${request.address}, ${request.city}, ${request.state}, ${request.pincode}",
                 formatDateRange(request.startDate?.toIso8601String(),
                     request.endDate?.toIso8601String()),
                 request.shift ?? "N/A",
-                "${request.firstRange} - ${request.secondRange}",
-                "OPD Nurse",
-                "Required data from Api",
-                request.bookingType!,
+                // "${request.firstRange} - ${request.secondRange}",
+                // "OPD Nurse",
+                // "Required data from Api",
+                // request.bookingType!,
                 request.id ?? 0,
               );
             },
           ),
         );
       }),
-    );
-  }
-
-  Widget manage_card(String title, String address, String date, String time,
-      String price, String role, String accpetedby, int bookingType, int id,
-      [bool isRequestRaised = false]) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 18.0, left: 5.0, right: 5.0),
-      child: Container(
-        width: double.maxFinite,
-        // height: 200,
-        decoration: BoxDecoration(
-          // color: item["color"],
-          color: HexColor('#FFFFFF'),
-          borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-          boxShadow: [
-            BoxShadow(
-                offset: const Offset(0, 0),
-                color: HexColor('#1B4584').withOpacity(0.05),
-                blurRadius: 4.0,
-                spreadRadius: 4.0,
-                blurStyle: BlurStyle.normal)
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      title,
-                      overflow: TextOverflow.visible, // Ensure full visibility
-                      softWrap: false, // Keep it in one line
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  Icon(
-                    Icons.radio_button_checked,
-                    color: bookingType == 1
-                        ? HexColor("#C60808")
-                        : HexColor("#007C02"),
-                    size: 12,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.place,
-                    color: Colors.grey[600],
-                    size: 12,
-                  ),
-                  SizedBox(width: 5),
-                  Expanded(
-                    child: Text(
-                      address,
-                      style: TextStyle(
-                          fontSize: 10.50,
-                          fontWeight: FontWeight.w400,
-                          color: HexColor('#333333')),
-                      softWrap: true,
-                      overflow: TextOverflow.visible,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Icon(Icons.calendar_month, size: 12, color: Colors.grey[600]),
-                  Text("  $date  |  ₹$price/hour",
-                      style: TextStyle(
-                          fontSize: 10.50,
-                          fontWeight: FontWeight.w400,
-                          color: HexColor('#333333'))),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Icon(Icons.schedule, size: 12, color: Colors.grey[600]),
-                  Text("  $time",
-                      style: TextStyle(
-                          fontSize: 10.50,
-                          fontWeight: FontWeight.w400,
-                          color: HexColor('#333333'))),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  SvgPicture.asset('assets/opd.svg',
-                      width: 12, height: 12, color: HexColor('#333333')),
-                  Text("  $role",
-                      style: TextStyle(
-                          fontSize: 10.50,
-                          fontWeight: FontWeight.w400,
-                          color: HexColor('#333333'))),
-                ],
-              ),
-              if (accpetedby.isNotEmpty)
-                SizedBox(
-                  height: 8,
-                ),
-              if (accpetedby.isNotEmpty)
-                Row(
-                  children: [
-                    SvgPicture.asset('assets/opd.svg',
-                        width: 12, height: 12, color: HexColor('#333333')),
-                    Text("  Accepted By $accpetedby",
-                        style: TextStyle(
-                            fontSize: 10.50,
-                            fontWeight: FontWeight.w400,
-                            color: HexColor('#333333'))),
-                  ],
-                ),
-              SizedBox(
-                height: 12,
-              ),
-              SizedBox(
-                height: 22,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                  ),
-                  onPressed: () {
-                    if (isRequestRaised == true) {
-                      Get.to(RequestRaisedbymeDetails(),
-                          binding: RequestDetailsBinding(id: id));
-                    } else {
-                      Get.to(RequestDetailsView(),
-                          binding: RequestDetailsBinding(id: id));
-                    }
-                  },
-                  child: Text(
-                    "View Details",
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

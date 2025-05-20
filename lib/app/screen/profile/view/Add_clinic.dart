@@ -1,13 +1,28 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:locume/Theme/theme.dart';
 import 'package:locume/app/screen/profile/controller/Profile_Controller.dart';
 import 'package:flutter/material.dart';
+import 'package:locume/app/screen/profile/view/AddSpecialities.dart';
 import 'package:locume/widget/reusedwidget.dart';
+import 'package:locume/app/screen/login/signup/model/specialtie_model.dart'
+    as specialtie;
 
 class AddClinic extends GetView<ProfileController> {
+  final List<String> weekdays = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
+  ];
+
+  final List<String> timeSlots = ['M', 'A', 'E'];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -45,6 +60,103 @@ class AddClinic extends GetView<ProfileController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Obx(() {
+                        return InkWell(
+                          onTap: () {
+                            controller.pickImage(ImageSource.gallery, false);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 5),
+                            width: double.infinity,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              color: HexColor("#F8F7F7"),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: HexColor("#DCD7D7")),
+                            ),
+                            child: controller.clinicImage.value.path.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        // Image with a fixed size
+                                        SizedBox(
+                                          width: 100, // Fixed size
+                                          height: 100,
+                                          child: Stack(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                child: Image.file(
+                                                  controller.clinicImage.value,
+                                                  width:
+                                                      100, // Ensure it fills the box
+                                                  height: 100,
+                                                  fit: BoxFit
+                                                      .cover, // Ensure full coverage without distortion
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: 5,
+                                                right:
+                                                    5, // Position inside the image
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    controller
+                                                            .clinicImage.value =
+                                                        File(""); // Clear image
+                                                  },
+                                                  child: Container(
+                                                    padding: EdgeInsets.all(5),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      shape: BoxShape.circle,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black26,
+                                                          blurRadius: 4,
+                                                          offset: Offset(0, 2),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      color: Colors.red,
+                                                      size: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.image,
+                                          size: 50, color: Colors.grey),
+                                      SizedBox(height: 8),
+                                      Text("Upload max 3 photo",
+                                          style: TextStyle(color: Colors.grey)),
+                                    ],
+                                  ),
+                          ),
+                        );
+                      }),
+                      Obx(() => controller.clinicImageError.value.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Text(
+                                controller.clinicImageError.value,
+                                style: const TextStyle(
+                                    color: Colors.red, fontSize: 12),
+                              ),
+                            )
+                          : const SizedBox()),
                       mylabel2("Clinic Name"),
                       SearchableDropdown(
                         hint: "Enter Clinic Name",
@@ -64,7 +176,8 @@ class AddClinic extends GetView<ProfileController> {
                             )
                           : const SizedBox()),
                       mylabel2("About Clinic"),
-                      mytextfield("Enter About Your Clinic", controller.about),
+                      mybigtextfield(
+                          "Enter About Your Clinic", controller.about),
                       Obx(() => controller.aboutError.value.isNotEmpty
                           ? Text(
                               controller.aboutError.value,
@@ -72,40 +185,40 @@ class AddClinic extends GetView<ProfileController> {
                                   color: Colors.red, fontSize: 12),
                             )
                           : const SizedBox()),
-                      mylabel2("Clinic Time Slot"),
-                      const SizedBox(height: 5),
-                      Wrap(
-                        spacing: 5,
-                        runSpacing: 10,
-                        children: [
-                          selectableBoxField(text: "Morning"),
-                          selectableBoxField(text: "Afternoon"),
-                          selectableBoxField(text: "Night"),
-                        ],
-                      ),
-                      Obx(() => controller.slotError.value.isNotEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 4.0),
-                              child: Text(
-                                controller.slotError.value,
-                                style: const TextStyle(
-                                    color: Colors.red, fontSize: 12),
-                              ),
-                            )
-                          : const SizedBox()),
-                      const SizedBox(height: 4),
-                      mylabel2("Contact Number"),
-                      mytextfield("Enter Contact Number",
-                          controller.contactNumber, true),
-                      Obx(() => controller.contactNumberError.value.isNotEmpty
-                          ? Text(
-                              controller.contactNumberError.value,
-                              style: const TextStyle(
-                                  color: Colors.red, fontSize: 12),
-                            )
-                          : const SizedBox()),
+                      // mylabel2("Clinic Time Slot"),
+                      // const SizedBox(height: 5),
+                      // Wrap(
+                      //   spacing: 5,
+                      //   runSpacing: 10,
+                      //   children: [
+                      //     selectableBoxField(text: "Morning"),
+                      //     selectableBoxField(text: "Afternoon"),
+                      //     selectableBoxField(text: "Night"),
+                      //   ],
+                      // ),
+                      // Obx(() => controller.slotError.value.isNotEmpty
+                      //     ? Padding(
+                      //         padding: const EdgeInsets.only(top: 4.0),
+                      //         child: Text(
+                      //           controller.slotError.value,
+                      //           style: const TextStyle(
+                      //               color: Colors.red, fontSize: 12),
+                      //         ),
+                      //       )
+                      //     : const SizedBox()),
+                      // const SizedBox(height: 4),
+                      // mylabel2("Contact Number"),
+                      // mytextfield("Enter Contact Number",
+                      //     controller.contactNumber, true),
+                      // Obx(() => controller.contactNumberError.value.isNotEmpty
+                      //     ? Text(
+                      //         controller.contactNumberError.value,
+                      //         style: const TextStyle(
+                      //             color: Colors.red, fontSize: 12),
+                      //       )
+                      //     : const SizedBox()),
                       mylabel2("Clinic Address"),
-                      mytextfield(
+                      mybigtextfield(
                           "Enter Clinic Address", controller.clinicAddress),
                       Obx(() => controller.clinicAddressError.value.isNotEmpty
                           ? Text(
@@ -213,105 +326,153 @@ class AddClinic extends GetView<ProfileController> {
                           ),
                         ],
                       ),
-                      mylabel2("Add Clinic Images"),
-                      Obx(() {
-                        return InkWell(
-                          onTap: () {
-                            controller.pickImage(ImageSource.gallery, false);
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 5),
-                            width: double.infinity,
-                            height: 150,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                  color: Color.fromARGB(124, 175, 175, 175)),
+                      Row(
+                        children: [
+                          mylabel2("Preferred Specialities"),
+                          Spacer(),
+                          InkWell(
+                              onTap: () {
+                                Get.to(Addspecialities());
+                              },
+                              child: Text(controller.selectedSpecialties !=
+                                          null &&
+                                      controller.selectedSpecialties!.isNotEmpty
+                                  ? "+Add more"
+                                  : "+Add Specialities"))
+                        ],
+                      ),
+                      controller.selectedSpecialties != null &&
+                              controller.selectedSpecialties!.isNotEmpty
+                          ? SizedBox(
+                              width: double.infinity,
+                              child: GridView.builder(
+                                shrinkWrap:
+                                    true, // Important to wrap content inside a column
+                                physics:
+                                    const NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 10,
+                                  childAspectRatio: 5,
+                                ),
+                                itemCount:
+                                    controller.selectedSpecialties.length,
+                                itemBuilder: (context, index) {
+                                  // Find the corresponding specialty object from specialtiesList using the ID
+                                  final specialty =
+                                      controller.specialtiesList.firstWhere(
+                                    (s) =>
+                                        s.id ==
+                                        controller.selectedSpecialties[index],
+                                    orElse: () => specialtie.Result(
+                                        id: 0,
+                                        specialtiesName:
+                                            "Unknown"), // Default object
+                                  );
+
+                                  return Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      specialty.specialtiesName ??
+                                          'Unknown', // Show name or fallback
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : Container(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text("No Specialities listed",
+                                  style: TextStyle(fontSize: 16)),
                             ),
-                            child: controller.clinicImage.value.path.isNotEmpty
-                                ? Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        // Image with a fixed size
-                                        SizedBox(
-                                          width: 100, // Fixed size
-                                          height: 100,
-                                          child: Stack(
+                      mylabel2("Working Day/Time"),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 1),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ...timeSlots.map((slot) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 9.4),
+                                      child: Obx(() {
+                                        bool allSelected = controller
+                                            .isSlotSelectedForAllDays(slot);
+                                        return GestureDetector(
+                                          onTap: () {
+                                            controller
+                                                .toggleSlotForAllDays(slot);
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                child: Image.file(
-                                                  controller.clinicImage.value,
-                                                  width:
-                                                      100, // Ensure it fills the box
-                                                  height: 100,
-                                                  fit: BoxFit
-                                                      .cover, // Ensure full coverage without distortion
-                                                ),
-                                              ),
-                                              Positioned(
-                                                top: 5,
-                                                right:
-                                                    5, // Position inside the image
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    controller
-                                                            .clinicImage.value =
-                                                        File(""); // Clear image
-                                                  },
-                                                  child: Container(
-                                                    padding: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      shape: BoxShape.circle,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors.black26,
-                                                          blurRadius: 4,
-                                                          offset: Offset(0, 2),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      color: Colors.red,
-                                                      size: 18,
-                                                    ),
-                                                  ),
+                                              Checkbox(
+                                                value: allSelected,
+                                                onChanged: (_) {
+                                                  controller
+                                                      .toggleSlotForAllDays(
+                                                          slot);
+                                                },
+                                                activeColor: primaryColor,
+                                                side: BorderSide(
+                                                  color: allSelected
+                                                      ? primaryColor
+                                                      : Colors.grey,
+                                                  width: 1,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.image,
-                                          size: 50, color: Colors.grey),
-                                      SizedBox(height: 8),
-                                      Text("Tap to select images",
-                                          style: TextStyle(color: Colors.grey)),
-                                    ],
-                                  ),
-                          ),
-                        );
-                      }),
-                      Obx(() => controller.clinicImageError.value.isNotEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 4.0),
-                              child: Text(
-                                controller.clinicImageError.value,
-                                style: const TextStyle(
-                                    color: Colors.red, fontSize: 12),
+                                        );
+                                      }),
+                                    );
+                                  }).toList(),
+                                ],
                               ),
-                            )
-                          : const SizedBox()),
+                            ),
+
+                            // Weekdays with individual checkboxes
+                            ...weekdays.map((day) {
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    day,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: textColor,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  ...timeSlots.map((slot) {
+                                    String key = "${day}_$slot";
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 4.0),
+                                      child: selectableBoxField(
+                                        text: key,
+                                        controller: controller,
+                                      ),
+                                    );
+                                  }).toList(),
+                                ],
+                              );
+                            }).toList(),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -478,9 +639,13 @@ class AddClinic extends GetView<ProfileController> {
   }
 
   /// Selectable Time Slot Box
-  Widget selectableBoxField({required String text}) {
+  Widget selectableBoxField({
+    required String text,
+    required ProfileController controller,
+  }) {
     return Obx(() {
       bool isSelected = controller.selectedOptions.contains(text);
+
       return GestureDetector(
         onTap: () {
           if (isSelected) {
@@ -489,42 +654,33 @@ class AddClinic extends GetView<ProfileController> {
             controller.selectedOptions.add(text);
           }
         },
-        child: Container(
-          height: 40,
-          width: 120,
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          decoration: BoxDecoration(
-            color:
-                isSelected ? primaryColor.withOpacity(0.1) : Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              width: 1,
-              color: isSelected ? primaryColor : Colors.grey,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Checkbox(
+              value: isSelected,
+              onChanged: (value) {
+                if (value == true) {
+                  controller.selectedOptions.add(text);
+                } else {
+                  controller.selectedOptions.remove(text);
+                }
+              },
+              activeColor: primaryColor,
+              side: BorderSide(
+                color: isSelected ? primaryColor : Colors.grey,
+                width: 1,
+              ),
             ),
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 25,
-                child: Icon(
-                  isSelected ? Icons.check_box : Icons.check_box_outline_blank,
-                  color: isSelected ? primaryColor : Colors.grey,
-                ),
+            Text(
+              text.split('_').last,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                color: isSelected ? primaryColor : Colors.grey,
               ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: isSelected ? primaryColor : Colors.grey,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     });

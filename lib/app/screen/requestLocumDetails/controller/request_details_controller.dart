@@ -34,7 +34,7 @@ class RequestDetailsController extends GetxController {
           'Authorization': 'Bearer ${Get.find<AuthProvider>().token}',
         },
         data: {
-          "bookingId": idd,
+          "bookingId": 20,
           "status": 0,
         },
       );
@@ -152,6 +152,23 @@ class RequestDetailsController extends GetxController {
     }
   }
 
+  List<String> Speciality = [
+    "Emergency Med",
+    "Anesthesiology",
+    "Cardiology",
+    "Endocrinology",
+    "Gastroenterology",
+    "Nephrology",
+    "Dermatology",
+    "Medical oncology",
+    "Primary care",
+  ];
+  RxInt currentIndex = 0.obs;
+  RxList<String> imageUrls = <String>[
+    'https://locumedocument.s3.ap-south-1.amazonaws.com/1741586110601Hospital.jpg',
+    'https://locumedocument.s3.ap-south-1.amazonaws.com/1741586110601Hospital.jpg',
+    'https://locumedocument.s3.ap-south-1.amazonaws.com/1741586110601Hospital.jpg',
+  ].obs;
   var doctorList = <Map<String, String>>[
     {
       "image": "https://via.placeholder.com/100",

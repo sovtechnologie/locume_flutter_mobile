@@ -145,6 +145,7 @@ class LocumView extends GetView<LocumController> {
                               padding: const EdgeInsets.fromLTRB(
                                   8.0, 0.0, 8.0, 16.0),
                               child: doctorcard(
+                                context,
                                 imagePath.toString(),
                                 '${doctor.firstName ?? ''} ${doctor.lastName ?? ''}',
                                 doctor.medicalId ?? '',
